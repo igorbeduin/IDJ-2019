@@ -1,6 +1,6 @@
 # IDJ-2019
-Este é o repositório host criado para a fazer referência aos trabalhos desenvolvidos na disciplina "Introdução ao Desenvolvimento de Jogos" da Universidade de Brasília - UnB.
+Este é o repositório criado para desenvolvimento dos trabalhos da disciplina "Introdução ao Desenvolvimento de Jogos" da Universidade de Brasília - UnB.
 
-T1: https://github.com/igorbeduin/IDJ_T1
+Visto que o objetivo da matéria é fazer um trabalho contínuo ao longo do semestre, a organização do desenvolvimento dos trabalhos é feita com branches específicas para cada um.
 
 A disciplina foi cursada durante o semestre 2019/1 pela Profª Carla Denise Castanho.
