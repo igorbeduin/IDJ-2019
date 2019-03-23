@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-
 #include "State.hpp"
 
 
@@ -22,6 +21,6 @@ void State::Render() {
     // Renderizar o fundo "bg"
 }
 
-bool QuitRequested() {
+bool State::QuitRequested() {
     return quitRequested;
 }

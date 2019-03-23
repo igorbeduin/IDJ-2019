@@ -44,7 +44,7 @@ int Sprite::GetHeight() {
     return height;
 }
 
-bool IsOpen() {
+bool Sprite::IsOpen() {
     if (texture != nullptr) {
         return true;
     } else {
