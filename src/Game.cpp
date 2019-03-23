@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <SDL2/SDL_image.h>
-#include < SDL2/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 #include "Game.hpp"
 
 Game::Game (std::string title, int width, int height) {
@@ -44,10 +44,17 @@ Game::~Game() {
 }
 
 Game& Game::GetInstance() {
+    std::string title;
+    // dimensoes da janela do jogo
+    int width = 1024;
+    int height = 600;
+
+    title = "Igor R. O. Beduin - 14/0143882";
+
     if (instance != nullptr) {
         return *instance;
     } else {
-        instance = new Game();
+        instance = new Game(title, width, height);
         return *instance;
     }
 }
