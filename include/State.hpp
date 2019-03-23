@@ -1,3 +1,8 @@
+#pragma once
+
+#include "../include/Sprite.hpp"
+#include "../include/Music.hpp"
+
 class State {
     public:
         State();
