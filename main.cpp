@@ -1,21 +1,13 @@
 #include <iostream>
-#include <Game.hpp>
-#include <Sprite.hpp>
-#include <Music.hpp>
-#include <State.hpp>
+#include "include/Game.hpp"
+#include "include/Sprite.hpp"
+#include "include/Music.hpp"
+#include "include/State.hpp"
 
 
 int main(int argc, char** argv) {
-    std::string title;
-    // dimensoes da janela do jogo
-    int width = 1024;
-    int height = 600;
-    Game game;
-
-    title = "Igor R. O. Beduin - 14/0143882"
-    game = new Game(title, width, height);
+    Game& game = Game::GetInstance();
     game.Run();
-    delete game;
 
     return 0;
 }
