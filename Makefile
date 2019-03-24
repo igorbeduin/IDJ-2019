@@ -18,7 +18,7 @@ LIBS = -lstdc++ -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 #LIBS = -lm -lstdc++ -framework SDL2 -framework SDL2_image -framework lSDL2_mixer -framework SDL2_ttf
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -Wall -Wextra -g -ggdb
+FLAGS = -std=c++11 -Wall -Wextra -g -v
 
 # Paths
 INC_PATH = include
