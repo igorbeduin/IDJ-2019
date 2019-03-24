@@ -2,9 +2,10 @@
 
 # Compilador
 COMPILER = g++
+# COMPILER = /usr/local/bin/g++-8
 
-# Play
-PLAY = blabla
+# Nome do executavel
+EXEC = blabla.out
 
 # Comando para remover pastas
 RMDIR = rm -rdf
@@ -13,42 +14,35 @@ RMDIR = rm -rdf
 RM = rm -f
 
 # Bibliotecas
-LIBS = -lstdc++ -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm 
+LIBS = -lstdc++ -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+#LIBS = -lm -lstdc++ -framework SDL2 -framework SDL2_image -framework lSDL2_mixer -framework SDL2_ttf
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -Wall -lstdc++
+FLAGS = -std=c++11 -Wall -Wextra -g -ggdb
 
 # Paths
 INC_PATH = include
 SRC_PATH = src
+BIN_PATH = bin
+OBJ_PATH = object
 
-# Nome do executavel
-# EXEC = PLAY
+# Binario para execucao
+BIN = $(BIN_PATH)/$(EXEC)
 
-# CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
+# Variavel com uma lista de todos arquivos .cpp em SRC_PATH
+SRC = $(wildcard $(SRC_PATH)/*.cpp)
 
-# INC_FILES = $(wildcard $(INC_PATH)/*.h)
+# Objects para compilação
+OBJ = $(patsubst $(SRC_PATH)/%.cpp, $(OBJ_PATH)/%.o, $(SRC))
 
-all: EXEC
+all: $(OBJ)
+	$(COMPILER) $(OBJ) $(LIBS) $(FLAGS) -o $(EXEC)
 
-EXEC: Main.o Game.o Music.o Sprite.o State.o
-	$(COMPILER) Main.o Game.o Music.o Sprite.o State.o -o $(PLAY)
+%.o: $(patsubst $(OBJ_PATH)/%.o, $(SRC_PATH)/%.cpp, $@)
+	$(COMPILER) -c $(FLAGS) $(patsubst $(OBJ_PATH)/%.o, $(SRC_PATH)/%.cpp, $@) -o $@
 
-Main.o: Main.cpp
-	$(COMPILER) $(FLAGS) Main.cpp
-
-Game.o: src/Game.cpp
-	$(COMPILER) $(FLAGS) src/Game.cpp
-
-Sprite.o: src/Sprite.cpp
-	$(COMPILER) $(FLAGS) src/Sprite.cpp
-
-State.o: src/State.cpp
-	$(COMPILER) $(FLAGS) src/State.cpp
-
-Music.o: src/Music.cpp
-	$(COMPILER) $(FLAGS) src/Music.cpp
-
+clean:
+	rm -f $(OBJ) *~
 
 
 
