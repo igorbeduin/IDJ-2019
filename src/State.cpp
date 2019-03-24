@@ -1,24 +1,26 @@
 #include <SDL2/SDL.h>
-#include "State.hpp"
+#include "TargetConditionals.h"
+#include "../include/State.hpp"
 
 
 State::State() {
     quitRequested = false;
-    // Instanciar o Sprite
+    bg = Sprite("assets/img/ocean.jpg");
 }
 
 void State::LoadAssets() {
-    // Preload de música, imagens, etc
+    // Pre load dos assets
 }
 
 void State::Update(float dt) {
-    if (SDL_QuitRequested == true) {
+    if (SDL_QuitRequested() == true) {
         quitRequested = true;
     }
+    SDL_Delay(dt);
 }
 
 void State::Render() {
-    // Renderizar o fundo "bg"
+    bg.Render(0, 0);
 }
 
 bool State::QuitRequested() {

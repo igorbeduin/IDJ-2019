@@ -1,4 +1,5 @@
-#include "Sprite.hpp"
+#include "../include/Sprite.hpp"
+#include "../include/Game.hpp"
 
 
 Sprite::Sprite() {
@@ -17,23 +18,27 @@ Sprite::~Sprite(){
 }
 
 void Sprite::Open(std::string file) {
+    Game& game = Game::GetInstance();  // Singleton's instance for local use
+
     if (texture != nullptr) {
         SDL_DestroyTexture(texture);
     };
-    texture = IMG_LoadTexture(renderer, path); // Renderer deve ser o renderer do Game
-    if (IMG_LoadTexture(renderer, path) == nullptr) {
-        std::cout << "Deu bosta";
-    } 
+    texture = IMG_LoadTexture(game.GetRenderer(), file.c_str());
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    clipRect = {x, y, w, h};
+    clipRect.x = x;
+    clipRect.y = y;
+    clipRect.w = w;
+    clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect* dstLoc = {x, y, clipRect.w, clipRect.h};
-    SDL_RenderCopy(renderer, texture, clipRect, dstLoc);
+    Game& game = Game::GetInstance(); // Singleton's instance for local use
+    SDL_Rect dstLoc = {x, y, clipRect.w, clipRect.h};
+
+    SDL_RenderCopy(game.GetRenderer(), texture, &clipRect, &dstLoc);
 }
 
 int Sprite::GetWidth() {
