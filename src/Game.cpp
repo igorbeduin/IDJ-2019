@@ -1,8 +1,10 @@
 #include <string>
 #include <iostream>
+#include "TargetConditionals.h"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include "Game.hpp"
+#include "../include/Game.hpp"
+#include "../include/State.hpp"
 
 Game::Game (std::string title, int width, int height) {
     int SDL_ERROR;
@@ -26,7 +28,7 @@ Game::Game (std::string title, int width, int height) {
             MSC_ERROR = Mix_Init(MIX_INIT_FLAC | MIX_INIT_OGG | MIX_INIT_MP3);
             Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024); // tratar erro
             Mix_AllocateChannels(32);
-            window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0); // resolver inputs
+            window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0); // resolver inputs
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE); // resolver inputs
         }
         state = new State();
@@ -43,7 +45,8 @@ Game::~Game() {
 
 }
 
-Game& Game::GetInstance() {
+Game& Game::GetInstance()
+{
     std::string title;
     // dimensoes da janela do jogo
     int width = 1024;
@@ -69,9 +72,8 @@ SDL_Renderer* Game::GetRenderer() {
 
 void Game::Run() {
     while (state->QuitRequested()!=true) {
-        state->Update();
+        state->Update(33);
         state->Render();
         SDL_RenderPresent(renderer);
-        SDL_Delay(FRAME_RATE);
     }
 }
