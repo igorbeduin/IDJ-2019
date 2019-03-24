@@ -1,9 +1,8 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include "TargetConditionals.h"
 #include "State.hpp"
-
-#define FRAME_RATE 33 //ms
 
 
 class Game {
