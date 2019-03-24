@@ -4,7 +4,6 @@
 #include "TargetConditionals.h"
 #include "State.hpp"
 
-
 class Game {
     private:
         Game(std::string title, int width, int height);
@@ -15,8 +14,8 @@ class Game {
 
     public:
         ~Game();
-        static Game& GetInstance();
         void Run();
         SDL_Renderer* GetRenderer();
         State& GetState();
+        static Game& GetInstance();
 };
