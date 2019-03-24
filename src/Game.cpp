@@ -4,17 +4,16 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include "../include/Game.hpp"
-#include "../include/State.hpp"
 
 Game::Game (std::string title, int width, int height) {
     int SDL_ERROR;
     int IMG_ERROR;
     int MSC_ERROR;
 
-    if (instance != nullptr) {
+    if (Game::instance != nullptr) {
         std::cout << "Something's Wrong!";
     } else {
-        instance = this;
+        Game::instance = this;
     }
 
     SDL_ERROR = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
@@ -45,20 +44,17 @@ Game::~Game() {
 
 }
 
-Game& Game::GetInstance()
-{
-    std::string title;
+Game& Game::GetInstance() {
+    std::string title = "Igor R. O. Beduin - 14/0143882";
     // dimensoes da janela do jogo
     int width = 1024;
     int height = 600;
 
-    title = "Igor R. O. Beduin - 14/0143882";
-
-    if (instance != nullptr) {
-        return *instance;
+    if (Game::instance != nullptr) {
+        return *Game::instance;
     } else {
-        instance = new Game(title, width, height);
-        return *instance;
+        Game::instance = new Game(title, width, height);
+        return *Game::instance;
     }
 }
 
