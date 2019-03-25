@@ -3,7 +3,7 @@ Este é o repositório criado para desenvolvimento dos trabalhos da disciplina "
 
 Visto que o objetivo da matéria é fazer um trabalho contínuo ao longo do semestre, a organização do desenvolvimento dos trabalhos é feita com branches específicas para cada um.
 
-A disciplina foi cursada durante o semestre 2019/1 pela Profª Carla Denise Castanho.
+A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carla Denise Castanho e seus monitores.
 
 ## T1
 ### TODO List:
