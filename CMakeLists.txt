@@ -7,15 +7,30 @@ project (${OUTPUT})
 
 add_definitions(-std=c++11)
 
-set(SDL2_INCLUDE 
-    /usr/local/include
-)
-set(SDL2_LIB 
-    /usr/local/lib/libSDL2.dylib
-    /usr/local/lib/libSDL2_image.dylib
-    /usr/local/lib/libSDL2_mixer.dylib
-    /usr/local/lib/libSDL2_ttf.dylib
-)
+if(${APPLE})
+    set(SDL2_INCLUDE 
+        /usr/local/include
+    )
+    set(SDL2_LIB 
+        /usr/local/lib/libSDL2.dylib
+        /usr/local/lib/libSDL2_image.dylib
+        /usr/local/lib/libSDL2_mixer.dylib
+        /usr/local/lib/libSDL2_ttf.dylib
+    )
+endif(${APPLE})
+
+if(NOT ${APPLE} AND ${UNIX})
+    set(SDL2_INCLUDE 
+        /usr/include/SDL2
+    )
+    set(SDL2_LIB 
+        SDL2
+        SDL2_image
+        SDL2_mixer
+        SDL2_ttf
+    )
+endif(NOT ${APPLE} AND ${UNIX})
+
 
 include_directories (
     include/
