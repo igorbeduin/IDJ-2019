@@ -99,6 +99,6 @@ void Game::Run() {
     while (state->QuitRequested()!=true) {
         state->Update(33);
         state->Render();
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
 }
