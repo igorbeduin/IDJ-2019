@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include "TargetConditionals.h"
 #include "../include/State.hpp"
 
 

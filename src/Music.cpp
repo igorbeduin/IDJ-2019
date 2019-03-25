@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../include/Music.hpp"
 #include <SDL2/SDL_mixer.h>
-#include "TargetConditionals.h"
 
 
 Music::Music() {

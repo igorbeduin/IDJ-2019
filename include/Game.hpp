@@ -1,13 +1,12 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include "TargetConditionals.h"
 #include "State.hpp"
 
 class Game {
     private:
-        Game(std::string title, int width, int height);
         static Game* instance;
+        Game(std::string title, int width, int height);
         SDL_Window* window;
         SDL_Renderer* renderer;
         State* state;
