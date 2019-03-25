@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/igorbeduin/IDJ/IDJ-2019
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named IDJ
+# Target rules for targets named IDJ.o
 
 # Build rule for target.
-IDJ: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 IDJ
-.PHONY : IDJ
+IDJ.o: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 IDJ.o
+.PHONY : IDJ.o
 
 # fast build rule for target.
-IDJ/fast:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/build
-.PHONY : IDJ/fast
+IDJ.o/fast:
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/build
+.PHONY : IDJ.o/fast
 
 src/Game.o: src/Game.cpp.o
 
@@ -129,7 +129,7 @@ src/Game.o: src/Game.cpp.o
 
 # target to build an object file
 src/Game.cpp.o:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Game.cpp.o
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Game.cpp.o
 .PHONY : src/Game.cpp.o
 
 src/Game.i: src/Game.cpp.i
@@ -138,7 +138,7 @@ src/Game.i: src/Game.cpp.i
 
 # target to preprocess a source file
 src/Game.cpp.i:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Game.cpp.i
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Game.cpp.i
 .PHONY : src/Game.cpp.i
 
 src/Game.s: src/Game.cpp.s
@@ -147,7 +147,7 @@ src/Game.s: src/Game.cpp.s
 
 # target to generate assembly for a file
 src/Game.cpp.s:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Game.cpp.s
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Game.cpp.s
 .PHONY : src/Game.cpp.s
 
 src/Main.o: src/Main.cpp.o
@@ -156,7 +156,7 @@ src/Main.o: src/Main.cpp.o
 
 # target to build an object file
 src/Main.cpp.o:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Main.cpp.o
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Main.cpp.o
 .PHONY : src/Main.cpp.o
 
 src/Main.i: src/Main.cpp.i
@@ -165,7 +165,7 @@ src/Main.i: src/Main.cpp.i
 
 # target to preprocess a source file
 src/Main.cpp.i:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Main.cpp.i
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Main.cpp.i
 .PHONY : src/Main.cpp.i
 
 src/Main.s: src/Main.cpp.s
@@ -174,7 +174,7 @@ src/Main.s: src/Main.cpp.s
 
 # target to generate assembly for a file
 src/Main.cpp.s:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Main.cpp.s
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Main.cpp.s
 .PHONY : src/Main.cpp.s
 
 src/Music.o: src/Music.cpp.o
@@ -183,7 +183,7 @@ src/Music.o: src/Music.cpp.o
 
 # target to build an object file
 src/Music.cpp.o:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Music.cpp.o
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Music.cpp.o
 .PHONY : src/Music.cpp.o
 
 src/Music.i: src/Music.cpp.i
@@ -192,7 +192,7 @@ src/Music.i: src/Music.cpp.i
 
 # target to preprocess a source file
 src/Music.cpp.i:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Music.cpp.i
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Music.cpp.i
 .PHONY : src/Music.cpp.i
 
 src/Music.s: src/Music.cpp.s
@@ -201,7 +201,7 @@ src/Music.s: src/Music.cpp.s
 
 # target to generate assembly for a file
 src/Music.cpp.s:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Music.cpp.s
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Music.cpp.s
 .PHONY : src/Music.cpp.s
 
 src/Sprite.o: src/Sprite.cpp.o
@@ -210,7 +210,7 @@ src/Sprite.o: src/Sprite.cpp.o
 
 # target to build an object file
 src/Sprite.cpp.o:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Sprite.cpp.o
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Sprite.cpp.o
 .PHONY : src/Sprite.cpp.o
 
 src/Sprite.i: src/Sprite.cpp.i
@@ -219,7 +219,7 @@ src/Sprite.i: src/Sprite.cpp.i
 
 # target to preprocess a source file
 src/Sprite.cpp.i:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Sprite.cpp.i
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Sprite.cpp.i
 .PHONY : src/Sprite.cpp.i
 
 src/Sprite.s: src/Sprite.cpp.s
@@ -228,7 +228,7 @@ src/Sprite.s: src/Sprite.cpp.s
 
 # target to generate assembly for a file
 src/Sprite.cpp.s:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/Sprite.cpp.s
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/Sprite.cpp.s
 .PHONY : src/Sprite.cpp.s
 
 src/State.o: src/State.cpp.o
@@ -237,7 +237,7 @@ src/State.o: src/State.cpp.o
 
 # target to build an object file
 src/State.cpp.o:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/State.cpp.o
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/State.cpp.o
 .PHONY : src/State.cpp.o
 
 src/State.i: src/State.cpp.i
@@ -246,7 +246,7 @@ src/State.i: src/State.cpp.i
 
 # target to preprocess a source file
 src/State.cpp.i:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/State.cpp.i
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/State.cpp.i
 .PHONY : src/State.cpp.i
 
 src/State.s: src/State.cpp.s
@@ -255,7 +255,7 @@ src/State.s: src/State.cpp.s
 
 # target to generate assembly for a file
 src/State.cpp.s:
-	$(MAKE) -f CMakeFiles/IDJ.dir/build.make CMakeFiles/IDJ.dir/src/State.cpp.s
+	$(MAKE) -f CMakeFiles/IDJ.o.dir/build.make CMakeFiles/IDJ.o.dir/src/State.cpp.s
 .PHONY : src/State.cpp.s
 
 # Help Target
@@ -264,9 +264,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... IDJ"
+	@echo "... rebuild_cache"
+	@echo "... IDJ.o"
 	@echo "... src/Game.o"
 	@echo "... src/Game.i"
 	@echo "... src/Game.s"
