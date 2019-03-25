@@ -7,11 +7,19 @@ project (${OUTPUT})
 
 add_definitions(-std=c++11)
 
-set(SDL2_INCLUDE /usr/include/SDL2)
+set(SDL2_INCLUDE 
+    /usr/local/include
+)
+set(SDL2_LIB 
+    /usr/local/lib/libSDL2.dylib
+    /usr/local/lib/libSDL2_image.dylib
+    /usr/local/lib/libSDL2_mixer.dylib
+    /usr/local/lib/libSDL2_ttf.dylib
+)
 
 include_directories (
     include/
-    $(SDL2_INCLUDE)
+    ${SDL2_INCLUDE}
 )
 
 add_executable(${OUTPUT}
@@ -22,4 +30,4 @@ add_executable(${OUTPUT}
     src/State.cpp
 )
 
-target_link_libraries(${OUTPUT} SDL2 SDL2_image SDL2_mixer SDL2_ttf)
+target_link_libraries(${OUTPUT} ${SDL2_LIB})
