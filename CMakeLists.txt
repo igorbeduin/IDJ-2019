@@ -7,34 +7,35 @@ project (${OUTPUT})
  
 add_definitions(-std=c++11)
 
-if(${UNIX})
-    set(SDL2_INCLUDE
-        /usr/include/SDL2
+
+if(${APPLE})
+    set(SDL2_INCLUDE 
+        /usr/local/include
     )
-    set(SDL2_LIB
-        SDL2
-        SDL2_image
-        SDL2_mixer
-        SDL2_ttf
+    set(SDL2_LIB 
+        /usr/local/lib/libSDL2.dylib
+        /usr/local/lib/libSDL2_image.dylib
+        /usr/local/lib/libSDL2_mixer.dylib
+        /usr/local/lib/libSDL2_ttf.dylib
     )
     else()
-        if(${APPLE})
-            set(SDL2_INCLUDE 
-                /usr/local/include
+        if(${UNIX})
+            set(SDL2_INCLUDE
+                /usr/include/SDL2
             )
-            set(SDL2_LIB 
-                /usr/local/lib/libSDL2.dylib
-                /usr/local/lib/libSDL2_image.dylib
-                /usr/local/lib/libSDL2_mixer.dylib
-                /usr/local/lib/libSDL2_ttf.dylib
+            set(SDL2_LIB
+                SDL2
+                SDL2_image
+                SDL2_mixer
+                SDL2_ttf
             )
-        endif(${APPLE})
-endif(${UNIX})
+        endif(${UNIX})
+endif(${APPLE})
 
  
 include_directories (
     include/
-    $(SDL2_INCLUDE)
+    ${SDL2_INCLUDE}
 )
  
 add_executable(${OUTPUT}
