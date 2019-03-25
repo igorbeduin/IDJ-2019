@@ -1,6 +1,8 @@
 #include "../include/Sprite.hpp"
 #include "../include/Game.hpp"
 
+#define CLIP_START_X 0
+#define CLIP_START_Y 0
 
 Sprite::Sprite() {
     texture = nullptr;
@@ -12,19 +14,29 @@ Sprite::Sprite(std::string file) {
 }
 
 Sprite::~Sprite(){
-    if (texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    };
+    // # DESTRUCTOR sendo chamado logo depois da instanciacao do sprite
+    // std::cout << "destructor was called!" << std::endl;
+    // if (texture != nullptr) {
+    //     SDL_DestroyTexture(texture);
+    // };
 }
 
 void Sprite::Open(std::string file) {
-    Game& game = Game::GetInstance();  // Singleton's instance for local use
+    // Singleton's instance for local use
+    Game& game = Game::GetInstance();
 
     if (texture != nullptr) {
-        SDL_DestroyTexture(texture);
+       SDL_DestroyTexture(texture);
     };
     texture = IMG_LoadTexture(game.GetRenderer(), file.c_str());
-    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    if (texture == nullptr)
+    {
+        std::cout << "Falha ao carregar a textura" << std::endl;
+    } else {
+        std::cout << "Textura carregada com sucesso!" << std::endl;
+        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    }
+    SetClip(CLIP_START_X, CLIP_START_Y, width, height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -35,10 +47,13 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    Game& game = Game::GetInstance(); // Singleton's instance for local use
-    SDL_Rect dstLoc = {x, y, clipRect.w, clipRect.h};
+    int RENDER_ERROR;
+    SDL_Rect dstLoc = {x, y, GetWidth(), GetHeight()};
 
-    SDL_RenderCopy(game.GetRenderer(), texture, &clipRect, &dstLoc);
+    RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
+    if (RENDER_ERROR != 0) {
+        std::cout << "Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
+    }
 }
 
 int Sprite::GetWidth() {
@@ -50,9 +65,10 @@ int Sprite::GetHeight() {
 }
 
 bool Sprite::IsOpen() {
-    if (texture != nullptr) {
-        return true;
-    } else {
+    std::cout << texture << std::endl;
+    if (texture == nullptr) {
         return false;
+    } else {
+        return true;
     }
 }
