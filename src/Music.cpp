@@ -24,7 +24,12 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(std::string file) {
-    Mix_LoadMUS(file.c_str()); // tratar erro
+    music = Mix_LoadMUS(file.c_str());
+    if (music == nullptr) {
+        std::cout << "Falha ao carregar a música!" << std::endl;
+    } else {
+        std::cout << "Musica carregada com sucesso!" << std::endl;
+    }
 }
 
 bool Music::IsOpen() {
@@ -36,8 +41,9 @@ bool Music::IsOpen() {
 }
 
 Music::~Music() {
-    if (music != nullptr) {
-        Stop(1500);
-        Mix_FreeMusic(music);
-    }
+    // # DESTRUCTOR sendo chamado logo depois da instanciacao da music
+    // if (music != nullptr) {
+    //     Stop(1500);
+    //     Mix_FreeMusic(music);
+    // }
 }
