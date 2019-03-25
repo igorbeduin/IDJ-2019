@@ -1,14 +1,19 @@
 #include <SDL2/SDL.h>
 #include "../include/State.hpp"
 
+#define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
+#define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
+#define BACKGROUND_MUSIC_LOOP_TIMES -1 // -1 for infinite loop
 
 State::State() {
     quitRequested = false;
-    bg = Sprite("assets/img/ocean.jpg");
+    LoadAssets();
+    music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
 }
 
 void State::LoadAssets() {
-    // Pre load dos assets
+    bg = Sprite(BACKGROUND_SPRITE_PATH);
+    music = Music(BACKGROUND_MUSIC_PATH);
 }
 
 void State::Update(float dt) {
