@@ -1,7 +1,6 @@
 *.pyc
 .vscode
 .DS_Store
-*.o
 *.out
 CMakeFiles*
 CMakeCache.txt
