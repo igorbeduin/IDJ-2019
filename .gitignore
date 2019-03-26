@@ -1,2 +1,7 @@
 *.pyc
 .vscode
+.DS_Store
+*.out
+CMakeFiles*
+CMakeCache.txt
+cmake_install.cmake
