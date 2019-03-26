@@ -2,6 +2,7 @@
 .vscode
 .DS_Store
 *.o
+*.out
 CMakeFiles*
 CMakeCache.txt
 cmake_install.cmake
