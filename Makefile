@@ -1,5 +1,5 @@
 CC=g++
-EXECNAME = Play.out
+EXECNAME = play.out
 SRCDIR = src
 INCDIR = include
 BINDIR = bin
@@ -19,3 +19,4 @@ all: $(OBJ)
 
 clean:
 	rm -f $(OBJ) *~
+
