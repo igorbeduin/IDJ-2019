@@ -12,8 +12,8 @@ State::State() {
 }
 
 void State::LoadAssets() {
-    bg = Sprite(BACKGROUND_SPRITE_PATH);
-    music = Music(BACKGROUND_MUSIC_PATH);
+    bg.Open(BACKGROUND_SPRITE_PATH);
+    music.Open(BACKGROUND_MUSIC_PATH);
 }
 
 void State::Update(float dt) {
