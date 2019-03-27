@@ -8,4 +8,4 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 ## T1
 ### TODO List:
 * Resolver erros de inicialização com `try/catch`
-* Resolver compilação *cross-platform* 
+* Resolver compilação *cross-platform* (Linux: Done | OSX: Done | Windows: TODO)
