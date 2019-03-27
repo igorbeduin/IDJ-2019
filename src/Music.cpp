@@ -11,6 +11,13 @@ Music::Music(std::string file) {
     Open(file);
 }
 
+Music::~Music() {
+    if (music != nullptr) {
+        Stop(1500);
+        Mix_FreeMusic(music);
+    }
+}
+
 void Music::Play(int times) {
     if (music != nullptr) {
         Mix_PlayMusic(music, times);
@@ -38,12 +45,4 @@ bool Music::IsOpen() {
     } else {
         return false;
     }
-}
-
-Music::~Music() {
-    // # DESTRUCTOR sendo chamado logo depois da instanciacao da music
-    // if (music != nullptr) {
-    //     Stop(1500);
-    //     Mix_FreeMusic(music);
-    // }
 }

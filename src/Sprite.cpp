@@ -14,11 +14,9 @@ Sprite::Sprite(std::string file) {
 }
 
 Sprite::~Sprite(){
-    // # DESTRUCTOR sendo chamado logo depois da instanciacao do sprite
-    // std::cout << "destructor was called!" << std::endl;
-    // if (texture != nullptr) {
-    //     SDL_DestroyTexture(texture);
-    // };
+    if (texture != nullptr) {
+        SDL_DestroyTexture(texture);
+    };
 }
 
 void Sprite::Open(std::string file) {
