@@ -1,4 +1,3 @@
-#include <SDL2/SDL.h>
 #include "../include/State.hpp"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"

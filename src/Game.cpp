@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+
 #include "../include/Game.hpp"
 
 #define AUDIO_CHUNKSIZE 1024

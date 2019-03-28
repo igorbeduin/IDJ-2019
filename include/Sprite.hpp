@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
+#define INCLUDE_SDL
+#define INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
 
 class Sprite {
     public:
