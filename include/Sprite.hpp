@@ -1,11 +1,13 @@
 #pragma once
-
 #include <iostream>
+
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
-#include "SDL_include.h"
 
-class Sprite {
+#include "SDL_include.h"
+#include "../include/Component.hpp"
+
+class Sprite : public Component {
     public:
         Sprite();
         Sprite(std::string file);

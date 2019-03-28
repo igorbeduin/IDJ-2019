@@ -4,7 +4,7 @@
 #include "State.hpp"
 #include "SDL_include.h"
 
-class Game {
+    class Game {
     private:
         static Game* instance;
         Game(std::string title, int width, int height);
