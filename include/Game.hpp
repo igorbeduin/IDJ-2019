@@ -1,9 +1,11 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#define INCLUDE_SDL
+
+#include "SDL_include.h"
 #include "State.hpp"
 
-class Game {
+    class Game {
     private:
         static Game* instance;
         Game(std::string title, int width, int height);

@@ -1,8 +1,12 @@
 #pragma once
-
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+
+#define INCLUDE_SDL
+#define INCLUDE_SDL_MIXER
+
+#include "SDL_include.h"
+
+
 
 class Music {
     public:
