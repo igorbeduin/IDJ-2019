@@ -1,7 +1,8 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#define INCLUDE_SDL
 #include "State.hpp"
+#include "SDL_include.h"
 
 class Game {
     private:

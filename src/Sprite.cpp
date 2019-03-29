@@ -20,13 +20,10 @@ Sprite::~Sprite(){
 }
 
 void Sprite::Open(std::string file) {
-    // Singleton's instance for local use
-    Game& game = Game::GetInstance();
-
     if (texture != nullptr) {
        SDL_DestroyTexture(texture);
     };
-    texture = IMG_LoadTexture(game.GetRenderer(), file.c_str());
+    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
     if (texture == nullptr)
     {
         std::cout << "Falha ao carregar a textura" << std::endl;

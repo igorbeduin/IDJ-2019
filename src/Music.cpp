@@ -1,7 +1,5 @@
 #include <iostream>
 #include "../include/Music.hpp"
-#include <SDL2/SDL_mixer.h>
-
 
 Music::Music() {
     music = nullptr;
