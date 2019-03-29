@@ -1,8 +1,5 @@
 #pragma once
 #include <iostream>
-#define INCLUDE_SDL
-#define INCLUDE_SDL_MIXER
-#include "SDL_include.h"
 
 #define INCLUDE_SDL
 #define INCLUDE_SDL_MIXER
