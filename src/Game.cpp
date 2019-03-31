@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "../include/Game.hpp"
+#include "../include/Game.h"
 
 #define AUDIO_CHUNKSIZE 1024
 #define AUDIO_FREQUENCY MIX_DEFAULT_FREQUENCY

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../include/GameObject.hpp"
+#include "../include/GameObject.h"
 
 class Component {
     public:

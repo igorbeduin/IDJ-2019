@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Component.hpp"
-#include "Rect.hpp"
+#include "Component.h"
+#include "Rect.h"
 
 class GameObject {
     public:

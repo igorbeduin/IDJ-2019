@@ -1,4 +1,4 @@
-#include "../include/State.hpp"
+#include "../include/State.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
 #define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"

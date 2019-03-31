@@ -5,7 +5,7 @@
 #define INCLUDE_SDL_IMAGE
 
 #include "SDL_include.h"
-#include "../include/Component.hpp"
+#include "../include/Component.h"
 
 class Sprite : public Component {
     public:

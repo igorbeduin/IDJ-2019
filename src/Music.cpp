@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/Music.hpp"
+#include "../include/Music.h"
 
 Music::Music() {
     music = nullptr;
