@@ -1,33 +1,38 @@
 #include "../include/State.h"
+#include "../include/GameObject.h"
+#include "../include/Face.h"
+#include "../include/Vec2.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
 #define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
 #define BACKGROUND_MUSIC_LOOP_TIMES -1 // -1 for infinite loop
 
-State::State()
+#define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
+#define ENEMY_SOUND_PATH "assets/audio/boom.wav"
+
+State::State() : bg(Sprite(BACKGROUND_SPRITE_PATH)),
+                 music(BACKGROUND_MUSIC_PATH)
 {
     quitRequested = false;
-    LoadAssets();
     music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
 }
 
 void State::LoadAssets()
 {
-    bg.Open(BACKGROUND_SPRITE_PATH);
-    music.Open(BACKGROUND_MUSIC_PATH);
 }
 
 void State::Update(float dt)
 {
     Input();
-    for (int i = 0; i != objectArray.size(); i++)
+    for (int i = 0; i != int(objectArray.size()); i++)
     {
-        objectArray[i].Update(dt);
+        objectArray[i]->Update(dt);
     }
-    for (int i = 0; i != objectArray.size(); i++)
+    for (int i = 0; i != int(objectArray.size()); i++)
     {
-        if (objectArray[i].IsDead()) {
-            objectArray.erase(objectArray.begin()+i);
+        if (objectArray[i]->IsDead())
+        {
+            objectArray.erase(objectArray.begin() + i);
         }
     }
 
@@ -35,14 +40,14 @@ void State::Update(float dt)
     {
         quitRequested = true;
     }
-    // SDL_Delay(dt);
+    SDL_Delay(dt);
 }
 
 void State::Render()
 {
-    for (int i = 0; i != objectArray.size(); i++)
+    for (int i = 0; i != int(objectArray.size()); i++)
     {
-        objectArray[i].Render();
+        objectArray[i]->Render();
     }
 }
 
@@ -74,7 +79,7 @@ void State::Input()
         {
 
             // Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
-            for (int i = objectArray.size() - 1; i >= 0; --i)
+            for (int i = int(objectArray.size()) - 1; i >= 0; --i)
             {
                 // Obtem o ponteiro e casta pra Face.
                 GameObject *go = (GameObject *)objectArray[i].get();
@@ -116,16 +121,17 @@ void State::Input()
 
 void State::AddObject(int mouseX, int mouseY)
 {
-    GameObject* enemy;
-    // # Criar um componente Sprite
-    // img/penguinface.png
-    // Atribuir posições dos argumentos para a box do GO
-    // Compensar tamanho do Sprite para a imagem ficar centralizada
-
-    // # Criar um componente Sound
-    // audio/boom.wav
-    
-    // # Criar um Face
-
-    // objectArray.emplace_back(enemy);
+    GameObject enemy;
+    enemy.box.x = mouseX;
+    enemy.box.x = mouseY;
+    // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
+    Sprite *enemy_sprite = new Sprite(enemy, ENEMY_SPRITE_PATH);
+    enemy.AddComponent(enemy_sprite); 
+    // Criando o som do inimigo
+    Sound *enemy_sound = new Sound(enemy, ENEMY_SOUND_PATH);
+    enemy.AddComponent(enemy_sound);
+    // Criando a interface do inimigo
+    Face *enemy_interface = new Face(enemy);
+    enemy.AddComponent(enemy_interface);
+    objectArray.emplace_back(enemy);
 }
