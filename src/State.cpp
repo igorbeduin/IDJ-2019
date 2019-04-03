@@ -10,6 +10,8 @@
 #define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
 #define ENEMY_SOUND_PATH "assets/audio/boom.wav"
 
+#define PI 3.141592
+
 State::State() : bg(Sprite(BACKGROUND_SPRITE_PATH)),
                  music(BACKGROUND_MUSIC_PATH)
 {
@@ -34,11 +36,6 @@ void State::Update(float dt)
         {
             objectArray.erase(objectArray.begin() + i);
         }
-    }
-
-    if (SDL_QuitRequested() == true)
-    {
-        quitRequested = true;
     }
     SDL_Delay(dt);
 }
@@ -89,7 +86,7 @@ void State::Input()
                 // Esse código, assim como a classe Face, é provisório. Futuramente, para
                 // chamar funções de GameObjects, use objectArray[i]->função() direto.
 
-                if (go->box.Contains({(float)mouseX, (float)mouseY}))
+                if (go->box.Contains(float(mouseX), float(mouseY)))
                 {
                     Face *face = (Face *)go->GetComponent("Face");
                     if (nullptr != face)
@@ -112,7 +109,8 @@ void State::Input()
             // Se não, crie um objeto
             else
             {
-                Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+                // Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+                Vec2 objPos = Vec2(200, 0) + Vec2(mouseX, mouseY);
                 AddObject((int)objPos.x, (int)objPos.y);
             }
         }
