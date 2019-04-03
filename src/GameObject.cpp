@@ -1,66 +1,85 @@
 #include <iostream>
 #include "../include/Component.h"
 
-GameObject::GameObject() {
+GameObject::GameObject()
+{
     isDead = false;
 }
 
-GameObject::~GameObject() {
-    for (std::vector<Component*>::iterator it = components.end(); it != components.begin(); it--) {
-        delete it-1;
+GameObject::~GameObject()
+{
+    for (int i = components.size(); i >= 0; --i)
+    {
+        delete *(components.begin() + i);
+    }
+    components.clear();
+}
+
+void GameObject::Update(float dt)
+{
+    for (int i = components.size(); i >= 0; --i)
+    {
+        components[i]->Update(dt);
     }
 }
 
-void GameObject::Update(float dt) {
-    for (std::vector<Component *>::iterator it = components.end(); it != components.begin(); it--) {
-        *(it-1).Update(dt);
+void GameObject::Render()
+{
+    for (int i = components.size(); i >= 0; --i)
+    {
+        components[i]->Render();
     }
 }
 
-void GameObject::Render() {
-    for (std::vector<Component *>::iterator it = components.end(); it != components.begin(); it--) {
-        *(it - 1).Render();
-    }
-}
-
-bool GameObject::IsDead() {
+bool GameObject::IsDead()
+{
     return isDead;
 }
 
-void GameObject::RequestDelete() {
+void GameObject::RequestDelete()
+{
     isDead = true;
 }
 
-void GameObject::AddComponent(Component* cpt) {
-    component.push_back(cpt);
+void GameObject::AddComponent(Component *cpt)
+{
+    components.push_back(cpt);
 }
 
-void GameObject::RemoveComponent(Component* cpt) {
+void GameObject::RemoveComponent(Component *cpt)
+{
     bool cptFound = false;
 
-    for (std::vector<Component *>::iterator it = components.end(); it != components.begin(); it--) {
-        if (*it == cpt) {
-            component.erase(it-1);
+    for (int i = components.size(); i >= 0; i--)
+    {
+        if (components[i] == cpt)
+        {
+            delete components[i];
             cptFound = true;
         }
     }
 
-    if (cpt == false) {
+    if (cptFound == false)
+    {
         std::cout << "No component found!" << std::endl;
     }
 }
 
-Component& GameObject::GetComponent(Component *cpt) {
+Component *GameObject::GetComponent(std::string type)
+{
     bool cptFound = false;
 
-    for (std::vector<Component *>::iterator it = components.end(); it != components.begin(); it--) {
-        if (*it == cpt) {
+    for (int i = components.size(); i >= 0; i--)
+    {
+        if (components[i]->Is(type))
+        {
             cptFound = true;
-            return *it;
+            return components[i];
         }
     }
 
-    if (cpt == false) {
+    if (cptFound == false)
+    {
         std::cout << "No component found!" << std::endl;
         return nullptr;
     }
