@@ -1,4 +1,8 @@
 #pragma once
+
+// #ifndef MUSIC_H
+// #define MUSIC_H
+
 #include <iostream>
 
 #define INCLUDE_SDL

@@ -1,5 +1,8 @@
 #pragma once
 
+// #ifndef GAME_H
+// #define GAME_H
+
 #define INCLUDE_SDL
 #include "State.h"
 #include "SDL_include.h"

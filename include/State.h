@@ -1,5 +1,8 @@
 #pragma once
 
+// #ifndef STATE_H
+// #define STATE_H
+
 #include "Sprite.h"
 #include "Music.h"
 #include "GameObject.h"
