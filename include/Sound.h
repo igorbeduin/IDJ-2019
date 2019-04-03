@@ -7,6 +7,7 @@
 #include "SDL_include.h"
 #include <iostream>
 #include "GameObject.h"
+#include <memory>
 #include "Component.h"
 
 class Sound : public Component

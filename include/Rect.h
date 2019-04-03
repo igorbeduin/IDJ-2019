@@ -2,6 +2,7 @@
 
 // #ifndef RECT_H
 // #define RECT_H
+#include <memory>
 
 class Rect {
     public:

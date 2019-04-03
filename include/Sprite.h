@@ -3,13 +3,12 @@
 // #ifndef SPRITE_H
 // #define SPRITE_H
 
-#include <iostream>
-
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
 #include "SDL_include.h"
 #include "Component.h"
+#include <memory>
 
 class Sprite : public Component
 {

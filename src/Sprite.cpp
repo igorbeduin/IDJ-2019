@@ -5,7 +5,7 @@
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
 
-Sprite::Sprite(std::string file)
+Sprite::Sprite(std::string file) : Component::Component(associated)
 {
     Open(file);
 }

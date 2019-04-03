@@ -8,6 +8,7 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_MIXER
 
+#include <memory>
 #include "SDL_include.h"
 
 

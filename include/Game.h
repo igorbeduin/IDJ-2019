@@ -5,6 +5,7 @@
 
 #define INCLUDE_SDL
 #include "State.h"
+#include <memory>
 #include "SDL_include.h"
 
     class Game {

@@ -6,8 +6,8 @@
 #include "Sprite.h"
 #include "Music.h"
 #include "GameObject.h"
-
 #include <vector>
+#include <memory>
 
 class State
 {

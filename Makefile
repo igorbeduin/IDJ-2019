@@ -17,7 +17,7 @@ RM = rm -f
 LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter
+FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized
 
 # Paths
 INC_PATH = include

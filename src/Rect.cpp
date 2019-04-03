@@ -2,9 +2,9 @@
 
 bool Rect::Contains(float x, float y)
 {
-    if ((x >= this.x)&&(x <= this.x + w)) 
+    if ((x >= this->x)&&(x <= this->x + w)) 
     {
-        if ((y >= this.y) && (y <= this.y + h))
+        if ((y >= this->y) && (y <= this->y + h))
         {
             return true;
         }

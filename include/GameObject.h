@@ -3,8 +3,9 @@
 // #ifndef GAME_OBJECT_H
 // #define GAME_OBJECT_H
 
-#include <iostream>
+#include <memory>
 #include "Rect.h"
+#include <string>
 #include "Component.h"
 #include <vector>
 

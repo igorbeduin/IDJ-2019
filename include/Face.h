@@ -6,6 +6,7 @@
 #include <iostream>
 #include "GameObject.h"
 #include "Component.h"
+#include <memory>
 #include "Sound.h"
 
 class Face : public Component

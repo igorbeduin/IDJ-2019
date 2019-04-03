@@ -67,20 +67,14 @@ void GameObject::RemoveComponent(Component *cpt)
 
 Component *GameObject::GetComponent(std::string type)
 {
-    bool cptFound = false;
-
     for (int i = components.size(); i >= 0; i--)
     {
         if (components[i]->Is(type))
         {
-            cptFound = true;
             return components[i];
         }
     }
 
-    if (cptFound == false)
-    {
-        std::cout << "No component found!" << std::endl;
-        return nullptr;
-    }
+    std::cout << "No component found!" << std::endl;
+    return nullptr;
 }
