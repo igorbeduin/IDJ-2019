@@ -11,9 +11,7 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 
 ## TRABALHOS
 ### T1 - DONE
-### T2 - in progress
-**TODO List:**
-* Implementar `GetRotated` do `Vec2`
+### T2 - DONE
 
 ## Global TODO List:
 * Resolver erros de inicialização com `try/catch`
