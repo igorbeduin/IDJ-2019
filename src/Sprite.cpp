@@ -5,11 +5,6 @@
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
 
-Sprite::Sprite(std::string file) : Component::Component(associated)
-{
-    Open(file);
-}
-
 Sprite::Sprite(GameObject &associated) : Component::Component(associated)
 {
     texture = nullptr;
@@ -58,7 +53,7 @@ void Sprite::SetClip(int x, int y, int w, int h)
 void Sprite::Render()
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {int(associated.box.x), int(associated.box.y), int(associated.box.w), int(associated.box.h)};
+    SDL_Rect dstLoc = {int(associated.box.x), int(associated.box.y), clipRect.w, clipRect.h};
 
     RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
     if (RENDER_ERROR != 0)

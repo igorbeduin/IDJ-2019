@@ -7,5 +7,5 @@
 class Rect {
     public:
       bool Contains(float x, float y);
-      float x, y, w, h;
+      float x = 0, y = 0, w = 0, h = 0;
 };

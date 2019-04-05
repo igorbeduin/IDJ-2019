@@ -3,8 +3,9 @@
 // #ifndef COMPONENT_H
 // #define COMPONENT_H
 
-#include "GameObject.h"
 #include <string>
+
+#include "GameObject.h"
 
 class GameObject;
 

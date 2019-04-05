@@ -4,19 +4,34 @@
 #include "../include/Vec2.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
-#define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
-#define BACKGROUND_MUSIC_LOOP_TIMES -1 // -1 for infinite loop
+#define BACKGROUND_SOUND_PATH "assets/audio/stageState.ogg"
+#define BACKGROUND_SOUND_LOOP_TIMES -1 // -1 for infinite loop
 
 #define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
 #define ENEMY_SOUND_PATH "assets/audio/boom.wav"
 
 #define PI 3.141592
 
-State::State() : bg(Sprite(BACKGROUND_SPRITE_PATH)),
-                 music(BACKGROUND_MUSIC_PATH)
-{
+State::State() : bg_sprite(new Sprite(background, BACKGROUND_SPRITE_PATH)),
+                 bg_sound(new Sound(background, BACKGROUND_SOUND_PATH))
+{   
+    background.AddComponent(bg_sprite);
+    background.AddComponent(bg_sound);
+    objectArray.emplace_back(&background);
+    LoadAssets();
     quitRequested = false;
-    music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
+    Sound *sound = (Sound *)background.GetComponent("Sound");
+    sound->Play();
+}
+
+State::~State()
+{
+    for (int i = objectArray.size() - 1; i >= 0; --i)
+    {
+        // Garantia de "delete" do unique_ptr
+        objectArray[i].reset(nullptr);
+        objectArray.erase(objectArray.begin() + i);
+    }
 }
 
 void State::LoadAssets()
@@ -24,26 +39,29 @@ void State::LoadAssets()
 }
 
 void State::Update(float dt)
-{
+{   
     Input();
-    for (int i = 0; i != int(objectArray.size()); i++)
+    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
     {
         objectArray[i]->Update(dt);
     }
-    for (int i = 0; i != int(objectArray.size()); i++)
+    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
     {
         if (objectArray[i]->IsDead())
         {
+            // Garantia de "delete" do unique_ptr
+            objectArray[i].reset(nullptr);
             objectArray.erase(objectArray.begin() + i);
         }
     }
+
     SDL_Delay(dt);
 }
 
 void State::Render()
-{
-    for (int i = 0; i != int(objectArray.size()); i++)
-    {
+{   
+    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
+    {   
         objectArray[i]->Render();
     }
 }
@@ -74,7 +92,6 @@ void State::Input()
         // Se o evento for clique...
         if (event.type == SDL_MOUSEBUTTONDOWN)
         {
-
             // Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
             for (int i = int(objectArray.size()) - 1; i >= 0; --i)
             {
@@ -109,8 +126,7 @@ void State::Input()
             // Se não, crie um objeto
             else
             {
-                // Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
-                Vec2 objPos = Vec2(200, 0) + Vec2(mouseX, mouseY);
+                Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
                 AddObject((int)objPos.x, (int)objPos.y);
             }
         }
@@ -118,18 +134,19 @@ void State::Input()
 }
 
 void State::AddObject(int mouseX, int mouseY)
-{
+{   
     GameObject enemy;
     enemy.box.x = mouseX;
-    enemy.box.x = mouseY;
+    enemy.box.y = mouseY;
     // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
     Sprite *enemy_sprite = new Sprite(enemy, ENEMY_SPRITE_PATH);
-    enemy.AddComponent(enemy_sprite); 
+    enemy.AddComponent(enemy_sprite);
     // Criando o som do inimigo
     Sound *enemy_sound = new Sound(enemy, ENEMY_SOUND_PATH);
     enemy.AddComponent(enemy_sound);
     // Criando a interface do inimigo
     Face *enemy_interface = new Face(enemy);
     enemy.AddComponent(enemy_interface);
-    objectArray.emplace_back(enemy);
+    // Adicionando o inimigo no objectArray
+    objectArray.emplace_back(&enemy);
 }

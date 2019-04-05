@@ -8,7 +8,6 @@
 
 #include "SDL_include.h"
 #include "Component.h"
-#include <memory>
 
 class Sprite : public Component
 {

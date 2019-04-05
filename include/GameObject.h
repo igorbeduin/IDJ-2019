@@ -1,13 +1,11 @@
 #pragma once
 
-// #ifndef GAME_OBJECT_H
-// #define GAME_OBJECT_H
-
-#include <memory>
-#include "Rect.h"
-#include <string>
-#include "Component.h"
+#include <iostream>
 #include <vector>
+#include <string>
+
+#include "Rect.h"
+#include "Component.h"
 
 class Component;
 
@@ -20,11 +18,10 @@ class GameObject
     void Render();
     bool IsDead();
     void RequestDelete();
-    void AddComponent(Component *cpt);
-    void RemoveComponent(Component *cpt);
-    Component *GetComponent(std::string type);
+    void AddComponent(Component * cpt);
+    void RemoveComponent(Component * cpt);
+    Component * GetComponent(std::string type);
     Rect box;
-
   private:
     std::vector<Component *> components;
     bool isDead;

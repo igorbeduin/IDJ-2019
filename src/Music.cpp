@@ -1,15 +1,17 @@
 #include <iostream>
 #include "../include/Music.h"
 
-Music::Music() {
+Music::Music(){
     music = nullptr;
 }
 
-Music::Music(std::string file) {
+Music::Music(std::string file)
+{
     Open(file);
 }
 
-Music::~Music() {
+Music::~Music() 
+{
     if (music != nullptr) {
         Stop(1500);
         Mix_FreeMusic(music);

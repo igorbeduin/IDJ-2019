@@ -11,5 +11,6 @@ Vec2 Vec2::operator+(const Vec2 &other) const
 
 Vec2 Vec2::GetRotated(float theta)
 {
+    // Logica de rotação
     return Vec2(x, y);
 }

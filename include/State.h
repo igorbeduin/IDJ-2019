@@ -1,13 +1,11 @@
 #pragma once
 
-// #ifndef STATE_H
-// #define STATE_H
-
-#include "Sprite.h"
-#include "Music.h"
-#include "GameObject.h"
 #include <vector>
 #include <memory>
+
+#include "Sprite.h"
+#include "Sound.h"
+#include "GameObject.h"
 
 class State
 {
@@ -20,8 +18,9 @@ class State
     void Render();
 
   private:
-    Sprite bg;
-    Music music;
+    GameObject background;
+    Sprite *bg_sprite;
+    Sound *bg_sound;
     bool quitRequested;
     void Input();
     void AddObject(int mouseX, int mouseY);

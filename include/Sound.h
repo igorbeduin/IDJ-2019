@@ -1,8 +1,5 @@
 #pragma once
 
-// #ifndef SOUND_H
-// #define SOUND_H
-
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 #include <iostream>
