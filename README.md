@@ -13,9 +13,7 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 ### T1 - DONE
 ### T2 - in progress
 **TODO List:**
-* Implementar _overload_ de operadores para `Vec2` e `Rec`
-* Consertar `State::Input()`
-
+* Implementar `GetRotated` do `Vec2`
 
 ## Global TODO List:
 * Resolver erros de inicialização com `try/catch`
