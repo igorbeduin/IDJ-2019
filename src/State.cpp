@@ -138,19 +138,18 @@ void State::Input()
 
 void State::AddObject(int mouseX, int mouseY)
 {   
-    GameObject enemy;
-    enemy.box.x = mouseX;
-    enemy.box.y = mouseY;
+    GameObject *enemy = new GameObject();
+    enemy->box.x = mouseX;
+    enemy->box.y = mouseY;
     // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
-    Sprite *enemy_sprite = new Sprite(enemy, ENEMY_SPRITE_PATH);
-    enemy.AddComponent((Component *)enemy_sprite);
+    Sprite *enemy_sprite = new Sprite(*enemy, ENEMY_SPRITE_PATH);
+    enemy->AddComponent(enemy_sprite);
     // Criando o som do inimigo
-    Sound *enemy_sound = new Sound(enemy, ENEMY_SOUND_PATH);
-    enemy.AddComponent(enemy_sound);
+    Sound *enemy_sound = new Sound(*enemy, ENEMY_SOUND_PATH);
+    enemy->AddComponent(enemy_sound);
     // Criando a interface do inimigo
-    Face *enemy_interface = new Face(enemy);
-    enemy.AddComponent(enemy_interface);
-
+    Face *enemy_interface = new Face(*enemy);
+    enemy->AddComponent(enemy_interface);
     // Adicionando o inimigo no objectArray
-    objectArray.emplace_back(&enemy);
+    objectArray.emplace_back(enemy);
 }
