@@ -18,10 +18,10 @@ Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
 Sprite::~Sprite()
 {   
     std::cout << "Destructor do Sprite chamado" << std::endl;
-    // if (texture != nullptr)
-    // {
-    //     SDL_DestroyTexture(texture);
-    // };
+    if (texture != nullptr)
+    {
+        SDL_DestroyTexture(texture);
+    };
 }
 
 void Sprite::Open(std::string file)
@@ -37,7 +37,6 @@ void Sprite::Open(std::string file)
     }
     else
     {
-        std::cout << "------------------------" << std::endl;
         std::cout << "Textura carregada com sucesso!" << std::endl;
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     }
@@ -50,12 +49,17 @@ void Sprite::SetClip(int x, int y, int w, int h)
     clipRect.y = y;
     clipRect.w = w;
     clipRect.h = h;
+
+    associated.box.w = w;
+    associated.box.h = h;
 }
 
 void Sprite::Render()
 {
     int RENDER_ERROR;
     SDL_Rect dstLoc = {int(associated.box.x), int(associated.box.y), clipRect.w, clipRect.h};
+    // std::cout << "x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
+
 
     RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
     if (RENDER_ERROR != 0)

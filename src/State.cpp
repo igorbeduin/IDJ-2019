@@ -41,17 +41,15 @@ void State::LoadAssets()
 void State::Update(float dt)
 {   
     Input();
-    std::cout << "objectArray.size(): " << objectArray.size() << std::endl;
     for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
     {   
-        std::cout << "index: " << i << std::endl;
         GameObject *go = (GameObject *)objectArray[i].get();
         go->Update(dt);
     }
     for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
     {
         if (objectArray[i]->IsDead())
-        {
+        {   
             // Garantia de "delete" do unique_ptr
             objectArray[i].reset(nullptr);
             objectArray.erase(objectArray.begin() + i);
@@ -63,7 +61,7 @@ void State::Update(float dt)
 
 void State::Render()
 {   
-    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
+    for (int i = 0; i != (int)objectArray.size(); i++)
     {   
         objectArray[i]->Render();
     }
@@ -106,7 +104,7 @@ void State::Input()
                 // chamar funções de GameObjects, use objectArray[i]->função() direto.
 
                 if (go->box.Contains(float(mouseX), float(mouseY)))
-                {
+                {   
                     Face *face = (Face *)go->GetComponent("Face");
                     if (nullptr != face)
                     {
@@ -139,8 +137,6 @@ void State::Input()
 void State::AddObject(int mouseX, int mouseY)
 {   
     GameObject *enemy = new GameObject();
-    enemy->box.x = mouseX;
-    enemy->box.y = mouseY;
     // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
     Sprite *enemy_sprite = new Sprite(*enemy, ENEMY_SPRITE_PATH);
     enemy->AddComponent(enemy_sprite);
@@ -150,6 +146,10 @@ void State::AddObject(int mouseX, int mouseY)
     // Criando a interface do inimigo
     Face *enemy_interface = new Face(*enemy);
     enemy->AddComponent(enemy_interface);
+
+    enemy->box.x = mouseX - (enemy_sprite->GetWidth())/2;
+    enemy->box.y = mouseY - (enemy_sprite->GetHeight())/2;
+
     // Adicionando o inimigo no objectArray
     objectArray.emplace_back(enemy);
 }

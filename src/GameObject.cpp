@@ -17,7 +17,6 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {   
-    std::cout << "components.size(): " << components.size() << std::endl;
     for (int i = components.size() - 1; i >= 0; --i)
     {
         components[i]->Update(dt);
@@ -27,7 +26,7 @@ void GameObject::Update(float dt)
 void GameObject::Render()
 {   
     for (int i = components.size() -1; i >= 0; --i)
-    {
+    {   
         components[i]->Render();
     }
 }
@@ -78,8 +77,4 @@ Component* GameObject::GetComponent(std::string type)
 
     std::cout << "No component found!" << std::endl;
     return nullptr;
-}
-
-int GameObject::ComponentsSize() {
-    return components.size();
 }

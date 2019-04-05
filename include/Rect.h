@@ -3,6 +3,7 @@
 // #ifndef RECT_H
 // #define RECT_H
 #include <memory>
+#include <iostream>
 
 class Rect {
     public:

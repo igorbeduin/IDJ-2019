@@ -1,8 +1,5 @@
 #pragma once
 
-// #ifndef VEC2_H
-// #define VEC2_H
-
 #include <memory>
 
 class Vec2

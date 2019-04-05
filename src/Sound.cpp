@@ -13,11 +13,11 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated)
 Sound::~Sound()
 {
     std::cout << "Destructor do Sound chamado" << std::endl;
-    // if (chunk != NULL)
-    // {
-    //     Stop();
-    //     Mix_FreeChunk(chunk);
-    // }
+    if (chunk != NULL)
+    {
+        Stop();
+        Mix_FreeChunk(chunk);
+    }
 }
 
 void Sound::Play(int times)

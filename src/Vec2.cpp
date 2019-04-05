@@ -1,4 +1,5 @@
 #include "../include/Vec2.h"
+#include <math.h>
 
 Vec2::Vec2(int x, int y) : x(x),
                            y(y)
@@ -10,7 +11,9 @@ Vec2 Vec2::operator+(const Vec2 &other) const
 }
 
 Vec2 Vec2::GetRotated(float theta)
-{
-    // Logica de rotação
-    return Vec2(x, y);
+{   
+    int x_, y_;
+    x_ = (x * cos(theta)) - (y * sin(theta));
+    y_ = (y * cos(theta)) + (x * sin(theta));
+    return Vec2(x_, y_);
 }
