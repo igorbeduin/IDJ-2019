@@ -17,7 +17,7 @@ RM = rm -f
 LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter
+FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized -lm
 
 # Paths
 INC_PATH = include
@@ -77,7 +77,7 @@ endif
 # ===========================================================
 
 # Linkagem a partir dos objetos (.o)
-all: $(OBJ_FILES)
+all: clean $(OBJ_FILES)
 	$(COMPILER) $(OBJ_FILES) $(LIBS)  $(FLAGS) -o $(EXECNAME)
 
 # Geração dos objetos a partir dos arquivos src (.cpp)

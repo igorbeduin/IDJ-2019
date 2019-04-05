@@ -11,7 +11,9 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 
 ## TRABALHOS
 ### T1 - DONE
-### T2 - in progress
+### T2 - DONE
 
-## TODO List:
+## Global TODO List:
 * Resolver erros de inicialização com `try/catch`
+* Adicionar os arquivos _.o_ na lista no _.gitignore_
+* Adicionar uma rotina de verificação/criação do diretorio _object_ no _Makefile_
