@@ -1,6 +1,7 @@
 #include "../include/GameObject.h"
 
-GameObject::GameObject() : isDead(false)
+GameObject::GameObject() : box(0, 0, 0, 0),
+                           isDead(false)
 {
 }
 
@@ -16,6 +17,7 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {   
+    std::cout << "components.size(): " << components.size() << std::endl;
     for (int i = components.size() - 1; i >= 0; --i)
     {
         components[i]->Update(dt);
@@ -76,4 +78,8 @@ Component* GameObject::GetComponent(std::string type)
 
     std::cout << "No component found!" << std::endl;
     return nullptr;
+}
+
+int GameObject::ComponentsSize() {
+    return components.size();
 }

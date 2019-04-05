@@ -16,11 +16,12 @@ Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
 }
 
 Sprite::~Sprite()
-{
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    };
+{   
+    std::cout << "Destructor do Sprite chamado" << std::endl;
+    // if (texture != nullptr)
+    // {
+    //     SDL_DestroyTexture(texture);
+    // };
 }
 
 void Sprite::Open(std::string file)
@@ -36,6 +37,7 @@ void Sprite::Open(std::string file)
     }
     else
     {
+        std::cout << "------------------------" << std::endl;
         std::cout << "Textura carregada com sucesso!" << std::endl;
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     }

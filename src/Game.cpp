@@ -85,7 +85,6 @@ Game::Game(std::string title, int width, int height)
     } 
     // End of initialization routine
     state = new State();
-    std::cout << "State criado com sucesso!" << std::endl;
 }
 
 Game::~Game()

@@ -41,9 +41,12 @@ void State::LoadAssets()
 void State::Update(float dt)
 {   
     Input();
+    std::cout << "objectArray.size(): " << objectArray.size() << std::endl;
     for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
-    {
-        objectArray[i]->Update(dt);
+    {   
+        std::cout << "index: " << i << std::endl;
+        GameObject *go = (GameObject *)objectArray[i].get();
+        go->Update(dt);
     }
     for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
     {
@@ -82,7 +85,6 @@ void State::Input()
     // SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
     while (SDL_PollEvent(&event))
     {
-
         // Se o evento for quit, setar a flag para terminação
         if (event.type == SDL_QUIT)
         {
@@ -127,6 +129,7 @@ void State::Input()
             else
             {
                 Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+                std::cout << "Detectou teclado" << std::endl;
                 AddObject((int)objPos.x, (int)objPos.y);
             }
         }
@@ -140,13 +143,14 @@ void State::AddObject(int mouseX, int mouseY)
     enemy.box.y = mouseY;
     // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
     Sprite *enemy_sprite = new Sprite(enemy, ENEMY_SPRITE_PATH);
-    enemy.AddComponent(enemy_sprite);
+    enemy.AddComponent((Component *)enemy_sprite);
     // Criando o som do inimigo
     Sound *enemy_sound = new Sound(enemy, ENEMY_SOUND_PATH);
     enemy.AddComponent(enemy_sound);
     // Criando a interface do inimigo
     Face *enemy_interface = new Face(enemy);
     enemy.AddComponent(enemy_interface);
+
     // Adicionando o inimigo no objectArray
     objectArray.emplace_back(&enemy);
 }
