@@ -110,9 +110,11 @@ void State::Input()
                 {   
                     Face *face = (Face *)go->GetComponent("Face");
                     if (nullptr != face)
-                    {
+                    {   
+                        int damage = std::rand() % 10 + 10;
+                        std::cout << "Damage applied: " << damage << std::endl;
                         // Aplica dano
-                        face->Damage(std::rand() % 10 + 10);
+                        face->Damage(damage);
                         // Sai do loop (só queremos acertar um)
                         break;
                     }
@@ -130,7 +132,6 @@ void State::Input()
             else
             {
                 Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
-                std::cout << "Detectou teclado" << std::endl;
                 AddObject((int)objPos.x, (int)objPos.y);
             }
         }
@@ -140,7 +141,7 @@ void State::Input()
 void State::AddObject(int mouseX, int mouseY)
 {   
     GameObject *enemy = new GameObject();
-    // Criando o sprite do inimigo | Compensar tamanho do Sprite para a imagem ficar centralizada
+    // Criando o sprite do inimigo
     Sprite *enemy_sprite = new Sprite(*enemy, ENEMY_SPRITE_PATH);
     enemy->AddComponent(enemy_sprite);
     // Criando o som do inimigo

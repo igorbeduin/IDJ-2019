@@ -74,7 +74,5 @@ Component* GameObject::GetComponent(std::string type)
             return components[i];
         }
     }
-
-    std::cout << "No component found!" << std::endl;
     return nullptr;
 }
