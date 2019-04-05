@@ -12,9 +12,9 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated)
 
 Sound::~Sound()
 {
-    std::cout << "Destructor do Sound chamado" << std::endl;
+    SDL_Delay(2000);
     if (chunk != NULL)
-    {
+    {   
         Stop();
         Mix_FreeChunk(chunk);
     }
@@ -45,10 +45,7 @@ void Sound::Open(std::string file)
     {
         std::cout << "Falha ao abrir o som!" << std::endl;
     } 
-    else {
-        std::cout << "Load do som feito com sucesso!" << std::endl;
-    }
-    
+  
 }
 
 void Sound::Update(float dt)

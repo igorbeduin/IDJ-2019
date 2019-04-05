@@ -1,10 +1,13 @@
 #pragma once
 
+#define INCLUDE_SDL
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
+
 #include <iostream>
-#include "GameObject.h"
 #include <memory>
+
+#include "GameObject.h"
 #include "Component.h"
 
 class Sound : public Component

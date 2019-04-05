@@ -50,6 +50,9 @@ void State::Update(float dt)
     {
         if (objectArray[i]->IsDead())
         {   
+            GameObject *go = (GameObject *)objectArray[i].get();
+            Sound *sound = (Sound *)go->GetComponent("Sound");
+            sound->Play();
             // Garantia de "delete" do unique_ptr
             objectArray[i].reset(nullptr);
             objectArray.erase(objectArray.begin() + i);
