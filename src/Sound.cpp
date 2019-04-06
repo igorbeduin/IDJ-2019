@@ -12,7 +12,6 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated)
 
 Sound::~Sound()
 {
-    SDL_Delay(2000);
     if (chunk != NULL)
     {   
         Stop();

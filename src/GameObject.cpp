@@ -7,11 +7,7 @@ GameObject::GameObject() : box(0, 0, 0, 0),
 
 GameObject::~GameObject()
 {
-    for (int i = components.size() - 1; i >= 0; --i)
-    {   
-        std::vector<Component *>::iterator it = components.begin() + i;
-        delete *it;
-    }
+
     components.clear();
 }
 
@@ -41,31 +37,23 @@ void GameObject::RequestDelete()
     isDead = true;
 }
 
-void GameObject::AddComponent(Component* cpt)
+void GameObject::AddComponent(std::shared_ptr<Component> cpt)
 {
-    components.push_back(cpt);
+    components.emplace_back(cpt);
 }
 
-void GameObject::RemoveComponent(Component* cpt)
+void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
 {
-    bool cptFound = false;
-
     for (int i = components.size() - 1; i >= 0; i--)
-    {
+    {   
         if (components[i] == cpt)
         {
-            delete components[i];
-            cptFound = true;
+            components.erase(components.begin()+i);
         }
-    }
-
-    if (cptFound == false)
-    {
-        std::cout << "No component found!" << std::endl;
     }
 }
 
-Component* GameObject::GetComponent(std::string type)
+std::shared_ptr<Component> GameObject::GetComponent(std::string type)
 {
     for (int i = components.size() - 1; i >= 0; i--)
     {

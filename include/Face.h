@@ -1,12 +1,12 @@
 #pragma once
 
-// #ifndef FACE_H
-// #define FACE_H
+#define INCLUDE_SDL
 
 #include <iostream>
+#include <memory>
+
 #include "GameObject.h"
 #include "Component.h"
-#include <memory>
 #include "Sound.h"
 
 class Face : public Component

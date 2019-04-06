@@ -14,24 +14,19 @@
 
 State::State() : bg_sprite(new Sprite(background, BACKGROUND_SPRITE_PATH)),
                  bg_sound(new Sound(background, BACKGROUND_SOUND_PATH))
-{   
-    background.AddComponent(bg_sprite);
-    background.AddComponent(bg_sound);
-    objectArray.emplace_back(&background);
+{
+    background.AddComponent((std::shared_ptr<Sprite>)bg_sprite);
+    background.AddComponent((std::shared_ptr<Sound>)bg_sound);
+    objectArray.emplace_back((std::shared_ptr<GameObject>)&background);
     LoadAssets();
     quitRequested = false;
-    Sound *sound = (Sound *)background.GetComponent("Sound");
+    Sound *sound = (Sound *)background.GetComponent("Sound").get();
     sound->Play();
 }
 
 State::~State()
 {
-    for (int i = objectArray.size() - 1; i >= 0; --i)
-    {
-        // Garantia de "delete" do unique_ptr
-        objectArray[i].reset(nullptr);
-        objectArray.erase(objectArray.begin() + i);
-    }
+    objectArray.clear();
 }
 
 void State::LoadAssets()
@@ -39,22 +34,16 @@ void State::LoadAssets()
 }
 
 void State::Update(float dt)
-{   
+{
     Input();
-    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
-    {   
-        GameObject *go = (GameObject *)objectArray[i].get();
-        go->Update(dt);
+    for (int i = (int)objectArray.size() - 1; i >= 0; --i)
+    {
+        objectArray[i]->Update(dt);
     }
-    for (int i = (int)objectArray.size() - 1; i >=0 ; --i)
+    for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         if (objectArray[i]->IsDead())
-        {   
-            GameObject *go = (GameObject *)objectArray[i].get();
-            Sound *sound = (Sound *)go->GetComponent("Sound");
-            sound->Play();
-            // Garantia de "delete" do unique_ptr
-            objectArray[i].reset(nullptr);
+        {
             objectArray.erase(objectArray.begin() + i);
         }
     }
@@ -63,9 +52,9 @@ void State::Update(float dt)
 }
 
 void State::Render()
-{   
+{
     for (int i = 0; i != (int)objectArray.size(); i++)
-    {   
+    {
         objectArray[i]->Render();
     }
 }
@@ -101,16 +90,14 @@ void State::Input()
                 // Obtem o ponteiro e casta pra Face.
                 GameObject *go = (GameObject *)objectArray[i].get();
                 // Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
-                // O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
-                // ao usar get(), violamos esse princípio e estamos menos seguros.
                 // Esse código, assim como a classe Face, é provisório. Futuramente, para
                 // chamar funções de GameObjects, use objectArray[i]->função() direto.
 
                 if (go->box.Contains(float(mouseX), float(mouseY)))
-                {   
-                    Face *face = (Face *)go->GetComponent("Face");
+                {
+                    Face *face = (Face *)go->GetComponent("Face").get();
                     if (nullptr != face)
-                    {   
+                    {
                         int damage = std::rand() % 10 + 10;
                         std::cout << "Damage applied: " << damage << std::endl;
                         // Aplica dano
@@ -139,20 +126,20 @@ void State::Input()
 }
 
 void State::AddObject(int mouseX, int mouseY)
-{   
+{
     GameObject *enemy = new GameObject();
     // Criando o sprite do inimigo
     Sprite *enemy_sprite = new Sprite(*enemy, ENEMY_SPRITE_PATH);
-    enemy->AddComponent(enemy_sprite);
+    enemy->AddComponent((std::shared_ptr<Sprite>)enemy_sprite);
     // Criando o som do inimigo
     Sound *enemy_sound = new Sound(*enemy, ENEMY_SOUND_PATH);
-    enemy->AddComponent(enemy_sound);
+    enemy->AddComponent((std::shared_ptr<Sound>)enemy_sound);
     // Criando a interface do inimigo
     Face *enemy_interface = new Face(*enemy);
-    enemy->AddComponent(enemy_interface);
+    enemy->AddComponent((std::shared_ptr<Face>)enemy_interface);
 
-    enemy->box.x = mouseX - (enemy_sprite->GetWidth())/2;
-    enemy->box.y = mouseY - (enemy_sprite->GetHeight())/2;
+    enemy->box.x = mouseX - (enemy_sprite->GetWidth()) / 2;
+    enemy->box.y = mouseY - (enemy_sprite->GetHeight()) / 2;
 
     // Adicionando o inimigo no objectArray
     objectArray.emplace_back(enemy);
