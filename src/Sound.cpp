@@ -13,7 +13,8 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated)
 Sound::~Sound()
 {
     if (chunk != NULL)
-    {   
+    {
+        while (Mix_Playing(channel));
         Stop();
         Mix_FreeChunk(chunk);
     }
