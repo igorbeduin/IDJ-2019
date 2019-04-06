@@ -15,8 +15,6 @@ void Face::Damage(int damage)
         if (sound != nullptr)
         {
         sound->Play();
-        // Delay adicionado para dar tempo de tocar a música
-        SDL_Delay(2000);
         }
     }
 }
