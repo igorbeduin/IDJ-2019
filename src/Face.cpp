@@ -11,10 +11,12 @@ void Face::Damage(int damage)
     if (hitpoints <= 0)
     {
         associated.RequestDelete();
-        Sound* sound = (Sound *)associated.GetComponent("Sound");
+        Sound* sound = (Sound *)associated.GetComponent("Sound").get();
         if (sound != nullptr)
         {
         sound->Play();
+        // Delay adicionado para dar tempo de tocar a música
+        SDL_Delay(2000);
         }
     }
 }
