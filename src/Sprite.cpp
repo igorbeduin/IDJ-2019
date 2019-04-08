@@ -17,19 +17,11 @@ Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
 
 Sprite::~Sprite()
 {   
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    };
 }
 
 void Sprite::Open(std::string file)
 {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    };
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    texture = Resources::GetImage(file.c_str());
     if (texture == nullptr)
     {
         std::cout << "Falha ao carregar a textura" << std::endl;
