@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "Sound.h"
 #include "GameObject.h"
+#include "TileMap.h"
 
 class State
 {
@@ -21,6 +22,7 @@ class State
     GameObject background;
     Sprite *bg_sprite;
     Sound *bg_sound;
+    TileMap *bg_tileMap; 
     bool quitRequested;
     void Input();
     void AddObject(int mouseX, int mouseY);

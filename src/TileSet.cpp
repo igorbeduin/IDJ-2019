@@ -4,15 +4,23 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file) : tileWidth(ti
                                                                     tileHeight(tileHeight)
 {
     tileSet.Open(file.c_str());
-    // TODO: Descobrir pelo tamanho do sprite o número de linhas e colunas
+    columns = tileSet.GetWidth()/tileWidth;
+    rows = tileSet.GetHeight()/tileHeight;
 }
 
 void TileSet::RenderTile(unsigned index, float x, float y)
-{
-    // TODO: verificar se o índice é valido. 
-    // Se sim, setar o clip recortando e renderizando na posição desejada
-
-    // TODO: Fazer overload de operador de Sprite::Render
+{   
+    // Número de tiles é o número de colunas * o número de linhas
+    int tilesNumber = columns * rows;
+    if ((0 < index) && (index < (tilesNumber - 1)))
+    {
+        // O resto da divisão do índice pelo número de colunas
+        int clipOrgX = index % columns;
+        // O quociente da divisão do índice pelo número de colunas
+        int clipOrgY = index / columns; 
+        tileSet.SetClip(clipOrgX, clipOrgY, tileSet.GetWidth(), tileSet.GetHeight());
+        tileSet.Render((int)x, (int)y);
+    }
 }
 
 int GetTileWidth()
