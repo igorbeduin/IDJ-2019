@@ -7,13 +7,26 @@ TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : C
 }
 
 void TileMap::Load(std::string file)
-{
-    /*
-    # TODO: 
-    Carregar um arquivo de mapa, no formato dado pelo arquivo map/tileMap.txt.
-    Os primeiros três números são as dimensões do mapa: largura, altura e profundidade.
-    Em seguida, vêm os tiles, que devem ser carregados em ordem para a matriz de tiles.
+{   
+    int width, height, depth;
+    char separator;
+    std::ifstream file_object;
+    file_object.open(file.c_str());
+    // Garante que o arquivo foi aberto corretamente
+    if (file) 
+    {
+        // Pega os três primeiros valores do arquivo tileMap.txt
+        file_object >> width >> separator >> height >> separator >> depth;
+        std::cout << "tileMap width: " << width << std::endl  << "tileMap height: " << height << std::endl << "tileMap depth: " << width << std::endl;
+    }
 
+    if (file)
+    {
+        // TODO: Rotina para carregar os tiles em ordem correta na matriz >> SUBTRAIR 1<<
+
+    }
+
+    /*
     Note que, para o arquivo que usamos na disciplina, tiles vazios são representados por 0,
     que é o padrão do editor de tilemaps open spurce TileD.
     Para o nosso código, é mais conveniente que eles sejam representados por - 1,
