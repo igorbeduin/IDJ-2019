@@ -9,14 +9,17 @@
 
 #define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
 #define ENEMY_SOUND_PATH "assets/audio/boom.wav"
-
 #define PI 3.141592
 
+#define BACKGROUND_TILEMAP_PATH "assets/audio/boom.wav"
+
 State::State() : bg_sprite(new Sprite(background, BACKGROUND_SPRITE_PATH)),
-                 bg_sound(new Sound(background, BACKGROUND_SOUND_PATH))
+                 bg_sound(new Sound(background, BACKGROUND_SOUND_PATH)),
+                 bg_tileMap(new TileMap(background, BACKGROUND_TILEMAP_PATH))
 {
     background.AddComponent((std::shared_ptr<Sprite>)bg_sprite);
     background.AddComponent((std::shared_ptr<Sound>)bg_sound);
+    background.AddComponent((std::shared_ptr<TileMap>)bg_tileMap);
     objectArray.emplace_back((std::shared_ptr<GameObject>)&background);
     LoadAssets();
     quitRequested = false;
