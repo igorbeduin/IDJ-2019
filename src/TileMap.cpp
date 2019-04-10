@@ -6,11 +6,6 @@ TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : C
     TileMap::Load(file.c_str());
 }
 
-TileMap::TileMap(GameObject &associated, std::string file) : Component::Component(associated)
-{
-    TileMap::Load(file.c_str());
-}
-
 void TileMap::Load(std::string file)
 {   
     int width, height, depth;
