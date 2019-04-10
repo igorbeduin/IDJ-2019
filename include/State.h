@@ -7,6 +7,7 @@
 #include "Sound.h"
 #include "GameObject.h"
 #include "TileMap.h"
+#include "TileSet.h"
 
 class State
 {
@@ -20,6 +21,7 @@ class State
 
   private:
     GameObject background;
+    TileSet *tileSet;
     Sprite *bg_sprite;
     Sound *bg_sound;
     TileMap *bg_tileMap; 

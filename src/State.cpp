@@ -15,11 +15,11 @@
 
 State::State() : bg_sprite(new Sprite(background, BACKGROUND_SPRITE_PATH)),
                  bg_sound(new Sound(background, BACKGROUND_SOUND_PATH)),
-                 bg_tileMap(new TileMap(background, BACKGROUND_TILEMAP_PATH))
+                 bg_tileMap(new TileMap(background, BACKGROUND_TILEMAP_PATH, tileSet))
 {
     background.AddComponent((std::shared_ptr<Sprite>)bg_sprite);
     background.AddComponent((std::shared_ptr<Sound>)bg_sound);
-    background.AddComponent((std::shared_ptr<TileMap>)bg_tileMap);
+    //background.AddComponent((std::shared_ptr<TileMap>)bg_tileMap);
     objectArray.emplace_back((std::shared_ptr<GameObject>)&background);
     LoadAssets();
     quitRequested = false;
