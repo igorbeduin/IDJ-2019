@@ -7,8 +7,8 @@ TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : C
 }
 
 void TileMap::Load(std::string file)
-{   
-    int width, height, depth;
+{
+    int tile;
     char separator;
     std::ifstream file_object;
     file_object.open(file.c_str());
@@ -16,22 +16,16 @@ void TileMap::Load(std::string file)
     if (file_object) 
     {
         // Pega os três primeiros valores do arquivo tileMap.txt
-        file_object >> width >> separator >> height >> separator >> depth;
-        std::cout << "tileMap width: " << width << std::endl  << "tileMap height: " << height << std::endl << "tileMap depth: " << width << std::endl;
+        file_object >> mapWidth >> separator >> mapHeight >> separator >> mapDepth >> separator;
+        std::cout << "tileMap width: " << mapWidth << std::endl  << "tileMap height: " << mapHeight << std::endl << "tileMap depth: " << mapWidth << std::endl;
     }
 
-    if (file_object)
+    for (int i = 0; i < (mapWidth * mapHeight * mapDepth); i++)
     {
-        // TODO: Rotina para carregar os tiles em ordem correta na matriz >> SUBTRAIR 1<<
-
+        file_object >> tile >> separator;
+        std::cout << i << ": " << tile << std::endl;
+        tileMatrix.push_back(tile);
     }
-
-    /*
-    Note que, para o arquivo que usamos na disciplina, tiles vazios são representados por 0,
-    que é o padrão do editor de tilemaps open spurce TileD.
-    Para o nosso código, é mais conveniente que eles sejam representados por - 1,
-     e o primeiro tile do tileset por 0. Portanto, subtraia um de cada índice lido do arquivo.
-    */
 }
 
 void TileMap::SetTileSet(TileSet* tileSet)
