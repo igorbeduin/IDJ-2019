@@ -12,7 +12,7 @@ void TileSet::RenderTile(unsigned index, float x, float y)
 {   
     // Número de tiles é o número de colunas * o número de linhas
     int tilesNumber = columns * rows;
-    if ((0 < index) && (index < (tilesNumber - 1)))
+    if ((0 < index) && (index < (unsigned)(tilesNumber - 1)))
     {
         // O resto da divisão do índice pelo número de colunas
         int clipOrgX = index % columns;
@@ -23,12 +23,12 @@ void TileSet::RenderTile(unsigned index, float x, float y)
     }
 }
 
-int GetTileWidth()
+int TileSet::GetTileWidth()
 {
     return tileWidth;
 }
 
-int GetTileHeight()
+int TileSet::GetTileHeight()
 {
     return tileHeight;
 }
