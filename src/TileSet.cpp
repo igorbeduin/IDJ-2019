@@ -1,11 +1,11 @@
 #include "../include/TileSet.h"
 
-TileSet::TileSet(int tileWidth, int tileHeight, std::string file) : tileWidth(tileWidth),
-                                                                    tileHeight(tileHeight)
+TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file) : tileWidth(tileWidth),
+                                                                                            tileHeight(tileHeight),
+                                                                                            tileSet(Sprite(associated, file.c_str()))
 {
-    tileSet->Open(file.c_str());
-    columns = tileSet->GetWidth()/tileWidth;
-    rows = tileSet->GetHeight()/tileHeight;
+    columns = tileSet.GetWidth()/tileWidth;
+    rows = tileSet.GetHeight()/tileHeight;
 }
 
 void TileSet::RenderTile(unsigned index, float x, float y)
@@ -18,8 +18,8 @@ void TileSet::RenderTile(unsigned index, float x, float y)
         int clipOrgX = index % columns;
         // O quociente da divisão do índice pelo número de colunas
         int clipOrgY = index / columns; 
-        tileSet->SetClip(clipOrgX, clipOrgY, tileSet->GetWidth(), tileSet->GetHeight());
-        tileSet->Render((int)x, (int)y);
+        tileSet.SetClip(clipOrgX, clipOrgY, tileSet.GetWidth(), tileSet.GetHeight());
+        tileSet.Render((int)x, (int)y);
     }
 }
 
