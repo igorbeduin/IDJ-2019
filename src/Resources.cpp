@@ -1,6 +1,10 @@
 #include "../include/Resources.h"
 
-SDL_Texture* Resources::GetImage(std::string file)
+std::unordered_map<std::string, SDL_Texture *> Resources::imageTable;
+std::unordered_map<std::string, Mix_Music *> Resources::musicTable;
+std::unordered_map<std::string, Mix_Chunk *> Resources::soundTable;
+
+SDL_Texture *Resources::GetImage(std::string file)
 {
     /*
     # TODO:
@@ -21,7 +25,7 @@ void Resources::ClearImages()
     */
 }
 
-Mix_Music* Resources::GetMusic(std::string file)
+Mix_Music *Resources::GetMusic(std::string file)
 {
     /*
     # TODO:
@@ -42,7 +46,7 @@ void Resources::ClearMusics()
     */
 }
 
-Mix_Chunk* Resources::GetSound(std::string file)
+Mix_Chunk *Resources::GetSound(std::string file)
 {
     /*
     # TODO:
