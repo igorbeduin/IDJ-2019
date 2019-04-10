@@ -6,6 +6,11 @@ TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : C
     TileMap::Load(file.c_str());
 }
 
+TileMap::TileMap(GameObject &associated, std::string file) : Component::Component(associated)
+{
+    TileMap::Load(file.c_str());
+}
+
 void TileMap::Load(std::string file)
 {   
     int width, height, depth;
@@ -13,14 +18,14 @@ void TileMap::Load(std::string file)
     std::ifstream file_object;
     file_object.open(file.c_str());
     // Garante que o arquivo foi aberto corretamente
-    if (file) 
+    if (file_object) 
     {
         // Pega os três primeiros valores do arquivo tileMap.txt
         file_object >> width >> separator >> height >> separator >> depth;
         std::cout << "tileMap width: " << width << std::endl  << "tileMap height: " << height << std::endl << "tileMap depth: " << width << std::endl;
     }
 
-    if (file)
+    if (file_object)
     {
         // TODO: Rotina para carregar os tiles em ordem correta na matriz >> SUBTRAIR 1<<
 
@@ -63,7 +68,7 @@ void TileMap::Render()
 {
     /*
     # TODO:
-    Tenderiza as camadas do mapa. Dica: utilize o RenderLayer e o box do GameObject que o contém.
+    Renderiza as camadas do mapa. Dica: utilize o RenderLayer e o box do GameObject que o contém.
     */
 }
 
@@ -81,3 +86,17 @@ int TileMap::GetDepth()
 {
     return mapDepth;
 }
+
+bool TileMap::Is(std::string type)
+{
+    if (type == "TileMap")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void TileMap::Update(float dt) {}
