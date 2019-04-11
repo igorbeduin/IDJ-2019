@@ -22,7 +22,7 @@ void Music::Play(int times) {
     if (music != nullptr) {
         Mix_PlayMusic(music, times);
     } else {
-        std::cout << "Não existe música como atributo na classe";
+        std::cout << "Music: Não existe música como atributo na classe";
     }
 }
 
@@ -33,9 +33,9 @@ void Music::Stop(int msToStop) {
 void Music::Open(std::string file) {
     music = Mix_LoadMUS(file.c_str());
     if (music == nullptr) {
-        std::cout << "Falha ao carregar a música!" << std::endl;
+        std::cout << "Music: Falha ao carregar a música!" << std::endl;
     } else {
-        std::cout << "Musica carregada com sucesso!" << std::endl;
+        std::cout << "Music: Musica carregada com sucesso!" << std::endl;
     }
 }
 

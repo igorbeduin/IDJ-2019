@@ -14,6 +14,7 @@
 #define TILE_WIDTH 64
 #define TILE_HEIGHT 64
 #define MAP_TILEMAP_PATH "assets/map/tileMap.txt"
+#define MAP_TILESET_PATH "assets/img/tileset.png"
 
 State::State() : music(BACKGROUND_MUSIC_PATH),
                  quitRequested(false)
@@ -40,7 +41,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     // ====================================================
     GameObject *map = new GameObject();
     // Criando o tileSet para o tileMap
-    TileSet *tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILEMAP_PATH);
+    TileSet *tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILESET_PATH);
     // Criando o tileMap
     TileMap *tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
     map->AddComponent((std::shared_ptr<TileMap>)tileMap);
@@ -52,6 +53,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     objectArray.emplace_back(map);
 
     // ====================================================
+    std::cout << "State: Fim do construtor" << std::endl;
 }
 
 State::~State()
@@ -129,7 +131,7 @@ void State::Input()
                     if (nullptr != face)
                     {
                         int damage = std::rand() % 10 + 10;
-                        std::cout << "Damage applied: " << damage << std::endl;
+                        std::cout << "State:  Damage applied: " << damage << std::endl;
                         // Aplica dano
                         face->Damage(damage);
                         // Sai do loop (só queremos acertar um)

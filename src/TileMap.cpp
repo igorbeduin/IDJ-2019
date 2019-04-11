@@ -17,13 +17,13 @@ void TileMap::Load(std::string file)
     {
         // Pega os três primeiros valores do arquivo tileMap.txt
         file_object >> mapWidth >> separator >> mapHeight >> separator >> mapDepth >> separator;
-        std::cout << "tileMap width: " << mapWidth << std::endl  << "tileMap height: " << mapHeight << std::endl << "tileMap depth: " << mapWidth << std::endl;
+        std::cout << "TileMap:  tileMap width: " << mapWidth << std::endl  << "tileMap height: " << mapHeight << std::endl << "tileMap depth: " << mapWidth << std::endl;
     }
 
     for (int i = 0; i < (mapWidth * mapHeight * mapDepth); i++)
     {
         file_object >> tile >> separator;
-        std::cout << i << ": " << tile << std::endl;
+        // std::cout << i << ": " << tile << std::endl;
         tileMatrix.push_back(tile - 1);
     }
 }
@@ -35,8 +35,9 @@ void TileMap::SetTileSet(TileSet* tileSet)
 int& TileMap::At(int x, int y, int z)
 {
     int index = x + (y * mapWidth) + (z * mapWidth * mapHeight);
+    int& reference = tileMatrix[index];
 
-    return index;
+    return reference;
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
@@ -45,6 +46,7 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
     {
         for (int y = 0; x < mapHeight; y++)
         {
+            // std::cout << "TileMap:  Ta entrando aqui" << std::endl;
             tileSet->RenderTile(At(x, y, layer),
                                 (float)(x + tileSet->GetTileWidth()),
                                 (float)(y + tileSet->GetTileHeight()));
@@ -56,7 +58,6 @@ void TileMap::Render()
 {
     for (int i = 0; i < mapDepth; i++)
     {
-        std::cout << "Ta entrando aqui" << std::endl;
         RenderLayer(i);
     }
 }

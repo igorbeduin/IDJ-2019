@@ -11,10 +11,11 @@ SDL_Texture *Resources::GetImage(std::string file)
     if (it == Resources::imageTable.end())
     {   
         // std::cout << (*it) << std::endl;
-        std::cout << "Resources: No image found on Table!" << std::endl;
-        std::cout << "Resources: Loading a new file..." << std::endl;
+        std::cout << "Resources: No image found on Table! " << "(" << file << ")"  << std::endl;
+        std::cout << "Resources: Loading a new file... " << "(" << file << ")" << std::endl;
         texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
         Resources::imageTable.insert({file, texture});
+        std::cout << "Loading done! " << "(" << file << ")" << std::endl;
         return texture;
     }
     
