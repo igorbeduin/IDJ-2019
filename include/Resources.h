@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 #include "SDL_include.h"
+#include "Game.h"
 
 class Resources
 {   
