@@ -85,5 +85,5 @@ all: clean $(OBJ_FILES)
 	$(COMPILER) -c $(FLAGS) $(patsubst $(OBJ_PATH)/%.o, $(SRC_PATH)/%.cpp, $@) -o $@
 
 clean:
-	rm -f $(OBJ_FILES) *~
+	rm -f $(OBJ_FILES)
 

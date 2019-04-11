@@ -53,7 +53,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     objectArray.emplace_back(map);
 
     // ====================================================
-    std::cout << "State: Fim do construtor" << std::endl;
 }
 
 State::~State()
@@ -87,6 +86,7 @@ void State::Render()
 {
     for (int i = 0; i != (int)objectArray.size(); i++)
     {
+        // std::cout << "State::Render: Indice do objeto no array " << i << std::endl;
         objectArray[i]->Render();
     }
 }
@@ -131,7 +131,7 @@ void State::Input()
                     if (nullptr != face)
                     {
                         int damage = std::rand() % 10 + 10;
-                        std::cout << "State:  Damage applied: " << damage << std::endl;
+                        std::cout << "Damage applied: " << damage << std::endl;
                         // Aplica dano
                         face->Damage(damage);
                         // Sai do loop (só queremos acertar um)

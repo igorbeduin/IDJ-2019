@@ -1,4 +1,5 @@
 #include "../include/Sound.h"
+#include "../include/Resources.h"
 
 Sound::Sound(GameObject &associated) : Component::Component(associated)
 {
@@ -12,12 +13,7 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated)
 
 Sound::~Sound()
 {
-    if (chunk != NULL)
-    {
-        while (Mix_Playing(channel));
-        Stop();
-        Mix_FreeChunk(chunk);
-    }
+
 }
 
 void Sound::Play(int times)
@@ -39,8 +35,9 @@ void Sound::Stop()
 }
 
 void Sound::Open(std::string file)
-{
-    chunk = Mix_LoadWAV(file.c_str());
+{   
+    chunk = Resources::GetSound(file.c_str());
+    // chunk = Mix_LoadWAV(file.c_str());
     if (chunk == NULL)
     {
         std::cout << "Sound: Falha ao abrir o som!" << std::endl;

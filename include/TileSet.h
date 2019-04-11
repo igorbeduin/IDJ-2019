@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "GameObject.h"
 #include "Sprite.h"
+#include "GameObject.h"
 
 class TileSet
 {
@@ -21,5 +21,6 @@ class TileSet
     int columns;
     int tileWidth;
     int tileHeight;
+    int tilesNumber;
 };
 #endif

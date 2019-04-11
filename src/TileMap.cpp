@@ -24,7 +24,7 @@ void TileMap::Load(std::string file)
     {
         file_object >> tile >> separator;
         // std::cout << i << ": " << tile << std::endl;
-        tileMatrix.push_back(tile - 1);
+        tileMatrix.push_back(tile-1);
     }
 }
 
@@ -44,12 +44,11 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 {
     for (int x = 0; x < mapWidth; x++)
     {
-        for (int y = 0; x < mapHeight; y++)
+        for (int y = 0; y < mapHeight; y++)
         {
-            // std::cout << "TileMap:  Ta entrando aqui" << std::endl;
             tileSet->RenderTile(At(x, y, layer),
-                                (float)(x + tileSet->GetTileWidth()),
-                                (float)(y + tileSet->GetTileHeight()));
+                                (float)(x * tileSet->GetTileWidth()), 
+                                (float)(y * tileSet->GetTileHeight()));
         }
     }
 }
@@ -57,7 +56,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 void TileMap::Render()
 {
     for (int i = 0; i < mapDepth; i++)
-    {
+    {   
+        // std::cout << "TileMap::Render: Indice da layer " << i << std::endl;
         RenderLayer(i);
     }
 }

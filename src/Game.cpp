@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/Resources.h"
 
 #define AUDIO_CHUNKSIZE 1024
 #define AUDIO_FREQUENCY MIX_DEFAULT_FREQUENCY
@@ -125,4 +126,7 @@ void Game::Run()
         state->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
 }

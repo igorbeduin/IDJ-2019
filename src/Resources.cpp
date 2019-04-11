@@ -21,60 +21,83 @@ SDL_Texture *Resources::GetImage(std::string file)
     
     else
     {
-        //std::cout << (*it) << std::endl;
         return it->second;
     }
     
 }
 
 void Resources::ClearImages()
-{
-    /*
-    # TODO:
-    Percorra a tabela de imagens destruindo textura por textura. Ao final,
-    esvazie a tabela. Inclua uma chamada a esse método após o main gameloop, em
-    Game::Run.
-    */
+{   
+    int i = 0;
+    while (imageTable.begin() != imageTable.end())
+    {
+        std::cout << "Limpando memória de imagens..." << " (" << i + 1 << ") " << std::endl;
+        imageTable.erase(imageTable.begin()++);
+        i++;
+    }
+    std::cout << "Todas as imagens foram apagadas!" << std::endl;
 }
 
 Mix_Music *Resources::GetMusic(std::string file)
 {
-    /*
-    # TODO:
-    Usar find e descobrir se a música já existe na tabela de assets.
-        * Se sim, retorne o ponteiro gravado lá. 
-        * Se não, carregue da mesma forma que fazia em Sprite. Se for carregada com sucesso,
-          e insira o par caminho/ponteiro na tabela e retorne o ponteiro.
-    */
+    Mix_Music *music;
+    std::unordered_map<std::string, Mix_Music *>::iterator it = Resources::musicTable.find(file);
+    if (it == Resources::musicTable.end())
+    {
+        std::cout << "Resources: No music found on Table! "
+                  << "(" << file << ")" << std::endl;
+        std::cout << "Resources: Loading a new file... "
+                  << "(" << file << ")" << std::endl;
+        music = Mix_LoadMUS(file.c_str());
+        Resources::musicTable.insert({file, music});
+        std::cout << "Loading done! "
+                  << "(" << file << ")" << std::endl;
+        return music;
+    }
+    return it->second;
 }
     
 void Resources::ClearMusics()
 {
-    /*
-    # TODO:
-    Percorra a tabela de imagens destruindo textura por textura. Ao final,
-    esvazie a tabela. Inclua uma chamada a esse método após o main gameloop, em
-    Game::Run.
-    */
+    int i = 0;
+    while (musicTable.begin() != musicTable.end())
+    {
+        std::cout << "Limpando memória de músicas..."
+                  << " (" << i + 1 << ") " << std::endl;
+        musicTable.erase(musicTable.begin()++);
+        i++;
+    }
+    std::cout << "Todas as músicas foram apagadas!" << std::endl;
 }
 
 Mix_Chunk *Resources::GetSound(std::string file)
 {
-    /*
-    # TODO:
-    Usar find e descobrir se o som já existe na tabela de assets.
-        * Se sim, retorne o ponteiro gravado lá. 
-        * Se não, carregue da mesma forma que fazia em Sprite. Se for carregada com sucesso,
-          e insira o par caminho/ponteiro na tabela e retorne o ponteiro.
-    */
+    Mix_Chunk *chunk;
+    std::unordered_map<std::string, Mix_Chunk *>::iterator it = Resources::soundTable.find(file);
+    if (it == Resources::soundTable.end())
+    {
+        std::cout << "Resources: No Sound found on Table! "
+                  << "(" << file << ")" << std::endl;
+        std::cout << "Resources: Loading a new file... "
+                  << "(" << file << ")" << std::endl;
+        chunk = Mix_LoadWAV(file.c_str());
+        Resources::soundTable.insert({file, chunk});
+        std::cout << "Loading done! "
+                  << "(" << file << ")" << std::endl;
+        return chunk;
+    }
+    return it->second;
 }
 
 void Resources::ClearSounds()
 {
-    /*
-    # TODO:
-    Percorra a tabela de imagens destruindo textura por textura. Ao final,
-    esvazie a tabela. Inclua uma chamada a esse método após o main gameloop, em
-    Game::Run.
-    */
+    int i = 0;
+    while (soundTable.begin() != soundTable.end())
+    {
+        std::cout << "Limpando memória de sons..."
+                  << " (" << i + 1 << ") " << std::endl;
+        soundTable.erase(soundTable.begin()++);
+        i++;
+    }
+    std::cout << "Todos os sons foram apagadas!" << std::endl;
 }
