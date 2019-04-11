@@ -1,14 +1,13 @@
 #pragma once
 
-// #ifndef SPRITE_H
-// #define SPRITE_H
-
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
 #include "SDL_include.h"
 #include "Component.h"
 #include "Resources.h"
+#include "Game.h"
+#include "GameObject.h"
 
 class Sprite : public Component
 {

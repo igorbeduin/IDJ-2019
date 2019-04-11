@@ -14,10 +14,10 @@ RMDIR = rm -rdf
 RM = rm -f
 
 # Bibliotecas
-LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized -lm
+FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized
 
 # Paths
 INC_PATH = include

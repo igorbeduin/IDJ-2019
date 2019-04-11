@@ -9,7 +9,6 @@
 #include "GameObject.h"
 #include "TileMap.h"
 #include "TileSet.h"
-#include "Resources.h"
 
 class State
 {
@@ -27,5 +26,4 @@ private:
   void Input();
   void AddObject(int mouseX, int mouseY);
   std::vector<std::shared_ptr<GameObject>> objectArray;
-  // static Resources *resources;
 };

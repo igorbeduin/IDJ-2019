@@ -15,8 +15,8 @@
 #define TILE_HEIGHT 64
 #define MAP_TILEMAP_PATH "assets/map/tileMap.txt"
 
-State::State() : quitRequested(false),
-                 music(BACKGROUND_MUSIC_PATH)
+State::State() : music(BACKGROUND_MUSIC_PATH),
+                 quitRequested(false)
 {   
     music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
     LoadAssets();

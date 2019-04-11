@@ -1,6 +1,3 @@
-#include <string>
-#include <iostream>
-
 #include "../include/Game.h"
 
 #define AUDIO_CHUNKSIZE 1024

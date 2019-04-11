@@ -1,6 +1,4 @@
 #include "../include/Sprite.h"
-#include "../include/Game.h"
-#include "../include/GameObject.h"
 
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
@@ -24,7 +22,7 @@ void Sprite::Open(std::string file)
     texture = Resources::GetImage(file.c_str());
     if (texture == nullptr)
     {
-        std::cout << "Falha ao carregar a textura" << std::endl;
+        std::cout << "Sprite: Falha ao carregar a textura" << std::endl;
     }
     else
     {
