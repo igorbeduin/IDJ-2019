@@ -2,7 +2,10 @@
 
 #include <iostream>
 
+#include "GameObject.h"
 #include "Sprite.h"
+
+class Sprite;
 
 class TileSet
 {
@@ -13,7 +16,7 @@ class TileSet
     int GetTileHeight();
 
   private:
-    Sprite tileSet;
+    Sprite *tileSet;
     int rows;
     int columns;
     int tileWidth;
