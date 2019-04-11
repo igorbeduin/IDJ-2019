@@ -5,14 +5,25 @@ std::unordered_map<std::string, Mix_Music *> Resources::musicTable;
 std::unordered_map<std::string, Mix_Chunk *> Resources::soundTable;
 
 SDL_Texture *Resources::GetImage(std::string file)
-{
-    /*
-    # TODO:
-    Usar find e descobrir se a imagem já existe na tabela de assets.
-        * Se sim, retorne o ponteiro gravado lá. 
-        * Se não, carregue da mesma forma que fazia em Sprite. Se for carregada com sucesso,
-          e insira o par caminho/ponteiro na tabela e retorne o ponteiro.
-    */
+{   
+    SDL_Texture* texture;
+    std::unordered_map<std::string, SDL_Texture*>::iterator it = Resources::imageTable.find(file);
+    if (it == Resources::imageTable.end())
+    {   
+        // std::cout << (*it) << std::endl;
+        std::cout << "Resources: No image found on Table!" << std::endl;
+        std::cout << "Resources: Loading a new file..." << std::endl;
+        texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+        Resources::imageTable.insert({file, texture});
+        return texture;
+    }
+    
+    else
+    {
+        //std::cout << (*it) << std::endl;
+        return it->second;
+    }
+    
 }
 
 void Resources::ClearImages()
@@ -35,7 +46,7 @@ Mix_Music *Resources::GetMusic(std::string file)
           e insira o par caminho/ponteiro na tabela e retorne o ponteiro.
     */
 }
-
+    
 void Resources::ClearMusics()
 {
     /*
