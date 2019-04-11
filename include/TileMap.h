@@ -6,13 +6,15 @@
 #include "GameObject.h"
 #include "TileSet.h"
 
+class TileSet;
+
 class TileMap : public Component
 {
 public:
   TileMap(GameObject &associated, std::string file, TileSet *tileSet);
   void Load(std::string file);
   void SetTileSet(TileSet *tileSet);
-  int &At(int x, int y, int z = 0);
+  int& At(int x, int y, int z = 0);
   void Render();
   void RenderLayer(int layer, int cameraX = 0,
                    int cameraY = 0);
