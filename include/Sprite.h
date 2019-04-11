@@ -7,8 +7,6 @@
 
 #include "SDL_include.h"
 #include "Component.h"
-#include "Resources.h"
-#include "Game.h"
 #include "GameObject.h"
 
 class Sprite : public Component

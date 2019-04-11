@@ -1,4 +1,6 @@
 #include "../include/Sprite.h"
+#include "../include/Resources.h"
+#include "../include/Game.h"
 
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
