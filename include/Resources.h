@@ -1,3 +1,5 @@
+#ifndef RESOURCES_H
+#define RESOURCES_H
 #pragma once
 
 #define INCLUDE_SDL
@@ -25,3 +27,4 @@ class Resources
     static std::unordered_map<std::string, Mix_Music*> musicTable;
     static std::unordered_map<std::string, Mix_Chunk*> soundTable;
 };
+#endif

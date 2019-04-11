@@ -8,8 +8,6 @@
 
 #include "SDL_include.h"
 
-
-
 class Music {
     public:
         Music();

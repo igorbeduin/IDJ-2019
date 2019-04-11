@@ -1,3 +1,5 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 
 #define INCLUDE_SDL
@@ -26,3 +28,4 @@ class Game {
         State& GetState();
         static Game& GetInstance();
 };
+#endif

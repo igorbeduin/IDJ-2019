@@ -1,3 +1,6 @@
+#ifndef TILEMAP_H
+#define TILEMAP_H
+
 #pragma once
 
 #include <iostream>
@@ -5,8 +8,6 @@
 
 #include "GameObject.h"
 #include "TileSet.h"
-
-class TileSet;
 
 class TileMap : public Component
 {
@@ -31,3 +32,4 @@ private:
   int mapHeight;
   int mapDepth;
 };
+#endif

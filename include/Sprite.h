@@ -1,3 +1,5 @@
+#ifndef SPRITE_H
+#define SPRITE_H
 #pragma once
 
 #define INCLUDE_SDL
@@ -33,3 +35,4 @@ private:
   int height;
   SDL_Rect clipRect;
 };
+#endif

@@ -1,11 +1,11 @@
+#ifndef TILESET_H
+#define TILESET_H
 #pragma once
 
 #include <iostream>
 
 #include "GameObject.h"
 #include "Sprite.h"
-
-class Sprite;
 
 class TileSet
 {
@@ -22,3 +22,4 @@ class TileSet
     int tileWidth;
     int tileHeight;
 };
+#endif

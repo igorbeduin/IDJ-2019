@@ -1,3 +1,5 @@
+#ifndef STATE_H
+#define STATE_H
 #pragma once
 
 #include <vector>
@@ -27,3 +29,4 @@ private:
   void AddObject(int mouseX, int mouseY);
   std::vector<std::shared_ptr<GameObject>> objectArray;
 };
+#endif
