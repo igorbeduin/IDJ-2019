@@ -24,7 +24,7 @@ void TileMap::Load(std::string file)
     {
         file_object >> tile >> separator;
         std::cout << i << ": " << tile << std::endl;
-        tileMatrix.push_back(tile);
+        tileMatrix.push_back(tile - 1);
     }
 }
 
@@ -34,31 +34,31 @@ void TileMap::SetTileSet(TileSet* tileSet)
 }
 int& TileMap::At(int x, int y, int z)
 {
-    /*
-    # TODO:
-    ENCAPSULAR A FUNÇÃO ACIMA PRIMEIRO
-    TODO: Calcular índice de retorno [x][y][z] de tileMatrix (que é um vetor).
-    */
+    int index = x + (y * mapWidth) + (z * mapWidth * mapHeight);
+
+    return index;
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 {
-    /*
-    # TODO:
-    Renderiza uma camada do mapa, tile a tile. Note que há dois ajustes a se fazer:
-        * Deve-se compensar o deslocamento da cˆmera
-        * Deve-se considerar o tamanho de cada tile (use os membros GetTileWidth e GetTileHeight de TileSet)
-    Ainda não temos câmera. Você pode deixar para implementar o primeiro ponto naquela oasião, mas já faça a 
-    função recebendo esses argumentos.
-    */
+    for (int x = 0; x < mapWidth; x++)
+    {
+        for (int y = 0; x < mapHeight; y++)
+        {
+            tileSet->RenderTile(At(x, y, layer),
+                                (float)(x + tileSet->GetTileWidth()),
+                                (float)(y + tileSet->GetTileHeight()));
+        }
+    }
 }
 
 void TileMap::Render()
 {
-    /*
-    # TODO:
-    Renderiza as camadas do mapa. Dica: utilize o RenderLayer e o box do GameObject que o contém.
-    */
+    for (int i = 0; i < mapDepth; i++)
+    {
+        std::cout << "Ta entrando aqui" << std::endl;
+        RenderLayer(i);
+    }
 }
 
 int TileMap::GetWidth()
