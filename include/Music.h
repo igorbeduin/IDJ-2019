@@ -1,17 +1,12 @@
 #pragma once
 
-// #ifndef MUSIC_H
-// #define MUSIC_H
-
-#include <iostream>
-
 #define INCLUDE_SDL
 #define INCLUDE_SDL_MIXER
 
+#include <iostream>
 #include <memory>
+
 #include "SDL_include.h"
-
-
 
 class Music {
     public:

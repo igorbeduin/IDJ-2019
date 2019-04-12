@@ -14,10 +14,10 @@ RMDIR = rm -rdf
 RM = rm -f
 
 # Bibliotecas
-LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 
 # Diretivas de compilacao
-FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized -lm
+FLAGS = -std=c++11 -g -Wall -Wextra -Wno-unused-parameter -Wno-uninitialized
 
 # Paths
 INC_PATH = include
@@ -31,7 +31,7 @@ EXECNAME = play.out
 # Listas de arquivos por extensão
 BIN = $(BIN_PATH)/$(EXECNAME)
 CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
-OBJ_FILES = $(patsubst $(SRC_PATH)/%.cpp, $(OBJ_PATH)/%.o, $(CPP_FILES))
+OBJ_FILES = $(patsubst $(SRC_PATH)/%.cpp, %.o, $(CPP_FILES))
 
 # ----------------------------------------------------
 # >>>>>>>>>> WINDOWS <<<<<<<<<<
@@ -77,13 +77,13 @@ endif
 # ===========================================================
 
 # Linkagem a partir dos objetos (.o)
-all: clean $(OBJ_FILES)
+all: $(OBJ_FILES)
 	$(COMPILER) $(OBJ_FILES) $(LIBS)  $(FLAGS) -o $(EXECNAME)
 
 # Geração dos objetos a partir dos arquivos src (.cpp)
-%.o: $(patsubst $(OBJ_PATH)/%.o, $(SRC_PATH)/%.cpp, $@)
-	$(COMPILER) -c $(FLAGS) $(patsubst $(OBJ_PATH)/%.o, $(SRC_PATH)/%.cpp, $@) -o $@
+%.o: $(patsubst %.o, $(SRC_PATH)/%.cpp, $@)
+	$(COMPILER) -c $(FLAGS) $(patsubst %.o, $(SRC_PATH)/%.cpp, $@) -o $@
 
 clean:
-	rm -f $(OBJ_FILES) *~
+	rm -f $(OBJ_FILES)
 

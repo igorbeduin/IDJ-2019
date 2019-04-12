@@ -1,13 +1,13 @@
+#ifndef SPRITE_H
+#define SPRITE_H
 #pragma once
-
-// #ifndef SPRITE_H
-// #define SPRITE_H
 
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
 #include "SDL_include.h"
 #include "Component.h"
+#include "GameObject.h"
 
 class Sprite : public Component
 {
@@ -20,6 +20,7 @@ public:
   void SetClip(int x, int y,
                int w, int h);
   void Render();
+  void Render(int x, int y);
   int GetWidth();
   int GetHeight();
   bool IsOpen();
@@ -32,3 +33,4 @@ private:
   int height;
   SDL_Rect clipRect;
 };
+#endif

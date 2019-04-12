@@ -1,6 +1,6 @@
 #include "../include/Sprite.h"
+#include "../include/Resources.h"
 #include "../include/Game.h"
-#include "../include/GameObject.h"
 
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
@@ -17,22 +17,14 @@ Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
 
 Sprite::~Sprite()
 {   
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    };
 }
 
 void Sprite::Open(std::string file)
 {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    };
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+    texture = Resources::GetImage(file.c_str());
     if (texture == nullptr)
     {
-        std::cout << "Falha ao carregar a textura" << std::endl;
+        std::cout << "Sprite: Falha ao carregar a textura " << file << std::endl;
     }
     else
     {
@@ -56,13 +48,26 @@ void Sprite::Render()
 {
     int RENDER_ERROR;
     SDL_Rect dstLoc = {int(associated.box.x), int(associated.box.y), clipRect.w, clipRect.h};
-    // std::cout << "x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
+    // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
 
 
     RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
     if (RENDER_ERROR != 0)
     {
-        std::cout << "Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
+        std::cout << "Sprite: Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
+    }
+}
+
+void Sprite::Render(int x, int y)
+{
+    int RENDER_ERROR;
+    SDL_Rect dstLoc = {x, y, clipRect.w, clipRect.h};
+    // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
+
+    RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
+    if (RENDER_ERROR != 0)
+    {
+        std::cout << "Sprite: Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
     }
 }
 

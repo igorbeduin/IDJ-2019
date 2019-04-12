@@ -1,14 +1,19 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 
-// #ifndef GAME_H
-// #define GAME_H
-
 #define INCLUDE_SDL
-#include "State.h"
-#include <memory>
-#include "SDL_include.h"
 
-    class Game {
+#include <string>
+#include <iostream>
+#include <memory>
+
+#include "SDL_include.h"
+#include "State.h"
+
+class State;
+
+class Game {
     private:
         static Game* instance;
         Game(std::string title, int width, int height);
@@ -23,3 +28,4 @@
         State& GetState();
         static Game& GetInstance();
 };
+#endif

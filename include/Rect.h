@@ -1,7 +1,5 @@
 #pragma once
 
-// #ifndef RECT_H
-// #define RECT_H
 #include <memory>
 #include <iostream>
 
