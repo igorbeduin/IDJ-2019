@@ -17,7 +17,8 @@
 // Static class member initialization
 Game *Game::instance = nullptr;
 
-Game::Game(std::string title, int width, int height)
+Game::Game(std::string title, int width, int height) : frameStart(0),
+                                                       dt(0.0)
 {
     int SDL_ERROR;
     int IMG_ERROR;
@@ -122,11 +123,28 @@ void Game::Run()
 {
     while (state->QuitRequested() != true)
     {   
-        state->Update(33);
+        CalculateDeltaTime();
+        state->Update(dt);
         state->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+}
+
+void Game::CalculateDeltaTime()
+{
+    frameStart = SDL_GetTicks();
+    std::cout << "frameStart: " << frameStart << std::endl;
+    int instTime = SDL_GetTicks();
+    std::cout << "instTime: " << instTime << std::endl;
+
+    dt = (instTime - frameStart) / 1000.0; // converting time from miliseconds to seconds
+    std::cout << "dt: " << dt << std::endl;
+}
+
+float Game::GetDeltaTime()
+{
+    return dt;
 }
