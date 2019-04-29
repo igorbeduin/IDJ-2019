@@ -1,9 +1,9 @@
 #include "../include/InputManager.h"
 
-static InputManager instance;
 
 InputManager& InputManager::GetInstance()
 {
+    static InputManager instance;
     return instance;
 }
 
@@ -16,6 +16,11 @@ InputManager::InputManager() : quitRequested(false),
         * mouseState
         * mouseUpdate
     */
+}
+
+InputManager::~InputManager()
+{
+    
 }
 
 void InputManager::Update()
