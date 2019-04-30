@@ -30,54 +30,52 @@ void InputManager::Update()
     // Ex.: O jogo esteja rodando com a flag de quit setada.
     quitRequested = false;
 
+    //Atualiza o updateCounter
+    updateCounter ++;
+
     // Retorna TRUE se ocorrer eventos e processa a pilha de eventos
     while (SDL_PollEvent(&event))
     {   
         // Garante que o mesmo evento não seja gravado repetidamente
-        if (event.key.repeat) 
-        {
-            break;
+        if (event.key.repeat != true) 
+        {   
+            // Switch que lida com os tipos de evento
+            switch (event.type)
+            {
+            // Evento de tecla pressionada
+            case SDL_KEYDOWN:
+                // event.key.keysym.sym guarda a tecla em que ocorreu o evento
+                keyState[event.key.keysym.sym] = true;
+                keyUpdate[event.key.keysym.sym] = updateCounter;
+                break;
+
+            // Evento de soltura de tecla
+            case SDL_KEYUP:
+                // event.key.keysym.sym guarda a tecla em que ocorreu o evento
+                keyState[event.key.keysym.sym] = false;
+                keyUpdate[event.key.keysym.sym] = updateCounter;
+                break;
+
+            // Evento de pressionamento de botão do mouse
+            case SDL_MOUSEBUTTONDOWN:
+                // event.button.button guarda o botão do mouse em que ocorreu o evento
+                mouseState[event.button.button] = true;
+                mouseUpdate[event.button.button] = updateCounter;
+                break;
+
+            // Evento de soltura do botão do mouse
+            case SDL_MOUSEBUTTONUP:
+                // event.button.button guarda o botão do mouse em que ocorreu o evento
+                mouseState[event.button.button] = false;
+                mouseUpdate[event.button.button] = updateCounter;
+                break;
+
+            // Evento de QUIT
+            case SDL_QUIT:
+                quitRequested = true;
+                break;
+            }
         }
-
-        switch (event.type)
-        {
-        // Evento de tecla pressionada
-        case SDL_KEYDOWN:
-            /*
-                TODO:
-                - processamento do evento de teclado usando 
-                  unordered map.
-            */
-            break;
-
-        // Evento de soltura de tecla
-        case SDL_KEYUP:
-            /*
-                TODO:
-                - processamento do evento de teclado usando 
-                  unordered map.
-            */
-            break;
-
-        // Evento de pressionamento de botão do mouse
-        case SDL_MOUSEBUTTONDOWN:
-            // event.button.button guarda o botão que occorreu o evento
-            mouseState[event.button.button] = true;
-            break;
-
-        // Evento de soltura do botão do mouse
-        case SDL_MOUSEBUTTONUP:
-            // event.button.button guarda o botão que occorreu o evento
-            mouseState[event.button.button] = false;
-            break;
-
-        // Evento de QUIT
-        case SDL_QUIT:
-            quitRequested = true;
-            break;
-        }
-        updateCounter ++;
-        // TODO: contador de Updates (mouseUpdate)
     }
 }
 
