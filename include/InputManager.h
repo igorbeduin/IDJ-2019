@@ -1,5 +1,7 @@
 #pragma once
 
+#define INCLUDE_SDL
+
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT
 #define UP_ARROW_EY SDLK_UP
@@ -9,6 +11,8 @@
 
 #include <unordered_map>
 
+#include "SDL_include.h"
+
 class InputManager
 {
 public:
@@ -16,6 +20,9 @@ public:
     bool KeyPress(int key);
     bool KeyRelease(int key);
     bool IsKeyDown(int key);
+    bool MousePress(int button);
+    bool MouseRelease(int button);
+    bool IsMouseDown(int button);
     int GetMouseX();
     int GetMouseY();
     bool QuitRequested();
