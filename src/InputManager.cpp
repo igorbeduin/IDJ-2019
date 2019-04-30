@@ -95,31 +95,79 @@ int InputManager::GetMouseY()
 }
 
 bool InputManager::KeyPress(int key)
-{ 
-    // TODO: Metodo que retorna se a tecla esta pressionada naquele instante (frame)
+{
+    // Metodo que retorna se a tecla esta pressionada naquele instante (frame)
+    if ((keyState[key] == true) && (keyUpdate[key] == updateCounter))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool InputManager::KeyRelease(int key)
 {
-    // TODO: Metodo que retorna se a tecla esta solta naquele instante (frame)
+    // Metodo que retorna se a tecla esta solta naquele instante (frame)
+    if ((keyState[key] == false) && (keyUpdate[key] == updateCounter))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool InputManager::IsKeyDown(int key)
 { 
-    // TODO: Metodo que retorna se a tecla esta pressionada independente de quando o evento inicial ocorreu
+    // Metodo que retorna se a tecla esta pressionada independente de quando o evento inicial ocorreu
+    if (keyState[key] == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool InputManager::MousePress(int button)
 {
-    // TODO: Metodo que retorna se o botão do mouse esta pressionado naquele instante (frame)
+    // Metodo que retorna se o botão do mouse esta pressionado naquele instante (frame)
+    if ((mouseState[button] == true)&&(mouseUpdate[button] == updateCounter))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool InputManager::MouseRelease(int button)
 {
-    // TODO: Metodo que retorna se o botão do mouse esta solto naquele instante (frame)
+    // Metodo que retorna se o botão do mouse esta solto naquele instante (frame)
+    if ((mouseState[button] == false) && (mouseUpdate[button] == updateCounter))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool InputManager::IsMouseDown(int button)
 {
-    // TODO: Metodo que retorna se o botão do mouse esta pressionado independente de quando o evento inicial ocorreu
+    // Metodo que retorna se o botão do mouse esta pressionado independente de quando o evento inicial ocorreu
+    if (mouseState[button] == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
