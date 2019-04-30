@@ -2,6 +2,7 @@
 #include "../include/GameObject.h"
 #include "../include/Face.h"
 #include "../include/Vec2.h"
+#include "../include/InputManager.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
 #define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
@@ -65,8 +66,19 @@ void State::LoadAssets()
 }
 
 void State::Update(float dt)
-{
-    Input();
+{   
+    // Lida com eventos de quit a partir da interface de InputManager
+    if ((InputManager::GetInstance().KeyPress(ESCAPE_KEY)) || (InputManager::GetInstance().QuitRequested()))
+    {
+        quitRequested = true;
+    }
+    if (InputManager::GetInstance().KeyPress(SPACEBAR_KEY))
+    {
+        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(InputManager::GetInstance().GetMouseX(),
+                                                                                         InputManager::GetInstance().GetMouseY());
+        AddObject((int)objPos.x, (int)objPos.y);
+    }
+
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         objectArray[i]->Update(dt);
