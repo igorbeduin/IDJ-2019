@@ -1,26 +1,22 @@
 #include "../include/InputManager.h"
 
-
-InputManager& InputManager::GetInstance()
+InputManager &InputManager::GetInstance()
 {
     static InputManager instance;
     return instance;
 }
 
-InputManager::InputManager() : quitRequested(false),
-                               updateCounter(0)
+InputManager::InputManager() : mouseState{false, false, false, false, false, false},
+                               mouseUpdate{0, 0, 0, 0, 0, 0},
+                               quitRequested(false),
+                               updateCounter(0),
+                               mouseX(0),
+                               mouseY(0)
 {
-    /*
-    TODO:
-        Inicializar:
-        * mouseState
-        * mouseUpdate
-    */
 }
 
 InputManager::~InputManager()
 {
-    
 }
 
 void InputManager::Update()
