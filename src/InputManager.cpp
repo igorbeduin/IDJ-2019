@@ -95,3 +95,33 @@ int InputManager::GetMouseY()
 {
     return mouseY;
 }
+
+bool InputManager::KeyPress(int key)
+{ 
+    // TODO: Metodo que retorna se a tecla esta pressionada naquele instante (frame)
+}
+
+bool InputManager::KeyRelease(int key)
+{
+    // TODO: Metodo que retorna se a tecla esta solta naquele instante (frame)
+}
+
+bool InputManager::IsKeyDown(int key)
+{ 
+    // TODO: Metodo que retorna se a tecla esta pressionada independente de quando o evento inicial ocorreu
+}
+
+bool InputManager::MousePress(int button)
+{
+    // TODO: Metodo que retorna se o botão do mouse esta pressionado naquele instante (frame)
+}
+
+bool InputManager::MouseRelease(int button)
+{
+    // TODO: Metodo que retorna se o botão do mouse esta solto naquele instante (frame)
+}
+
+bool InputManager::IsMouseDown(int button)
+{
+    // TODO: Metodo que retorna se o botão do mouse esta pressionado independente de quando o evento inicial ocorreu
+}
