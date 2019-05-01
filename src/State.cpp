@@ -67,6 +67,8 @@ void State::LoadAssets()
 
 void State::Update(float dt)
 {   
+    // É importante que o Update da camera ocorra ANTES da atualização dos objetos
+    // para que o background tenha sua movimentação compensada adequadamente.
     Camera::Update(dt);
 
     // Lida com eventos de quit a partir da interface de InputManager

@@ -16,7 +16,7 @@
 #define WINDOW_TITLE "Igor R. O. Beduin - 14/0143882"
 
 // Static class member initialization
-Game *Game::instance = nullptr;
+Game* Game::instance = nullptr;
 
 Game::Game(std::string title, int width, int height) : frameStart(0),
                                                        dt(0.0)
