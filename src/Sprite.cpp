@@ -1,6 +1,7 @@
 #include "../include/Sprite.h"
 #include "../include/Resources.h"
 #include "../include/Game.h"
+#include "../include/Camera.h"
 
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
@@ -47,7 +48,7 @@ void Sprite::SetClip(int x, int y, int w, int h)
 void Sprite::Render()
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {int(associated.box.x), int(associated.box.y), clipRect.w, clipRect.h};
+    SDL_Rect dstLoc = {int(associated.box.x) + (int)Camera::pos.x, int(associated.box.y) + (int)Camera::pos.y, clipRect.w, clipRect.h};
     // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
 
 
@@ -61,7 +62,7 @@ void Sprite::Render()
 void Sprite::Render(int x, int y)
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {x, y, clipRect.w, clipRect.h};
+    SDL_Rect dstLoc = {x + (int)Camera::pos.x, y + (int)Camera::pos.y, clipRect.w, clipRect.h};
     // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
 
     RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
