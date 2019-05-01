@@ -3,6 +3,7 @@
 #include "../include/Face.h"
 #include "../include/Vec2.h"
 #include "../include/InputManager.h"
+#include "../include/Camera.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
 #define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
@@ -23,13 +24,15 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
     LoadAssets();
 
-    // ====================================================
     // GameObject BACKGROUND
     // ====================================================
     GameObject *background = new GameObject();
     // Criando o sprite do background
     Sprite *bg_sprite = new Sprite(*background, BACKGROUND_SPRITE_PATH);
     background->AddComponent((std::shared_ptr<Sprite>)bg_sprite);
+    // Criando o camera follower do background
+    CameraFollower *bg_cmrFollower = new CameraFollower(*background);
+    background->AddComponent((std::shared_ptr<CameraFollower>)bg_cmrFollower);
 
     background->box.x = 0;
     background->box.y = 0;
@@ -37,7 +40,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     // Adicionando o background no objectArray
     objectArray.emplace_back(background);
 
-    // ====================================================
     // GameObject MAP
     // ====================================================
     GameObject *map = new GameObject();
@@ -65,6 +67,8 @@ void State::LoadAssets()
 
 void State::Update(float dt)
 {   
+    Camera::Update(dt);
+
     // Lida com eventos de quit a partir da interface de InputManager
     if ((InputManager::GetInstance().KeyPress(ESCAPE_KEY)) || (InputManager::GetInstance().QuitRequested()))
     {
