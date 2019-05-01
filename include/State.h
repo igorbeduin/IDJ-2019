@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "TileMap.h"
 #include "TileSet.h"
+#include "CameraFollower.h"
 
 class State
 {

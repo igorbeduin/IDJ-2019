@@ -52,8 +52,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // Adicionando o mapa no objectArray
     objectArray.emplace_back(map);
-
-    // ====================================================
 }
 
 State::~State()
@@ -76,7 +74,7 @@ void State::Update(float dt)
     {
         Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(InputManager::GetInstance().GetMouseX(),
                                                                                          InputManager::GetInstance().GetMouseY());
-        AddObject((int)objPos.x, (int)objPos.y);
+        AddObject((int)objPos.x - Camera::pos.x, (int)objPos.y - Camera::pos.y);
     }
 
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
@@ -90,6 +88,7 @@ void State::Update(float dt)
             objectArray.erase(objectArray.begin() + i);
         }
     }
+
 
     SDL_Delay(dt);
 }
