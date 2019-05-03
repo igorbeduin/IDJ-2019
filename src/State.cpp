@@ -2,6 +2,8 @@
 #include "../include/GameObject.h"
 #include "../include/Face.h"
 #include "../include/Vec2.h"
+#include "../include/InputManager.h"
+#include "../include/Camera.h"
 
 #define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
 #define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
@@ -22,13 +24,15 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
     LoadAssets();
 
-    // ====================================================
     // GameObject BACKGROUND
     // ====================================================
     GameObject *background = new GameObject();
     // Criando o sprite do background
     Sprite *bg_sprite = new Sprite(*background, BACKGROUND_SPRITE_PATH);
     background->AddComponent((std::shared_ptr<Sprite>)bg_sprite);
+    // Criando o camera follower do background
+    CameraFollower *bg_cmrFollower = new CameraFollower(*background);
+    background->AddComponent((std::shared_ptr<CameraFollower>)bg_cmrFollower);
 
     background->box.x = 0;
     background->box.y = 0;
@@ -36,7 +40,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     // Adicionando o background no objectArray
     objectArray.emplace_back(background);
 
-    // ====================================================
     // GameObject MAP
     // ====================================================
     GameObject *map = new GameObject();
@@ -51,8 +54,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // Adicionando o mapa no objectArray
     objectArray.emplace_back(map);
-
-    // ====================================================
 }
 
 State::~State()
@@ -65,8 +66,23 @@ void State::LoadAssets()
 }
 
 void State::Update(float dt)
-{
-    Input();
+{   
+    // É importante que o Update da camera ocorra ANTES da atualização dos objetos
+    // para que o background tenha sua movimentação compensada adequadamente.
+    Camera::Update(dt);
+
+    // Lida com eventos de quit a partir da interface de InputManager
+    if ((InputManager::GetInstance().KeyPress(ESCAPE_KEY)) || (InputManager::GetInstance().QuitRequested()))
+    {
+        quitRequested = true;
+    }
+    if (InputManager::GetInstance().KeyPress(SPACEBAR_KEY))
+    {
+        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(InputManager::GetInstance().GetMouseX(),
+                                                                                         InputManager::GetInstance().GetMouseY());
+        AddObject((int)objPos.x - Camera::pos.x, (int)objPos.y - Camera::pos.y);
+    }
+
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         objectArray[i]->Update(dt);
@@ -78,6 +94,7 @@ void State::Update(float dt)
             objectArray.erase(objectArray.begin() + i);
         }
     }
+
 
     SDL_Delay(dt);
 }

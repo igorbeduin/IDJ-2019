@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include "../include/Resources.h"
+#include "../include/InputManager.h"
 
 #define AUDIO_CHUNKSIZE 1024
 #define AUDIO_FREQUENCY MIX_DEFAULT_FREQUENCY
@@ -15,9 +16,10 @@
 #define WINDOW_TITLE "Igor R. O. Beduin - 14/0143882"
 
 // Static class member initialization
-Game *Game::instance = nullptr;
+Game* Game::instance = nullptr;
 
-Game::Game(std::string title, int width, int height)
+Game::Game(std::string title, int width, int height) : frameStart(0),
+                                                       dt(0.0)
 {
     int SDL_ERROR;
     int IMG_ERROR;
@@ -122,11 +124,29 @@ void Game::Run()
 {
     while (state->QuitRequested() != true)
     {   
-        state->Update(33);
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        state->Update(dt);
         state->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+}
+
+void Game::CalculateDeltaTime()
+{
+    int instTime = SDL_GetTicks();
+    // std::cout << "frameStart: " << frameStart << std::endl;
+    // std::cout << "instTime: " << instTime << std::endl;
+
+    dt = (instTime - frameStart) / 1000.0; // converting time from miliseconds to seconds
+    // std::cout << "dt: " << dt << std::endl;
+    frameStart = instTime;
+}
+
+float Game::GetDeltaTime()
+{
+    return dt;
 }

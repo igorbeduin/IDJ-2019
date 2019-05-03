@@ -77,7 +77,7 @@ endif
 # ===========================================================
 
 # Linkagem a partir dos objetos (.o)
-all: $(OBJ_FILES)
+all: clean $(OBJ_FILES)
 	$(COMPILER) $(OBJ_FILES) $(LIBS)  $(FLAGS) -o $(EXECNAME)
 
 # Geração dos objetos a partir dos arquivos src (.cpp)

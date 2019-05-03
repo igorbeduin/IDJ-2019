@@ -99,5 +99,5 @@ void Resources::ClearSounds()
         soundTable.erase(soundTable.begin()++);
         i++;
     }
-    std::cout << "Todos os sons foram apagadas!" << std::endl;
+    std::cout << "Todos os sons foram apagados!" << std::endl;
 }
