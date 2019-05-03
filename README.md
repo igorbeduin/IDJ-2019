@@ -13,6 +13,8 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 ### T1 - DONE
 ### T2 - DONE
 ### T3 - DONE
+### T4 - DONE
+### T5 - in progress
 
 ## Global TODO List:
 * Resolver erros de inicialização com `try/catch`
