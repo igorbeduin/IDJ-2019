@@ -12,6 +12,8 @@ class Component;
 class GameObject
 {
   public:
+    void Start();
+    bool started;
     GameObject();
     ~GameObject();
     void Update(float dt);
