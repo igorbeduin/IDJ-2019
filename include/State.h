@@ -12,6 +12,7 @@
 #include "TileMap.h"
 #include "TileSet.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 class State
 {

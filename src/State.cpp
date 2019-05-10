@@ -55,6 +55,18 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // Adicionando o mapa no objectArray
     objectArray.emplace_back(map);
+
+    // GameObject ALIEN
+    // ====================================================
+    GameObject *alien = new GameObject();
+    // Adicionando o comportamento de Alien
+    Alien *behaviour = new Alien(*alien, 3);
+    alien->AddComponent((std::shared_ptr<Alien>)behaviour);
+
+    alien->box.x = 512;
+    alien->box.y = 300;
+
+    objectArray.emplace_back(alien);
 }
 
 State::~State()
@@ -131,13 +143,13 @@ bool State::QuitRequested()
 
 std::weak_ptr<GameObject> State::AddObject(GameObject* go)
 {
-    std::shared_ptr<GameObject> shared_go = (std::shared_ptr<GameObject>) go;
+    std::shared_ptr<GameObject> shared_go = std::make_shared<GameObject>(*go);
     objectArray.push_back(shared_go);
     if (started)
     {
         shared_go->Start();
     }
-    std::weak_ptr<GameObject> weak_go = (std::weak_ptr<GameObject>) shared_go;
+    std::weak_ptr<GameObject> weak_go(shared_go);
     return weak_go;
 }
 
@@ -153,14 +165,14 @@ void State::Start()
 
 std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
 {
-    std::weak_ptr<GameObject> weak_go = (std::weak_ptr<GameObject>) nullptr;
-    for (int i = 0; i < objectArray.size(); i++)
+    for (int i = 0; i < (int)objectArray.size(); i++)
     {
         if (go == objectArray[i].get())
         {
-            weak_go = (std::weak_ptr<GameObject>)go;
+            std::weak_ptr<GameObject> weak_go(std::make_shared<GameObject>(*go));
             return weak_go;
         }
     }
-    return weak_go;
+    std::weak_ptr<GameObject> empty_weak;
+    return empty_weak;
 }
