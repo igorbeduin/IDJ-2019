@@ -41,14 +41,13 @@ void Alien::Update(float dt)
     // Enfileiramento de novas ações
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT))
     {
-        taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX() + Camera::pos.x,
-                                        InputManager::GetInstance().GetMouseY() + Camera::pos.y));
+        taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX() - Camera::pos.x,
+                                        InputManager::GetInstance().GetMouseY() - Camera::pos.y));
     }
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_RIGHT))
     {
-        std::cout << "ADICIONEI A ACTION CORRETA" << std::endl;
-        taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX() + Camera::pos.x,
-                                       InputManager::GetInstance().GetMouseY() + Camera::pos.y));
+        taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX() - Camera::pos.x,
+                                       InputManager::GetInstance().GetMouseY() - Camera::pos.y));
     }
 
     // Execução da fila de ações
