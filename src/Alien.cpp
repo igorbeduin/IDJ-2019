@@ -55,33 +55,39 @@ void Alien::Update(float dt)
     {
         if (taskQueue.front().type == MOVE)
         {
-            std::cout << "EXECUTANDO A ACTION CORRETA" << std::endl;
+            float step = dt * ALIEN_VELOCITY;
             int x_signal = 1;
             int y_signal = 1;
-            if (taskQueue.front().pos.x < associated.box.x)
+            if (taskQueue.front().pos.x < associated.box.x + associated.box.w / 2)
             {
                 x_signal = -1;
             }
-            if (taskQueue.front().pos.y < associated.box.y)
+            if (taskQueue.front().pos.y < associated.box.y + associated.box.h / 2)
             {
                 y_signal = -1;
             }
 
             // Calculo de velocidade e mudança de posição
-            float distance = Vec2::Distance(Vec2(associated.box.x, associated.box.y), taskQueue.front().pos);
+            float distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w/2, associated.box.y + associated.box.h/2), taskQueue.front().pos);
             std::cout << "distance: " << distance << std::endl;
-            
-            // associated.box.x += dt * ALIEN_VELOCITY * (x_signal);
-            associated.box.y += dt * ALIEN_VELOCITY * (y_signal);
-            // associated.box.DefineCenter(associated.box.x + (2 * (x_signal)), associated.box.y + (2 * (y_signal)));
 
-            if (distance < MIN_DIST)
+            std::cout << "step: " << step << std::endl;
+
+            if (distance > step)
             {
-                associated.box.DefineCenter(taskQueue.front().pos.x, taskQueue.front().pos.y);
+                associated.box.x += step * (x_signal);
+                associated.box.y += step * (y_signal);
+                std::cout << "x_signal: " << x_signal << std::endl;
+                std::cout << "y_signal: " << y_signal << std::endl;
+
+            }
+            else
+            {
+                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
                 taskQueue.pop();
             }
-            //taskQueue.pop();
         }
+
         if (taskQueue.front().type == SHOOT)
         {
             // Execução de tiro
