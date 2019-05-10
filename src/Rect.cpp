@@ -26,3 +26,9 @@ bool Rect::Contains(float x, float y)
         return false;
     }
 }
+
+void Rect::DefineCenter(float x, float y)
+{
+    this->x = x - w/2;
+    this->y = y - h/2;
+}
