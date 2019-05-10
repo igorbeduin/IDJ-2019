@@ -1,8 +1,8 @@
 #include "../include/GameObject.h"
 
-GameObject::GameObject() : box(0, 0, 0, 0),
-                           isDead(false),
-                           started(false)
+GameObject::GameObject() : started(false),
+                           box(0, 0, 0, 0),
+                           isDead(false)
 {
 }
 
@@ -41,6 +41,10 @@ void GameObject::RequestDelete()
 void GameObject::AddComponent(std::shared_ptr<Component> cpt)
 {   
     components.emplace_back(cpt);
+    if (started)
+    {
+        components.back()->Start();
+    }
 }
 
 void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
@@ -56,7 +60,7 @@ void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
 
 std::shared_ptr<Component> GameObject::GetComponent(std::string type)
 {
-    for (int i = ()components.size() - 1; i >= 0; i--)
+    for (int i = components.size() - 1; i >= 0; i--)
     {
         if (components[i]->Is(type))
         {
@@ -68,9 +72,9 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string type)
 
 void GameObject::Start()
 {
-    for (int i = 0; i < components.size(); i++)
+    for (int i = 0; i < (int)components.size(); i++)
     {
         components[i]->Start();
     }
-        components->started = true;
+        started = true;
 }
