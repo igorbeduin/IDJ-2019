@@ -1,6 +1,6 @@
 #include "../include/Vec2.h"
 
-Vec2::Vec2(int x, int y) : x(x),
+Vec2::Vec2(float x, float y) : x(x),
                            y(y)
 {
 }
@@ -15,18 +15,24 @@ Vec2 Vec2::operator+(const Vec2 &other) const
 
 Vec2 Vec2::Distance(Vec2 begin, Vec2 end)
 {
-    int x_distance = end.x - begin.x;
-    int y_distance = end.y - begin.y;
+    float x_distance = end.x - begin.x;
+    float y_distance = end.y - begin.y;
 
     return Vec2(x_distance, y_distance);
 }
 
+void Vec2::Rotate(float theta)
+{
+    x = (x * cos(theta)) - (y * sin(theta));
+    y = (x * sin(theta)) + (y * cos(theta));
+}
+
 Vec2 Vec2::GetRotated(float theta)
 {   
-    int x_, y_;
-    x_ = (x * cos(theta)) - (y * sin(theta));
-    y_ = (y * cos(theta)) + (x * sin(theta));
-    return Vec2(x_, y_);
+    Vec2 temp(x, y);
+    temp.Rotate(theta);
+
+    return temp;
 }
 
 float Vec2::Magnitude()
