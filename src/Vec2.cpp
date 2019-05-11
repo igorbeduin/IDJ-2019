@@ -28,3 +28,13 @@ Vec2 Vec2::GetRotated(float theta)
     y_ = (y * cos(theta)) + (x * sin(theta));
     return Vec2(x_, y_);
 }
+
+float Vec2::Magnitude()
+{
+    return (float)sqrt(pow(x, 2) + pow(y, 2));
+}
+
+float Vec2::Arg()
+{
+    return atan2(y, x);
+}
