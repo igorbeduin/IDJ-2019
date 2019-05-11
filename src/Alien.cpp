@@ -2,6 +2,7 @@
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 #include "../include/Vec2.h"
+#include "../include/Game.h"
 
 Alien::Action::Action(ActionType type, float x, float y) : type(type),
                                                            pos(x, y)
@@ -10,7 +11,8 @@ Alien::Action::Action(ActionType type, float x, float y) : type(type),
 
 // speed já está sendo inicializado pelo construtor de Vec2
 Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associated),
-                                                     hp(0)
+                                                     hp(0),
+                                                     nMinions(nMinions)
 {
     // Adicionando o sprite do alien
     Sprite *alien_sprite = new Sprite(associated, ALIEN_SPRITE_PATH);
@@ -19,10 +21,18 @@ Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associ
 
 void Alien::Start()
 {
-    /*
-        TODO:
-        - voltar aqui depois que o alien tiver funcionando
-    */
+    std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetState().GetObjectPtr(&associated);
+
+    
+    // Criando minions
+    for (int i = 0; i < nMinions; i++)
+    {
+        GameObject *minion = new GameObject();
+        Minion *minion_behaviour = new Minion(*minion, weak_alien, i * PI/2);
+        minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
+
+        Game::GetInstance().GetState().AddObject(minion);
+    }
 }
 
 Alien::~Alien()

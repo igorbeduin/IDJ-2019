@@ -3,6 +3,7 @@
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
 #define ALIEN_VELOCITY 150
 #define MIN_DIST 5
+#define PI 3.14159265359
 
 #include <iostream>
 #include <queue>
@@ -12,6 +13,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include "Sprite.h"
+#include "Minion.h"
 
 enum ActionType
 {
@@ -41,4 +43,5 @@ private:
   int hp;
   std::queue<Action> taskQueue;
   std::vector<std::weak_ptr<GameObject>> minionArray;
+  int nMinions;
 };
