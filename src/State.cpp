@@ -106,8 +106,8 @@ void State::Update(float dt)
         Face *enemy_interface = new Face(*enemy);
         enemy->AddComponent((std::shared_ptr<Face>)enemy_interface);
 
-        enemy->box.x = (objPos.x - (enemy_sprite->GetWidth()) / 2) - Camera::pos.x;
-        enemy->box.y = (objPos.y - (enemy_sprite->GetHeight()) / 2) - Camera::pos.y;
+        enemy->box.x = (objPos.x - (enemy_sprite->GetWidth()) / 2);
+        enemy->box.y = (objPos.y - (enemy_sprite->GetHeight()) / 2);
 
         AddObject(enemy);
     }

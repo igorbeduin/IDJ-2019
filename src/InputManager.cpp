@@ -1,4 +1,5 @@
 #include "../include/InputManager.h"
+#include "../include/Camera.h"
 
 InputManager &InputManager::GetInstance()
 {
@@ -25,6 +26,9 @@ void InputManager::Update()
 
     // Atualiza a posição do mouse nos atributos da class
     SDL_GetMouseState(&mouseX, &mouseY);
+    // A posição do mouse está sempre comepensada com a movimentação da câmera
+    mouseX -= Camera::pos.x;
+    mouseY -= Camera::pos.y;
 
     // Garante que, se um evento de quit não foi resolvido, o jogo continue rodando sem problemas
     // Ex.: O jogo esteja rodando com a flag de quit setada.
