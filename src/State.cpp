@@ -60,7 +60,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     // ====================================================
     GameObject *alien = new GameObject();
     // Adicionando o comportamento de Alien
-    Alien *behaviour = new Alien(*alien, 3);
+    Alien *behaviour = new Alien(*alien, 4);
     alien->AddComponent((std::shared_ptr<Alien>)behaviour);
 
     alien->box.x = 512;
@@ -147,7 +147,7 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
     {
         if (go == objectArray[i].get())
         {
-            std::weak_ptr<GameObject> weak_go(std::make_shared<GameObject>(*go));
+            std::weak_ptr<GameObject> weak_go(objectArray[i]);
             return weak_go;
         }
     }
