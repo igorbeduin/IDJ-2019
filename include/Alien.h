@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <queue>
+#include <math.h>
 
 #include "Component.h"
 #include "GameObject.h"

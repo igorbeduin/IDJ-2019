@@ -6,11 +6,10 @@
 Alien::Action::Action(ActionType type, float x, float y) : type(type),
                                                            pos(x, y)
 {
-
 }
 
 // speed já está sendo inicializado pelo construtor de Vec2
-Alien::Alien(GameObject& associated, int nMinions) : Component::Component(associated),
+Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associated),
                                                      hp(0)
 {
     // Adicionando o sprite do alien
@@ -28,12 +27,11 @@ void Alien::Start()
 
 Alien::~Alien()
 {
-    
+
     for (int i = minionArray.size() - 1; i >= 0; i--)
     {
         minionArray.erase(minionArray.begin() + i);
     }
-    
 }
 
 void Alien::Update(float dt)
@@ -41,13 +39,13 @@ void Alien::Update(float dt)
     // Enfileiramento de novas ações
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT))
     {
-        taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX() - Camera::pos.x,
-                                        InputManager::GetInstance().GetMouseY() - Camera::pos.y));
+        taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX(),
+                                 InputManager::GetInstance().GetMouseY()));
     }
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_RIGHT))
     {
-        taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX() - Camera::pos.x,
-                                       InputManager::GetInstance().GetMouseY() - Camera::pos.y));
+        taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX(),
+                                 InputManager::GetInstance().GetMouseY()));
     }
 
     // Execução da fila de ações
@@ -56,34 +54,22 @@ void Alien::Update(float dt)
         if (taskQueue.front().type == MOVE)
         {
             float step = dt * ALIEN_VELOCITY;
-            int x_signal = 1;
-            int y_signal = 1;
-            if (taskQueue.front().pos.x < associated.box.x + associated.box.w / 2)
-            {
-                x_signal = -1;
-            }
-            if (taskQueue.front().pos.y < associated.box.y + associated.box.h / 2)
-            {
-                y_signal = -1;
-            }
 
             // Calculo de velocidade e mudança de posição
-            float distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w/2, associated.box.y + associated.box.h/2), taskQueue.front().pos);
-            std::cout << "distance: " << distance << std::endl;
+            Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), taskQueue.front().pos);
+            std::cout << "distance magnitude: " << distance.Magnitude() << std::endl;
 
             std::cout << "step: " << step << std::endl;
 
-            if (distance > step)
+            if (distance.Magnitude() > step)
             {
-                associated.box.x += step * (x_signal);
-                associated.box.y += step * (y_signal);
-                std::cout << "x_signal: " << x_signal << std::endl;
-                std::cout << "y_signal: " << y_signal << std::endl;
-
+                associated.box.x += step * cos(distance.Arg());
+                associated.box.y += step * sin(distance.Arg());
             }
             else
             {
-                associated.box.x = taskQueue.front().pos.x - associated.box.w/2;
+                associated.box.x = taskQueue.front().pos.x - associated.box.w / 2;
+                associated.box.y = taskQueue.front().pos.y - associated.box.h / 2;
                 taskQueue.pop();
             }
         }
@@ -98,11 +84,9 @@ void Alien::Update(float dt)
 
 void Alien::Render()
 {
-
 }
 
 bool Alien::Is(std::string type)
 {
     return (type == "Alien");
 }
-
