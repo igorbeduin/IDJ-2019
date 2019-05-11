@@ -89,28 +89,6 @@ void State::Update(float dt)
     {
         quitRequested = true;
     }
-    if (InputManager::GetInstance().KeyPress(SPACEBAR_KEY))
-    {
-        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(InputManager::GetInstance().GetMouseX(),
-                                                                                         InputManager::GetInstance().GetMouseY());
-
-        // CRIAÇÃO DO INIMIGO
-        GameObject* enemy = new GameObject;
-        // Criando o sprite do inimigo
-        Sprite *enemy_sprite = new Sprite(*enemy, ENEMY_SPRITE_PATH);
-        enemy->AddComponent((std::shared_ptr<Sprite>)enemy_sprite);
-        // Criando o som do inimigo
-        Sound *enemy_sound = new Sound(*enemy, ENEMY_SOUND_PATH);
-        enemy->AddComponent((std::shared_ptr<Sound>)enemy_sound);
-        // Criando a interface do inimigo
-        Face *enemy_interface = new Face(*enemy);
-        enemy->AddComponent((std::shared_ptr<Face>)enemy_interface);
-
-        enemy->box.x = (objPos.x - (enemy_sprite->GetWidth()) / 2);
-        enemy->box.y = (objPos.y - (enemy_sprite->GetHeight()) / 2);
-
-        AddObject(enemy);
-    }
 
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
