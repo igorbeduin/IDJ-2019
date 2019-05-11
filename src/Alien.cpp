@@ -57,9 +57,6 @@ void Alien::Update(float dt)
 
             // Calculo de velocidade e mudança de posição
             Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), taskQueue.front().pos);
-            std::cout << "distance magnitude: " << distance.Magnitude() << std::endl;
-
-            std::cout << "step: " << step << std::endl;
 
             if (distance.Magnitude() > step)
             {
