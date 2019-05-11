@@ -24,13 +24,13 @@ void Camera::Update(float dt)
     {
         if (InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY))
         {
-            speed.x = SPEED;
+            speed.x = (-1) * SPEED;
         }
         else
         {
             if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY))
             {
-                speed.x = (-1) * SPEED;
+                speed.x = SPEED;
             }
             else
             {
@@ -39,16 +39,15 @@ void Camera::Update(float dt)
              
         }
         
-        // No caso do eixo Y, a seta pra baixo da a velocidade positiva pois a dimensão Y de imagens cresce para baixo
         if (InputManager::GetInstance().IsKeyDown(UP_ARROW_EY))
         {
-            speed.y = (-1) * SPEED;
+            speed.y = SPEED;
         }
         else
         {
             if (InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY))
             {
-                speed.y = SPEED;
+                speed.y = (-1) * SPEED;
             }
             else
             {
