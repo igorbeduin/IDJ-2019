@@ -22,9 +22,13 @@ Vec2 Vec2::Distance(Vec2 begin, Vec2 end)
 }
 
 void Vec2::Rotate(float theta)
-{
-    x = (x * cos(theta)) - (y * sin(theta));
-    y = (x * sin(theta)) + (y * cos(theta));
+{   
+
+    float x_ = (x * cos(theta)) - (y * sin(theta));
+    float y_ = (x * sin(theta)) + (y * cos(theta));
+
+    x = x_;
+    y = y_;
 }
 
 Vec2 Vec2::GetRotated(float theta)
