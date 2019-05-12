@@ -23,12 +23,11 @@ void Alien::Start()
 {
     std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetState().GetObjectPtr(&associated);
 
-    
     // Criando minions
     for (int i = 0; i < nMinions; i++)
     {
         GameObject *minion = new GameObject();
-        Minion *minion_behaviour = new Minion(*minion, weak_alien, i * PI/2);
+        Minion *minion_behaviour = new Minion(*minion, weak_alien, i * PI / 2);
         minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
 
         Game::GetInstance().GetState().AddObject(minion);
@@ -61,30 +60,36 @@ void Alien::Update(float dt)
     // Execução da fila de ações
     if (!taskQueue.empty())
     {
-        if (taskQueue.front().type == MOVE)
+        Action action = taskQueue.front();
+        switch (action.type)
         {
-            float step = dt * ALIEN_VELOCITY;
-
-            // Calculo de velocidade e mudança de posição
-            Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), taskQueue.front().pos);
-
-            if (distance.Magnitude() > step)
+            case MOVE:
             {
-                associated.box.x += step * cos(distance.Arg());
-                associated.box.y += step * sin(distance.Arg());
+                float step = dt * ALIEN_VELOCITY;
+
+                // Calculo de velocidade e mudança de posição
+                Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), action.pos);
+
+                if (distance.Magnitude() > step)
+                {
+                    associated.box.x += step * cos(distance.Arg());
+                    associated.box.y += step * sin(distance.Arg());
+                }
+                else
+                {
+                    associated.box.x = action.pos.x - associated.box.w / 2;
+                    associated.box.y = action.pos.y - associated.box.h / 2;
+                    taskQueue.pop();
+                }
+                break;
             }
-            else
+
+            case SHOOT:
             {
-                associated.box.x = taskQueue.front().pos.x - associated.box.w / 2;
-                associated.box.y = taskQueue.front().pos.y - associated.box.h / 2;
+                // TODO: ESCOLHER O MINION ALEATORIAMENTE E FAZER O SHOOT DE FATO
                 taskQueue.pop();
+                break;
             }
-        }
-
-        if (taskQueue.front().type == SHOOT)
-        {
-            // Execução de tiro
-            taskQueue.pop();
         }
     }
 }
