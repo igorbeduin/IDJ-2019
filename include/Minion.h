@@ -1,7 +1,7 @@
 #pragma once
 
 #define MINION_SPRITE_PATH "assets/img/minion.png"
-#define ARC_STEP -3.14159265359 / 5
+#define MINION_ANG_VEL -3.14159265359 / 5
 
 #include <iostream>
 #include <memory>
