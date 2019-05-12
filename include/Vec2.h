@@ -16,4 +16,5 @@ public:
   void Rotate(float theta);
   float x, y;
   Vec2 operator+(const Vec2 &other) const;
+  Vec2 operator-(const Vec2 &other) const;
 };
