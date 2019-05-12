@@ -50,4 +50,15 @@ bool Minion::Is(std::string type)
     return (type == "Minion");
 }
 
+void Minion::Shoot(Vec2 target)
+{   
+    // Criando um bullet
+    GameObject* bullet = new GameObject();
+
+    Vec2 distance = target - Vec2(associated.box.x + (associated.box.w / 2), associated.box.y + (associated.box.h / 2));
+    float angle = atan2(distance.y, distance.x);
+    Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH);
+    bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
+}
+
 
