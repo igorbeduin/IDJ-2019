@@ -7,11 +7,16 @@ Vec2::Vec2(float x, float y) : x(x),
 Vec2::Vec2() : Vec2(0, 0)
 {
 }
+
 Vec2 Vec2::operator+(const Vec2 &other) const
 {
     return Vec2(x + other.x, y + other.y);
 }
 
+Vec2 Vec2::operator-(const Vec2 &other) const
+{
+    return Vec2(x - other.x, y - other.y);
+}
 
 Vec2 Vec2::Distance(Vec2 begin, Vec2 end)
 {
