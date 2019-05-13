@@ -5,19 +5,6 @@
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 
-#define BACKGROUND_SPRITE_PATH "assets/img/ocean.jpg"
-#define BACKGROUND_MUSIC_PATH "assets/audio/stageState.ogg"
-#define BACKGROUND_MUSIC_LOOP_TIMES -1 // -1 for infinite loop
-
-#define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
-#define ENEMY_SOUND_PATH "assets/audio/boom.wav"
-#define PI 3.141592
-
-#define TILE_WIDTH 64
-#define TILE_HEIGHT 64
-#define MAP_TILEMAP_PATH "assets/map/tileMap.txt"
-#define MAP_TILESET_PATH "assets/img/tileset.png"
-
 State::State() : music(BACKGROUND_MUSIC_PATH),
                  quitRequested(false),
                  started(false)
@@ -121,7 +108,7 @@ bool State::QuitRequested()
 
 std::weak_ptr<GameObject> State::AddObject(GameObject* go)
 {
-    std::shared_ptr<GameObject> shared_go = std::make_shared<GameObject>(*go);
+    std::shared_ptr<GameObject> shared_go(go);
     objectArray.push_back(shared_go);
     if (started)
     {
