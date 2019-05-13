@@ -28,7 +28,7 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     radius.RotateDeg(arc);
     
     // Compensação do giro inicial
-    associated.angleDeg += radius.ArgDeg();
+    associated.angleDeg -= radius.ArgDeg();
 
 
 }
