@@ -28,12 +28,7 @@ void Minion::Update(float dt)
     float arcStep = dt * MINION_ANG_VEL;
     if (alienCenter.lock().get() != nullptr)
     {
-        std::cout << "radius.x: " << radius.x << std::endl;
-        std::cout << "radius.y: " << radius.y << std::endl;
-        std::cout << "radius.Magnitude(): " << radius.Magnitude() << std::endl;
-
         radius.Rotate(arcStep);
-
         Vec2 pos = radius + Vec2(alienCenter.lock()->box.x + alienCenter.lock()->box.w / 2, alienCenter.lock()->box.y + alienCenter.lock()->box.h / 2);
         associated.box.DefineCenter(pos.x, pos.y);
     }
