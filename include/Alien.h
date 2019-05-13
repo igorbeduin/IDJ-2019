@@ -3,17 +3,19 @@
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
 #define ALIEN_VELOCITY 150
 #define MIN_DIST 5
-#define PI 3.14159265359
 
 #include <iostream>
 #include <queue>
 #include <math.h>
+#include <limits>
 
 #include "Component.h"
 #include "GameObject.h"
 #include "Vec2.h"
 #include "Sprite.h"
 #include "Minion.h"
+#include "Rect.h"
+#include "State.h"
 
 enum ActionType
 {
