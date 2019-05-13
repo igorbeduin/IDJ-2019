@@ -5,14 +5,19 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
                                                                                                     alienCenter(alienCenter),
                                                                                                     arc(arcOffsetDeg)
 {
-    // Adicionando o sprite ao GameObject
+    // Criando o sprite do Minion
     Sprite* minion_sprite = new Sprite(associated, MINION_SPRITE_PATH);
+    // Escala aleatória
+    float scale = 1 + ((rand() % 50) / 100.0);
+    std::cout << "scale: " << scale << std::endl;
+    minion_sprite->SetScale(scale, scale);
+    // Adicionando o sprite ao GameObject
     associated.AddComponent((std::shared_ptr<Sprite>)minion_sprite);
 
     std::shared_ptr<GameObject> shared_alien = alienCenter.lock();
     if (shared_alien.get() != nullptr)
     {
-        // radius inicia com x aproximadamente igual à diagonal do sprite do alien
+        // Radius inicia com x aproximadamente igual à diagonal do sprite do alien
         radius.x = (shared_alien->box.w / 2);
         radius.y = (shared_alien->box.h / 2);
     }
@@ -20,15 +25,23 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     {   
         associated.RequestDelete();
     }
-    radius.Rotate(arc);
+    radius.RotateDeg(arc);
+    
+    // Compensação do giro inicial
+    associated.angleDeg += radius.ArgDeg();
+
+
 }
 
 void Minion::Update(float dt)
 {   
     float arcStep = dt * MINION_ANG_VEL;
+
+    // Compensação de giro
+    associated.angleDeg += arcStep;
     if (alienCenter.lock().get() != nullptr)
     {
-        radius.Rotate(arcStep);
+        radius.RotateDeg(arcStep);
         Vec2 pos = radius + Vec2(alienCenter.lock()->box.x + alienCenter.lock()->box.w / 2, alienCenter.lock()->box.y + alienCenter.lock()->box.h / 2);
         associated.box.DefineCenter(pos.x, pos.y);
     }
