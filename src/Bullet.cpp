@@ -14,10 +14,14 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
 void Bullet::Update(float dt)
 {
     Vec2 step(speed.x * dt, speed.y * dt);
-    associated.box.DefineCenter(associated.box.x + (associated.box.w / 2) + step.x,
-                                associated.box.y + (associated.box.h / 2) + step.y);
+    associated.box.DefineCenter(associated.box.GetCenter() + step);
 
     distanceLeft -= step.Magnitude();
+
+    if (distanceLeft <= 0)
+    {
+        associated.RequestDelete();
+    }
 }
 
 void Bullet::Render()
