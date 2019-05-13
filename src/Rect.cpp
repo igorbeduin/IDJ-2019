@@ -7,6 +7,10 @@ Rect::Rect(float x, float y, float w, float h) : x(x),
 {
 }
 
+Rect::Rect() : Rect(0, 0, 0, 0)
+{
+}
+
 bool Rect::Contains(float x, float y)
 {
     if ((x >= this->x)&&(x <= this->x + this->w)) 
@@ -29,6 +33,18 @@ bool Rect::Contains(float x, float y)
 
 void Rect::DefineCenter(float x, float y)
 {
-    this->x = x - w/2;
-    this->y = y - h/2;
+    this->x = x - (this->w / 2);
+    this->y = y - (this->h / 2);
+}
+
+void Rect::DefineCenter(Vec2 box)
+{
+    this->x = box.x - (this->w / 2);
+    this->y = box.y - (this->h / 2);
+}
+
+Vec2 Rect::GetCenter()
+{   
+    Vec2 center = Vec2(this->x + (this->w / 2), this->y + (this->h / 2));
+    return center;
 }
