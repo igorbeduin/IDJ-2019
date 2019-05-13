@@ -36,10 +36,24 @@ void Vec2::Rotate(float theta)
     y = y_;
 }
 
+void Vec2::RotateDeg(float theta)
+{
+    // Receives theta in degrees
+    Rotate(theta / (180 / 3.14159265359));
+}
+
 Vec2 Vec2::GetRotated(float theta)
 {   
     Vec2 temp(x, y);
     temp.Rotate(theta);
+
+    return temp;
+}
+
+Vec2 Vec2::GetRotatedDeg(float theta)
+{
+    Vec2 temp(x, y);
+    temp.RotateDeg(theta);
 
     return temp;
 }
@@ -52,4 +66,11 @@ float Vec2::Magnitude()
 float Vec2::Arg()
 {
     return atan2(y, x);
+}
+
+float Vec2::ArgDeg()
+{   
+    // Return value in degrees
+    float argDeg = Arg() * (180 / 3.14159265359);
+    return argDeg;
 }
