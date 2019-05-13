@@ -9,10 +9,11 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     associated.AddComponent((std::shared_ptr<Sprite>)bullet_sprite);
     this->speed.x = cos(angle) * speed;
     this->speed.y = sin(angle) * speed;
+    associated.angleDeg = this->speed.ArgDeg();
 }
 
 void Bullet::Update(float dt)
-{
+{   
     Vec2 step(speed.x * dt, speed.y * dt);
     associated.box.DefineCenter(associated.box.GetCenter() + step);
 

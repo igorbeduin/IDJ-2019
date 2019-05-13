@@ -27,7 +27,7 @@ void Alien::Start()
     for (int i = 0; i < nMinions; i++)
     {
         GameObject *minion = new GameObject();
-        Minion *minion_behaviour = new Minion(*minion, weak_alien, i * PI / 2);
+        Minion *minion_behaviour = new Minion(*minion, weak_alien, i * 360/nMinions);
         minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
 
         std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetState().AddObject(minion);
@@ -45,7 +45,10 @@ Alien::~Alien()
 }
 
 void Alien::Update(float dt)
-{
+{   
+    // Faz o alien girar
+    associated.angleDeg += dt * ALIEN_ANG_VEL;
+    
     // Enfileiramento de novas ações
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT))
     {
