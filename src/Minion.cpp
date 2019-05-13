@@ -1,4 +1,5 @@
 #include "../include/Minion.h"
+#include "../include/Game.h"
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component::Component(associated),
                                                                                                     alienCenter(alienCenter),
