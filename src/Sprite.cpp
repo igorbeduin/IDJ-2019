@@ -6,7 +6,8 @@
 #define CLIP_START_X 0
 #define CLIP_START_Y 0
 
-Sprite::Sprite(GameObject &associated) : Component::Component(associated)
+Sprite::Sprite(GameObject &associated) : Component::Component(associated),
+                                         scale(Vec2(1, 1))
 {
     texture = nullptr;
 }
@@ -17,7 +18,7 @@ Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
 }
 
 Sprite::~Sprite()
-{   
+{
 }
 
 void Sprite::Open(std::string file)
@@ -48,11 +49,10 @@ void Sprite::SetClip(int x, int y, int w, int h)
 void Sprite::Render()
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {int(associated.box.x) + (int)Camera::pos.x, int(associated.box.y) + (int)Camera::pos.y, clipRect.w, clipRect.h};
+    SDL_Rect dstLoc = {int(associated.box.x) + (int)Camera::pos.x, int(associated.box.y) + (int)Camera::pos.y, (int)associated.box.w, (int)associated.box.h};
     // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
 
-
-    RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
+    RENDER_ERROR = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (RENDER_ERROR != 0)
     {
         std::cout << "Sprite: Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
@@ -63,9 +63,8 @@ void Sprite::Render(int x, int y)
 {
     int RENDER_ERROR;
     SDL_Rect dstLoc = {x + (int)Camera::pos.x, y + (int)Camera::pos.y, clipRect.w, clipRect.h};
-    // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
 
-    RENDER_ERROR = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc);
+    RENDER_ERROR = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (RENDER_ERROR != 0)
     {
         std::cout << "Sprite: Falha ao renderizar a textura: " << SDL_GetError() << std::endl;
@@ -74,12 +73,12 @@ void Sprite::Render(int x, int y)
 
 int Sprite::GetWidth()
 {
-    return width;
+    return width * scale.x;
 }
 
 int Sprite::GetHeight()
 {
-    return height;
+    return height * scale.y;
 }
 
 bool Sprite::IsOpen()
@@ -101,12 +100,25 @@ void Sprite::Update(float dt)
 
 bool Sprite::Is(std::string type)
 {
-    if (type == "Sprite")
+    return (type == "Sprite");
+}
+
+void Sprite::SetScale(float scaleX, float scaleY)
+{
+    if (scaleX != 0)
     {
-        return true;
+        scale.x = scaleX;
+        associated.box.w = associated.box.w * scale.x;
     }
-    else
+    if (scaleX != 0)
     {
-        return false;
+        scale.y = scaleY;
+        associated.box.h = associated.box.h * scale.y;
+
     }
+}
+
+Vec2 Sprite::GetScale()
+{
+    return scale;
 }

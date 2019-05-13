@@ -121,7 +121,8 @@ SDL_Renderer *Game::GetRenderer()
 }
 
 void Game::Run()
-{
+{   
+    state->Start();
     while (state->QuitRequested() != true)
     {   
         CalculateDeltaTime();
@@ -138,11 +139,8 @@ void Game::Run()
 void Game::CalculateDeltaTime()
 {
     int instTime = SDL_GetTicks();
-    // std::cout << "frameStart: " << frameStart << std::endl;
-    // std::cout << "instTime: " << instTime << std::endl;
 
     dt = (instTime - frameStart) / 1000.0; // converting time from miliseconds to seconds
-    // std::cout << "dt: " << dt << std::endl;
     frameStart = instTime;
 }
 

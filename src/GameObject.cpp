@@ -1,6 +1,8 @@
 #include "../include/GameObject.h"
 
-GameObject::GameObject() : box(0, 0, 0, 0),
+GameObject::GameObject() : started(false),
+                           box(0, 0, 0, 0),
+                           angleDeg(0),
                            isDead(false)
 {
 }
@@ -38,8 +40,12 @@ void GameObject::RequestDelete()
 }
 
 void GameObject::AddComponent(std::shared_ptr<Component> cpt)
-{
+{   
     components.emplace_back(cpt);
+    if (started)
+    {
+        components.back()->Start();
+    }
 }
 
 void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
@@ -63,4 +69,13 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string type)
         }
     }
     return nullptr;
+}
+
+void GameObject::Start()
+{
+    for (int i = 0; i < (int)components.size(); i++)
+    {
+        components[i]->Start();
+    }
+        started = true;
 }
