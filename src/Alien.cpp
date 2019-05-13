@@ -77,16 +77,50 @@ void Alien::Update(float dt)
                 }
                 else
                 {
-                    associated.box.x = action.pos.x - associated.box.w / 2;
-                    associated.box.y = action.pos.y - associated.box.h / 2;
+                    associated.box.x = taskQueue.front().pos.x - associated.box.w / 2;
+                    associated.box.y = taskQueue.front().pos.y - associated.box.h / 2;
                     taskQueue.pop();
                 }
                 break;
             }
 
             case SHOOT:
-            {
-                // TODO: ESCOLHER O MINION ALEATORIAMENTE E FAZER O SHOOT DE FATO
+            {   
+                std::shared_ptr<GameObject> minion;
+                Vec2 target = taskQueue.front().pos;
+                
+                float distToTarget = std::numeric_limits<float>::max();
+
+                // Percorre o vector de minions procurando pelo mais próximo do target
+                if (!minionArray.empty())
+                {   
+                    for (int i = 0; i < (int)minionArray.size(); i++)
+                    {   
+                        if (!minionArray[i].expired())
+                        {
+                            std::shared_ptr<GameObject> temp_minion = minionArray[i].lock();
+                            float closerMinionDistance = Vec2::Distance(temp_minion->box.GetCenter(), target).Magnitude();
+
+                            if (closerMinionDistance < distToTarget)
+                            {
+                                distToTarget = closerMinionDistance;
+                                minion = temp_minion;
+                            }
+                        }
+                    }
+                }
+                
+
+                if (minion != nullptr)
+                {   
+                    Minion* realPtrMinion = (Minion *)minion->GetComponent("Minion").get();
+                    realPtrMinion->Shoot(target);
+                }
+                else
+                {
+                    std::cout << "ERRO: minion é um nullptr!" << std::endl;
+                }
+
                 taskQueue.pop();
                 break;
             }
