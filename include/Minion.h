@@ -1,7 +1,7 @@
 #pragma once
 
 #define MINION_SPRITE_PATH "assets/img/minion.png"
-#define MINION_ANG_VEL -3.14159265359 / 5
+#define MINION_ANG_VEL -50
 #define MINION_BULLET_SPEED 50.0
 #define MINION_BULLET_DAMAGE 30.0
 #define MINION_BULLET_SPRITE_PATH "assets/img/minionbullet1.png"
