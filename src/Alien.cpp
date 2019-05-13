@@ -11,7 +11,7 @@ Alien::Action::Action(ActionType type, float x, float y) : type(type),
 
 // speed já está sendo inicializado pelo construtor de Vec2
 Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associated),
-                                                     hp(0),
+                                                     hp(50),
                                                      nMinions(nMinions)
 {
     // Adicionando o sprite do alien
