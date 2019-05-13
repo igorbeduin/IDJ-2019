@@ -30,7 +30,8 @@ void Alien::Start()
         Minion *minion_behaviour = new Minion(*minion, weak_alien, i * PI / 2);
         minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
 
-        Game::GetInstance().GetState().AddObject(minion);
+        std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetState().AddObject(minion);
+        minionArray.push_back(weak_minion);
     }
 }
 
