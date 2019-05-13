@@ -50,26 +50,25 @@ void Alien::Update(float dt)
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT))
     {
         taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX(),
-                                 InputManager::GetInstance().GetMouseY()));
+                                        InputManager::GetInstance().GetMouseY()));
     }
     if (InputManager::GetInstance().MousePress(SDL_BUTTON_RIGHT))
     {
         taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX(),
-                                 InputManager::GetInstance().GetMouseY()));
+                                       InputManager::GetInstance().GetMouseY()));
     }
 
     // Execução da fila de ações
     if (!taskQueue.empty())
     {
-        Action action = taskQueue.front();
-        switch (action.type)
+        switch (taskQueue.front().type)
         {
             case MOVE:
             {
                 float step = dt * ALIEN_VELOCITY;
 
                 // Calculo de velocidade e mudança de posição
-                Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), action.pos);
+                Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), taskQueue.front().pos);
 
                 if (distance.Magnitude() > step)
                 {
