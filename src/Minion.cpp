@@ -12,8 +12,8 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     if (shared_alien.get() != nullptr)
     {
         // radius inicia com x aproximadamente igual à diagonal do sprite do alien
-        radius.x = shared_alien->box.w / 2 * 1.25;
-        radius.y = shared_alien->box.h / 2 * 1.25;
+        radius.x = (shared_alien->box.w / 2);
+        radius.y = (shared_alien->box.h / 2);
     }
     else
     {   
