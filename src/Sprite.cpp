@@ -7,14 +7,18 @@
 #define CLIP_START_Y 0
 
 Sprite::Sprite(GameObject &associated) : Component::Component(associated),
-                                         scale(Vec2(1, 1))
+                                         scale(Vec2(1, 1)),
+                                         timeElapsed(0),
+                                         currentFrame(0)
 {
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
+Sprite::Sprite(GameObject &associated, std::string file, int frameCount = 1, float frameTime = 1) : Sprite(associated)
 {
     Open(file);
+    this->frameTime = frameTime;
+    this->frameCount = frameCount;
 }
 
 Sprite::~Sprite()
@@ -95,7 +99,18 @@ bool Sprite::IsOpen()
 }
 
 void Sprite::Update(float dt)
-{
+{   
+    /*
+    timeElapsed += dt;
+    if (timeElapsed > frameTime)
+    {
+        SetFrame(frameCount + 1);
+    }
+    if (currentFrame > numero limite da imagem)
+    {
+        currentFrame = 0;
+    }
+    */
 }
 
 bool Sprite::Is(std::string type)
@@ -121,4 +136,28 @@ void Sprite::SetScale(float scaleX, float scaleY)
 Vec2 Sprite::GetScale()
 {
     return scale;
+}
+
+void Sprite::SetFrame(int frame)
+{
+    /*
+        TODO:
+            Setar o frame atual
+            Setar clip da imagem
+    */
+}
+
+void Sprite::SetFrameCount(int frameCount)
+{
+    this->frameCount = frameCount;
+    /*
+        TODO:
+            Resetar o frame inicial para 0
+            Recalcular a box do GameObject
+    */
+}
+
+void Sprite::SetFrameTime(float frameTime)
+{
+    this->frameTime = frameTime;
 }
