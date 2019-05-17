@@ -7,6 +7,11 @@ GameObject::GameObject() : started(false),
 {
 }
 
+GameObject::GameObject(int startingX, int startingY) : GameObject()
+{
+    this->box.DefineCenter(Vec2(startingX, startingY));
+}
+
 GameObject::~GameObject()
 {
 
