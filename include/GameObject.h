@@ -15,6 +15,7 @@ public:
   void Start();
   bool started;
   GameObject();
+  GameObject(int startingX, int startingY);
   ~GameObject();
   void Update(float dt);
   void Render();
