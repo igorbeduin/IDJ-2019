@@ -13,7 +13,7 @@ void Timer::Restart()
     time = 0;
 }
 
-float Get()
+float Timer::Get()
 {
     return time;
 }

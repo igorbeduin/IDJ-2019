@@ -1,6 +1,8 @@
 #pragma once
 
-#define BULLET_SPRITE_PATH "assets/img/minionbullet1"
+#define BULLET_FRAME_COUNT 3
+#define BULLET_FRAME_TIME 0.1
+
 #include <iostream>
 
 #include "Sprite.h"

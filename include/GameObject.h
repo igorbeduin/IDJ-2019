@@ -16,6 +16,7 @@ public:
   bool started;
   GameObject();
   GameObject(int startingX, int startingY);
+  GameObject(Vec2 startingPos);
   ~GameObject();
   void Update(float dt);
   void Render();

@@ -37,8 +37,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     TileMap *tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
     map->AddComponent((std::shared_ptr<TileMap>)tileMap);
 
-    map->box.x = 0;
-    map->box.y = 0;
+    map->box.DefineCenter(0, 0);
 
     // Adicionando o mapa no objectArray
     objectArray.emplace_back(map);
@@ -50,8 +49,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     Alien *behaviour = new Alien(*alien, 4);
     alien->AddComponent((std::shared_ptr<Alien>)behaviour);
 
-    alien->box.x = 512;
-    alien->box.y = 300;
+    alien->box.DefineCenter(512, 300);
 
     objectArray.emplace_back(alien);
 }

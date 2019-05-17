@@ -13,7 +13,7 @@ class Sprite : public Component
 public:
   Sprite(std::string file);
   Sprite(GameObject &associated);
-  Sprite(GameObject &associated, std::string file, int frameCount, float frameTime);
+  Sprite(GameObject &associated, std::string file, int frameCount = 1, float frameTime = 1);
   ~Sprite();
   void Open(std::string file);
   void SetClip(int x, int y,
@@ -22,6 +22,8 @@ public:
   void Render(int x, int y);
   int GetWidth();
   int GetHeight();
+  int GetWidthNoScale();
+  int GetHeightNoScale();
   bool IsOpen();
   void Update(float dt);
   bool Is(std::string type);

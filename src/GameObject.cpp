@@ -12,6 +12,11 @@ GameObject::GameObject(int startingX, int startingY) : GameObject()
     this->box.DefineCenter(Vec2(startingX, startingY));
 }
 
+GameObject::GameObject(Vec2 startingPos) : GameObject()
+{
+    this->box.DefineCenter(startingPos);
+}
+
 GameObject::~GameObject()
 {
 

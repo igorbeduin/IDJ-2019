@@ -9,7 +9,6 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     Sprite* minion_sprite = new Sprite(associated, MINION_SPRITE_PATH);
     // Escala aleatória
     float scale = 1 + ((rand() % 50) / 100.0);
-    std::cout << "scale: " << scale << std::endl;
     minion_sprite->SetScale(scale, scale);
     // Adicionando o sprite ao GameObject
     associated.AddComponent((std::shared_ptr<Sprite>)minion_sprite);
@@ -42,7 +41,7 @@ void Minion::Update(float dt)
     if (alienCenter.lock().get() != nullptr)
     {
         radius.RotateDeg(arcStep);
-        Vec2 pos = radius + Vec2(alienCenter.lock()->box.x + alienCenter.lock()->box.w / 2, alienCenter.lock()->box.y + alienCenter.lock()->box.h / 2);
+        Vec2 pos = radius + alienCenter.lock().get()->box.GetCenter();
         associated.box.DefineCenter(pos.x, pos.y);
     }
     else
@@ -65,11 +64,10 @@ void Minion::Shoot(Vec2 target)
     float angle = atan2(distance.y, distance.x);
 
     // Criando um bullet
-    GameObject* bullet = new GameObject();
+    // A Bullet inicia com posição inicial igual a posição do Minion
+    GameObject* bullet = new GameObject(associated.box.GetCenter());
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH);
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
-
-    bullet->box.DefineCenter(associated.box.GetCenter());
 
     Game::GetInstance().GetState().AddObject(bullet);
 }
