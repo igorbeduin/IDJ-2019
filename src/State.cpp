@@ -39,15 +39,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     AddObject(map);
 
-    // GameObject ALIEN
-    // ====================================================
-    GameObject *alien = new GameObject(512, 300);
-    // Adicionando o comportamento de Alien
-    Alien *alien_behaviour = new Alien(*alien, 4);
-    alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
-
-    AddObject(alien);
-
     // GameObject PENGUIN
     // ====================================================
     GameObject *penguinBody = new GameObject(704, 640);
@@ -65,6 +56,15 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     penguinCannon->AddComponent((std::shared_ptr<PenguinCannon>)penguinCannon_behaviour);
 
     AddObject(penguinCannon);
+
+    // GameObject ALIEN
+    // ====================================================
+    GameObject *alien = new GameObject(512, 300);
+    // Adicionando o comportamento de Alien
+    Alien *alien_behaviour = new Alien(*alien, 4);
+    alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
+
+    AddObject(alien);
 }
 
 State::~State()
