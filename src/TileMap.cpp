@@ -1,9 +1,6 @@
 #include "../include/TileMap.h"
 #include "../include/Camera.h"
 
-// Compensador de velocidade do parallax
-#define PARALLAX_COMP 0.25
-
 TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : Component::Component(associated),
                                                                                tileSet(tileSet)
 {
@@ -21,7 +18,7 @@ void TileMap::Load(std::string file)
     {
         // Pega os três primeiros valores do arquivo tileMap.txt
         file_object >> mapWidth >> separator >> mapHeight >> separator >> mapDepth >> separator;
-        std::cout << "TileMap:  tileMap width: " << mapWidth << std::endl
+        std::cout << "tileMap width: " << mapWidth << std::endl
                   << "tileMap height: " << mapHeight << std::endl
                   << "tileMap depth: " << mapWidth << std::endl;
     }

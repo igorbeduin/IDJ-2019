@@ -1,9 +1,8 @@
 #pragma once
 
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
-#define ALIEN_VELOCITY 150
-#define ALIEN_ANG_VEL 4 // degree/frame
-#define MIN_DIST 5
+#define ALIEN_VELOCITY 300
+#define ALIEN_ANG_VEL 8 // degree/frame
 
 #include <iostream>
 #include <queue>

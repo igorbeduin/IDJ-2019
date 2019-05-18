@@ -1,7 +1,7 @@
-#ifndef TILEMAP_H
-#define TILEMAP_H
-
 #pragma once
+
+// Compensador de velocidade do parallax
+#define PARALLAX_COMP 0.01
 
 #include <iostream>
 #include <fstream>
@@ -32,4 +32,3 @@ private:
   int mapHeight;
   int mapDepth;
 };
-#endif
