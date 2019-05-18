@@ -26,32 +26,45 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     background->box.y = 0;
 
     // Adicionando o background no objectArray
-    objectArray.emplace_back(background);
+    AddObject(background);
 
     // GameObject MAP
     // ====================================================
-    GameObject *map = new GameObject();
+    GameObject *map = new GameObject(0, 0);
     // Criando o tileSet para o tileMap
     TileSet *tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILESET_PATH);
     // Criando o tileMap
     TileMap *tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
     map->AddComponent((std::shared_ptr<TileMap>)tileMap);
 
-    map->box.DefineCenter(0, 0);
-
-    // Adicionando o mapa no objectArray
-    objectArray.emplace_back(map);
+    AddObject(map);
 
     // GameObject ALIEN
     // ====================================================
-    GameObject *alien = new GameObject();
+    GameObject *alien = new GameObject(512, 300);
     // Adicionando o comportamento de Alien
-    Alien *behaviour = new Alien(*alien, 4);
-    alien->AddComponent((std::shared_ptr<Alien>)behaviour);
+    Alien *alien_behaviour = new Alien(*alien, 4);
+    alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
 
-    alien->box.DefineCenter(512, 300);
+    AddObject(alien);
 
-    objectArray.emplace_back(alien);
+    // GameObject PENGUIN
+    // ====================================================
+    GameObject *penguinBody = new GameObject(704, 640);
+    // Adicionando o comportamento do PenguinBody
+    PenguinBody* penguinBody_behaviour = new PenguinBody(*penguinBody);
+    penguinBody->AddComponent((std::shared_ptr<PenguinBody>)penguinBody_behaviour);
+
+    std::weak_ptr<GameObject> weak_penguin = AddObject(penguinBody);
+
+    // GameObject CANNON PENGUIN
+    // ====================================================
+    GameObject *penguinCannon = new GameObject();
+    // Adicionando o comportamento do PenguinCannon
+    PenguinCannon* penguinCannon_behaviour = new PenguinCannon(*penguinCannon, weak_penguin);
+    penguinCannon->AddComponent((std::shared_ptr<PenguinCannon>)penguinCannon_behaviour);
+
+    AddObject(penguinCannon);
 }
 
 State::~State()
@@ -87,7 +100,7 @@ void State::Update(float dt)
         }
     }
 
-
+    
     SDL_Delay(dt);
 }
 

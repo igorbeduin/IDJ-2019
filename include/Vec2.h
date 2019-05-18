@@ -20,4 +20,5 @@ public:
   float x, y;
   Vec2 operator+(const Vec2 &other) const;
   Vec2 operator-(const Vec2 &other) const;
+  Vec2 operator*(const float &n) const;
 };

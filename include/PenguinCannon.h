@@ -1,10 +1,18 @@
 #pragma once
 
+#define PENGUINCANNON_SPRITE_PATH "assets/img/cubngun.png"
+#define PENGUIN_BULLET_SPEED 50.0
+#define PENGUIN_BULLET_DAMAGE 30.0
+#define PENGUIN_BULLET_SPRITE_PATH "assets/img/penguinbullet.png"
+
 #include <iostream>
 #include <memory>
 
+#include "Sprite.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "Vec2.h"
+#include "Bullet.h"
 
 class PenguinCannon : public Component
 {

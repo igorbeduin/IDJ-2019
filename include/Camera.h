@@ -1,5 +1,8 @@
 #pragma once
 
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 600
+
 #include "GameObject.h"
 #include "Vec2.h"
 

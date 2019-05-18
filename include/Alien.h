@@ -2,7 +2,7 @@
 
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
 #define ALIEN_VELOCITY 150
-#define ALIEN_ANG_VEL 2 // degree/frame
+#define ALIEN_ANG_VEL 4 // degree/frame
 #define MIN_DIST 5
 
 #include <iostream>

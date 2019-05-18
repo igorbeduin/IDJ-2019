@@ -4,12 +4,16 @@
 
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT
-#define UP_ARROW_EY SDLK_UP
+#define UP_ARROW_KEY SDLK_UP
 #define DOWN_ARROW_KEY SDLK_DOWN
 #define ESCAPE_KEY SDLK_ESCAPE
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
-#define SPACEBAR_KEY 32
+#define SPACEBAR_KEY SDLK_SPACE
+#define W_KEY SDLK_w
+#define A_KEY SDLK_a
+#define S_KEY SDLK_s
+#define D_KEY SDLK_d
 
 #include <iostream>
 #include <unordered_map>

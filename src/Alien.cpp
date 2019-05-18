@@ -49,17 +49,21 @@ void Alien::Update(float dt)
     // Faz o alien girar
     associated.angleDeg += dt * ALIEN_ANG_VEL;
     
+    /*
     // Enfileiramento de novas ações
-    if (InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT))
+    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
     {
         taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX(),
                                         InputManager::GetInstance().GetMouseY()));
     }
-    if (InputManager::GetInstance().MousePress(SDL_BUTTON_RIGHT))
+    */
+   
+    if (InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON))
     {
         taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX(),
                                        InputManager::GetInstance().GetMouseY()));
     }
+    
 
     // Execução da fila de ações
     if (!taskQueue.empty())

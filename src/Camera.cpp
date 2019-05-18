@@ -39,7 +39,7 @@ void Camera::Update(float dt)
              
         }
         
-        if (InputManager::GetInstance().IsKeyDown(UP_ARROW_EY))
+        if (InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY))
         {
             speed.y = SPEED;
         }
@@ -57,4 +57,10 @@ void Camera::Update(float dt)
         pos.x += dt * speed.x;
         pos.y += dt * speed.y;
     }
+    else
+    {
+        pos.x = -(focus->box.GetCenter().x) + (WINDOW_WIDTH / 2);
+        pos.y = -(focus->box.GetCenter().y) + (WINDOW_HEIGHT / 2);
+    }
+    
 }

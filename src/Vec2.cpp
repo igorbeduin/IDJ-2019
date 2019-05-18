@@ -18,6 +18,11 @@ Vec2 Vec2::operator-(const Vec2 &other) const
     return Vec2(x - other.x, y - other.y);
 }
 
+Vec2 Vec2::operator*(const float &n) const
+{
+    return Vec2(x * n, y * n);
+}
+
 Vec2 Vec2::Distance(Vec2 begin, Vec2 end)
 {
     float x_distance = end.x - begin.x;

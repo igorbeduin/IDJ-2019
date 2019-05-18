@@ -24,6 +24,8 @@
 #include "TileSet.h"
 #include "CameraFollower.h"
 #include "Alien.h"
+#include "PenguinBody.h"
+#include "PenguinCannon.h"
 
 class State
 {
