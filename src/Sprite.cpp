@@ -159,11 +159,8 @@ void Sprite::SetFrame(int frame)
 void Sprite::SetFrameCount(int frameCount)
 {
     this->frameCount = frameCount;
-    currentFrame = 0;
-    /*
-        TODO:
-            arrumar associated.box
-    */
+    SetFrame(0);
+    associated.box.w = GetWidth();
 }
 
 void Sprite::SetFrameTime(float frameTime)
