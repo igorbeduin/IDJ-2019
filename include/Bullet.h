@@ -1,8 +1,5 @@
 #pragma once
 
-#define BULLET_FRAME_COUNT 4
-#define BULLET_FRAME_TIME 1
-
 #include <iostream>
 
 #include "Sprite.h"

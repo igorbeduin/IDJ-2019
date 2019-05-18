@@ -55,7 +55,10 @@ void PenguinCannon::Shoot()
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, PENGUIN_BULLET_SPEED, PENGUIN_BULLET_DAMAGE, distanceToTarget.Magnitude(), PENGUIN_BULLET_SPRITE_PATH);
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
 
-    Game::GetInstance().GetState().AddObject(bullet);
+    std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
+    Sprite *bulletSprite = (Sprite *)weak_bullet.lock()->GetComponent("Sprite").get();
+    bulletSprite->SetFrameCount(PENGUINCANNON_FRAME_COUNT);
+    bulletSprite->SetFrameTime(PENGUINCANNON_FRAME_TIME);
 }
 
 bool PenguinCannon::Is(std::string type)

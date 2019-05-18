@@ -5,7 +5,7 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
                                                                                                           damage(damage)
 {
     // Criando o sprite do tiro
-    Sprite *bullet_sprite = new Sprite(associated, sprite, BULLET_FRAME_COUNT, BULLET_FRAME_TIME);
+    Sprite *bullet_sprite = new Sprite(associated, sprite);
     associated.AddComponent((std::shared_ptr<Sprite>)bullet_sprite);
     this->speed.x = cos(angle) * speed;
     this->speed.y = sin(angle) * speed;

@@ -69,7 +69,10 @@ void Minion::Shoot(Vec2 target)
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH);
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
 
-    Game::GetInstance().GetState().AddObject(bullet);
+    std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
+    Sprite* bulletSprite = (Sprite*)weak_bullet.lock()->GetComponent("Sprite").get();
+    bulletSprite->SetFrameCount(MINION_BULLET_FRAME_COUNT);
+    bulletSprite->SetFrameTime(MINION_BULLET_FRAME_TIME);
 }
 
 
