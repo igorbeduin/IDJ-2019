@@ -9,11 +9,15 @@ GameObject::GameObject() : started(false),
 
 GameObject::GameObject(int startingX, int startingY) : GameObject()
 {
+    // NÃO USAR: posição inicial não confiável (levemente deslocada)
+    // É preferível chamar o método DefineCenter() logo depois da instanciação de todos os Components
     this->box.DefineCenter(Vec2(startingX, startingY));
 }
 
 GameObject::GameObject(Vec2 startingPos) : GameObject()
 {
+    // NÃO USAR: posição inicial não confiável (levemente deslocada)
+    // É preferível chamar o método DefineCenter() logo depois da instanciação de todos os Components
     this->box.DefineCenter(startingPos);
 }
 
