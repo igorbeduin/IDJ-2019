@@ -108,7 +108,8 @@ void State::Update(float dt)
                 {
                     if (Collision::IsColliding(objectArray[i]->box, objWithCollider[j]->box, objectArray[i]->GetAngleRad(), objWithCollider[j]->GetAngleRad()))
                     {
-                        std::cout << "HOUVE COLISÃO" << std::endl;
+                        objectArray[i]->NotifyCollision(*objWithCollider[j].get());
+                        objWithCollider[j]->NotifyCollision(*objectArray[i].get());
                     }
                 }
             }
