@@ -24,6 +24,7 @@ public:
   int GetDepth();
   bool Is(std::string type);
   void Update(float dt);
+  void NotifyCollision(GameObject& other);
 
 private:
   std::vector<int> tileMatrix;

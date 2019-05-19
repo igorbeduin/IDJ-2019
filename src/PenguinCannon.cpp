@@ -9,6 +9,10 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
     // Criando a sprite
     Sprite* pengCannon_sprite = new Sprite(associated, PENGUINCANNON_SPRITE_PATH);
     associated.AddComponent((std::shared_ptr<Sprite>)pengCannon_sprite);
+    
+    // Adicionando Collider
+    Collider *penguinCannon_collider = new Collider(associated);
+    associated.AddComponent((std::shared_ptr<Collider>)penguinCannon_collider);
 
     std::shared_ptr<GameObject> shared_body = pbody.lock();
     if (shared_body.get() != nullptr)
@@ -51,8 +55,9 @@ void PenguinCannon::Shoot()
     Vec2 mousePos = Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
     Vec2 distanceToTarget = Vec2::Distance(associated.box.GetCenter(), mousePos);
     //Criando a bullet
-    GameObject *bullet = new GameObject(associated.box.GetCenter());
+    GameObject *bullet = new GameObject(associated.box.GetCenter());// + Vec2(associated.box.w / 2, associated.box.h / 2).Rotate(angle));
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, PENGUIN_BULLET_SPEED, PENGUIN_BULLET_DAMAGE, distanceToTarget.Magnitude(), PENGUIN_BULLET_SPRITE_PATH);
+    // bullet->box.DefineCenter();
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
 
     std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
@@ -65,3 +70,6 @@ bool PenguinCannon::Is(std::string type)
 {
     return (type == "PenguinCannon");
 }
+
+void PenguinCannon::NotifyCollision(GameObject &other)
+{}

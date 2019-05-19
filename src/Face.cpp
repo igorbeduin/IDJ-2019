@@ -48,3 +48,6 @@ bool Face::Is(std::string type)
         return false;
     }
 }
+
+void Face::NotifyCollision(GameObject &other)
+{}

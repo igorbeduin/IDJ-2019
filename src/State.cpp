@@ -88,10 +88,34 @@ void State::Update(float dt)
         quitRequested = true;
     }
 
+    // Update dos GOs
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         objectArray[i]->Update(dt);
     }
+
+    // Verifica se há colisões
+    std::vector<std::shared_ptr<GameObject>> objWithCollider;
+    for (int i = (int)objectArray.size() - 1; i >= 0; i--)
+    {   
+        std::shared_ptr<Component> colliderComponent = objectArray[i]->GetComponent("Collider");
+        if (colliderComponent.get() != nullptr)
+        {
+            objWithCollider.push_back(objectArray[i]);
+            for (int j = 0; j < (int)objWithCollider.size(); j++)
+            {
+                if (objectArray[i] != objWithCollider[j])
+                {
+                    if (Collision::IsColliding(objectArray[i]->box, objWithCollider[j]->box, objectArray[i]->GetAngleRad(), objWithCollider[j]->GetAngleRad()))
+                    {
+                        std::cout << "HOUVE COLISÃO" << std::endl;
+                    }
+                }
+            }
+        }
+    }
+
+    // Verifica se algum objeto deve ser deletado depois de ser atualizado
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         if (objectArray[i]->IsDead())

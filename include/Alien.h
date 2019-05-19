@@ -16,6 +16,7 @@
 #include "Minion.h"
 #include "Rect.h"
 #include "State.h"
+#include "Collider.h"
 
 enum ActionType
 {
@@ -32,6 +33,7 @@ public:
   void Update(float dt);
   void Render();
   bool Is(std::string type);
+  void NotifyCollision(GameObject &other);
 
 private:
   class Action

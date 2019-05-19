@@ -15,6 +15,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include "Bullet.h"
+#include "Collider.h"
 
 class PenguinCannon : public Component
 {
@@ -24,6 +25,8 @@ public:
     void Render();
     bool Is(std::string type);
     void Shoot();
+    void NotifyCollision(GameObject &other);
+
 private:
     std::weak_ptr<GameObject> pbody;
     float angle;

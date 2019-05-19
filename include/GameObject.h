@@ -24,9 +24,11 @@ public:
   void RequestDelete();
   void AddComponent(std::shared_ptr<Component> cpt);
   void RemoveComponent(std::shared_ptr<Component> cpt);
+  double GetAngleRad();
   std::shared_ptr<Component> GetComponent(std::string type);
   Rect box;
   double angleDeg;
+  void NotifyCollision(GameObject& other);
 
 private:
   std::vector<std::shared_ptr<Component>> components;

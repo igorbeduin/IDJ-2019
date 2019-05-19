@@ -23,7 +23,6 @@ bool Rect::Contains(float x, float y)
         {
             return false;
         }
-        
     }
     else 
     {

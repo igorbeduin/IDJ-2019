@@ -26,6 +26,8 @@
 #include "Alien.h"
 #include "PenguinBody.h"
 #include "PenguinCannon.h"
+#include "Collider.h"
+#include "Collision.h"
 
 class State
 {

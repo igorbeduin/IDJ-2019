@@ -11,6 +11,7 @@
 #include "Component.h"
 #include "Vec2.h"
 #include "GameObject.h"
+#include "Collider.h"
 
 class PenguinBody : public Component
 {
@@ -22,6 +23,7 @@ public:
     void Render();
     bool Is(std::string type);
     static PenguinBody* player;
+    void NotifyCollision(GameObject &other);
 
 private:
     std::weak_ptr<GameObject> pcannon;

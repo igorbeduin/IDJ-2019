@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "math.h"
 #include "Vec2.h"
+#include "Collider.h"
 
 class Bullet : public Component
 {
@@ -16,6 +17,7 @@ public:
     void Render();
     bool Is(std::string type);
     int GetDamage();
+    void NotifyCollision(GameObject &other);
 
 private:
     Vec2 speed;

@@ -12,13 +12,17 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     minion_sprite->SetScale(scale, scale);
     // Adicionando o sprite ao GameObject
     associated.AddComponent((std::shared_ptr<Sprite>)minion_sprite);
+    
+    // Adicionando Collider
+    Collider* minion_collider = new Collider(associated);
+    associated.AddComponent((std::shared_ptr<Collider>)minion_collider);
 
     std::shared_ptr<GameObject> shared_alien = alienCenter.lock();
     if (shared_alien.get() != nullptr)
     {
         // Radius inicia com x aproximadamente igual à diagonal do sprite do alien
-        radius.x = (shared_alien->box.w / 2);
-        radius.y = (shared_alien->box.h / 2);
+        radius.x = (shared_alien->box.w);
+        radius.y = (shared_alien->box.h);
     }
     else
     {   
@@ -75,4 +79,5 @@ void Minion::Shoot(Vec2 target)
     bulletSprite->SetFrameTime(MINION_BULLET_FRAME_TIME);
 }
 
-
+void Minion::NotifyCollision(GameObject &other)
+{}

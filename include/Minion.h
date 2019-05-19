@@ -17,6 +17,7 @@
 #include "Component.h"
 #include "Vec2.h"
 #include "Bullet.h"
+#include "Collider.h"
 
 class Minion : public Component
 {
@@ -26,6 +27,7 @@ public:
     void Render();
     bool Is(std::string type);
     void Shoot(Vec2 target);
+    void NotifyCollision(GameObject &other);
 
 private:
     Vec2 radius;

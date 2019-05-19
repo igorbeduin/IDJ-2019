@@ -62,3 +62,6 @@ bool Sound::Is(std::string type)
         return false;
     }
 }
+
+void Sound::NotifyCollision(GameObject &other)
+{}

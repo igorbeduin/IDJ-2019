@@ -15,6 +15,10 @@ PenguinBody::PenguinBody(GameObject &associated) : Component::Component(associat
     Sprite* pengBody_sprite = new Sprite(associated, PENGUINBODY_SPRITE_PATH);
     associated.AddComponent((std::shared_ptr<Sprite>)pengBody_sprite);
     Camera::Follow(&associated);
+
+    // Adicionando Collider
+    Collider *penguinBody_collider = new Collider(associated);
+    associated.AddComponent((std::shared_ptr<Collider>)penguinBody_collider);
 }
 
 PenguinBody::~PenguinBody()
@@ -63,4 +67,7 @@ bool PenguinBody::Is(std::string type)
 }
 
 void PenguinBody::Start()
+{}
+
+void PenguinBody::NotifyCollision(GameObject &other)
 {}

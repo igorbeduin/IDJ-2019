@@ -28,3 +28,6 @@ bool CameraFollower::Is(std::string type)
         return false;
     }
 }
+
+void CameraFollower::NotifyCollision(GameObject &other)
+{}

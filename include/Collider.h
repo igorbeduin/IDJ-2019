@@ -18,6 +18,8 @@ public:
     bool Is(std::string type);
     void SetScale(Vec2 scale);
     void SetOffset(Vec2 offset);
+    void NotifyCollision(GameObject &other);
+
 private:
     Vec2 scale;
     Vec2 offset;

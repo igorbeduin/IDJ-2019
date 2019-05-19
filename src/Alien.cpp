@@ -17,6 +17,10 @@ Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associ
     // Adicionando o sprite do alien
     Sprite *alien_sprite = new Sprite(associated, ALIEN_SPRITE_PATH);
     associated.AddComponent((std::shared_ptr<Sprite>)alien_sprite);
+
+    // Adicionando Collider
+    Collider* alien_collider = new Collider(associated);
+    associated.AddComponent((std::shared_ptr<Collider>)alien_collider);
 }
 
 void Alien::Start()
@@ -140,3 +144,6 @@ bool Alien::Is(std::string type)
 {
     return (type == "Alien");
 }
+
+void Alien::NotifyCollision(GameObject &other)
+{}

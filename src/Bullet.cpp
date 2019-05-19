@@ -10,6 +10,10 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     this->speed.x = cos(angle) * speed;
     this->speed.y = sin(angle) * speed;
     associated.angleDeg = this->speed.ArgDeg();
+
+    // Adicionando Collider
+    Collider *bullet_collider = new Collider(associated);
+    associated.AddComponent((std::shared_ptr<Collider>)bullet_collider);
 }
 
 void Bullet::Update(float dt)
@@ -38,4 +42,5 @@ int Bullet::GetDamage()
     return damage;
 }
 
-
+void Bullet::NotifyCollision(GameObject &other)
+{}

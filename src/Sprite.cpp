@@ -167,3 +167,6 @@ void Sprite::SetFrameTime(float frameTime)
 {
     this->frameTime = frameTime;
 }
+
+void Sprite::NotifyCollision(GameObject &other)
+{}

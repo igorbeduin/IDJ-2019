@@ -31,9 +31,9 @@ Vec2 Vec2::Distance(Vec2 begin, Vec2 end)
     return Vec2(x_distance, y_distance);
 }
 
-void Vec2::Rotate(float theta)
-{   
-
+void Vec2::RotateItself(float theta)
+{
+    // Recebe theta em radianos
     float x_ = (x * cos(theta)) - (y * sin(theta));
     float y_ = (x * sin(theta)) + (y * cos(theta));
 
@@ -41,16 +41,27 @@ void Vec2::Rotate(float theta)
     y = y_;
 }
 
+Vec2 Vec2::Rotate(float theta)
+{
+    // Recebe theta em radianos
+    float x_ = (x * cos(theta)) - (y * sin(theta));
+    float y_ = (x * sin(theta)) + (y * cos(theta));
+
+    x = x_;
+    y = y_;
+    return Vec2(x_, y_);
+}
+
 void Vec2::RotateDeg(float theta)
 {
-    // Receives theta in degrees
-    Rotate(theta / (180 / 3.14159265359));
+    // Recebe theta em graus
+    RotateItself(theta / (180 / 3.14159265359));
 }
 
 Vec2 Vec2::GetRotated(float theta)
 {   
     Vec2 temp(x, y);
-    temp.Rotate(theta);
+    temp.RotateItself(theta);
 
     return temp;
 }
