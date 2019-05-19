@@ -6,6 +6,7 @@
 #define PENGUIN_BULLET_SPRITE_PATH "assets/img/penguinbullet.png"
 #define PENGUINCANNON_FRAME_COUNT 4
 #define PENGUINCANNON_FRAME_TIME 2
+#define BULLET_WIDTH_FACTOR 0.75
 
 #include <iostream>
 #include <memory>

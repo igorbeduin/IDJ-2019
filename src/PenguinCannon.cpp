@@ -54,10 +54,11 @@ void PenguinCannon::Shoot()
 {
     Vec2 mousePos = Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
     Vec2 distanceToTarget = Vec2::Distance(associated.box.GetCenter(), mousePos);
+    
     //Criando a bullet
-    GameObject *bullet = new GameObject(associated.box.GetCenter());// + Vec2(associated.box.w / 2, associated.box.h / 2).Rotate(angle));
+    Vec2 bulletDistanceFromPeng = Vec2(associated.box.w * BULLET_WIDTH_FACTOR, 0).Rotate(angle);
+    GameObject *bullet = new GameObject(associated.box.GetCenter() + bulletDistanceFromPeng);
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, PENGUIN_BULLET_SPEED, PENGUIN_BULLET_DAMAGE, distanceToTarget.Magnitude(), PENGUIN_BULLET_SPRITE_PATH);
-    // bullet->box.DefineCenter();
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
 
     std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);

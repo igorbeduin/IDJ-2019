@@ -161,6 +161,7 @@ void Sprite::SetFrameCount(int frameCount)
     this->frameCount = frameCount;
     SetFrame(0);
     associated.box.w = GetWidth();
+    associated.box.DefineCenter(associated.box.x, associated.box.y);
 }
 
 void Sprite::SetFrameTime(float frameTime)
