@@ -30,7 +30,7 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // GameObject MAP
     // ====================================================
-    GameObject *map = new GameObject(0, 0);
+    GameObject *map = new GameObject();
     // Criando o tileSet para o tileMap
     TileSet *tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILESET_PATH);
     // Criando o tileMap
@@ -41,12 +41,14 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // GameObject PENGUIN
     // ====================================================
-    GameObject *penguinBody = new GameObject(704, 640);
+    GameObject *penguinBody = new GameObject();
     // Adicionando o comportamento do PenguinBody
     PenguinBody* penguinBody_behaviour = new PenguinBody(*penguinBody);
     penguinBody->AddComponent((std::shared_ptr<PenguinBody>)penguinBody_behaviour);
+    penguinBody->box.DefineCenter(704, 640);
 
-    std::weak_ptr<GameObject> weak_penguin = AddObject(penguinBody);
+        std::weak_ptr<GameObject>
+            weak_penguin = AddObject(penguinBody);
 
     // GameObject CANNON PENGUIN
     // ====================================================
@@ -59,10 +61,11 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // GameObject ALIEN
     // ====================================================
-    GameObject *alien = new GameObject(512, 300);
+    GameObject *alien = new GameObject();
     // Adicionando o comportamento de Alien
     Alien *alien_behaviour = new Alien(*alien, 4);
     alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
+    alien->box.DefineCenter(512, 300);
 
     AddObject(alien);
 }
