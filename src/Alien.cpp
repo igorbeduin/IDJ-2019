@@ -3,17 +3,17 @@
 #include "../include/Camera.h"
 #include "../include/Vec2.h"
 #include "../include/Game.h"
+#include "../include/PenguinBody.h"
 
-Alien::Action::Action(ActionType type, float x, float y) : type(type),
-                                                           pos(x, y)
-{
-}
+int Alien::alienCount = 0;
 
 // speed já está sendo inicializado pelo construtor de Vec2
 Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associated),
+                                                     state(RESTING),
                                                      hp(ALIEN_HP),
                                                      nMinions(nMinions)
 {
+    alienCount += 1;
     // Adicionando o sprite do alien
     Sprite *alien_sprite = new Sprite(associated, ALIEN_SPRITE_PATH);
     associated.AddComponent((std::shared_ptr<Sprite>)alien_sprite);
@@ -41,7 +41,7 @@ void Alien::Start()
 
 Alien::~Alien()
 {
-
+    alienCount -= 1;
     for (int i = minionArray.size() - 1; i >= 0; i--)
     {
         minionArray.erase(minionArray.begin() + i);
@@ -50,6 +50,7 @@ Alien::~Alien()
 
 void Alien::Update(float dt)
 {   
+    // Verifica morte
     if (hp <= 0)
     {
         associated.RequestDelete();
@@ -71,58 +72,52 @@ void Alien::Update(float dt)
 
     // Faz o alien girar
     associated.angleDeg += dt * ALIEN_ANG_VEL;
-    
-    // Enfileiramento de novas ações
-    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
-    {
-        taskQueue.emplace(Action(SHOOT, InputManager::GetInstance().GetMouseX(),
-                                        InputManager::GetInstance().GetMouseY()));
-    }
-    if (InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON))
-    {
-        taskQueue.emplace(Action(MOVE, InputManager::GetInstance().GetMouseX(),
-                                       InputManager::GetInstance().GetMouseY()));
-    }
-    
 
-    // Execução da fila de ações
-    if (!taskQueue.empty())
-    {
-        switch (taskQueue.front().type)
+    // FSM de ações do Alien
+    switch (state) 
+    {   
+        // Pega posição do player
+        if (PenguinBody::player != nullptr)
         {
-            case MOVE:
+            destination = PenguinBody::player->Pos();
+        }
+
+        // Se ele estiver se movendo
+        case MOVING:
+        {   
+            // Se a distancia for maior que uma tolerancia, SE MOVE até o destino
+            if (Vec2::Distance(associated.box.GetCenter(), destination).Magnitude() > ALIEN_TARGET_TOLERANCE)
             {
                 float step = dt * ALIEN_VELOCITY;
 
                 // Calculo de velocidade e mudança de posição
-                Vec2 distance = Vec2::Distance(Vec2(associated.box.x + associated.box.w / 2, associated.box.y + associated.box.h / 2), taskQueue.front().pos);
-
+                Vec2 distance = Vec2::Distance(associated.box.GetCenter(), destination);
+                // Anda até o destino
                 if (distance.Magnitude() > step)
                 {
                     associated.box.x += step * cos(distance.Arg());
                     associated.box.y += step * sin(distance.Arg());
                 }
+                // Teleporta pro destino (lida com "vibrações")
                 else
                 {
-                    associated.box.x = taskQueue.front().pos.x - associated.box.w / 2;
-                    associated.box.y = taskQueue.front().pos.y - associated.box.h / 2;
-                    taskQueue.pop();
+                    associated.box.DefineCenter(destination);
                 }
-                break;
             }
-
-            case SHOOT:
-            {   
+            // Se a distancia for menor que uma tolerancia, ATIRA
+            else
+            {
                 std::shared_ptr<GameObject> minion;
-                Vec2 target = taskQueue.front().pos;
-                
+                Vec2 target = destination;
+
                 float distToTarget = std::numeric_limits<float>::max();
 
                 // Percorre o vector de minions procurando pelo mais próximo do target
+                // No final do laço, temos em "minion" o shared_ptr para o minion mais próximo do target
                 if (!minionArray.empty())
-                {   
+                {
                     for (int i = 0; i < (int)minionArray.size(); i++)
-                    {   
+                    {
                         if (!minionArray[i].expired())
                         {
                             std::shared_ptr<GameObject> temp_minion = minionArray[i].lock();
@@ -136,21 +131,47 @@ void Alien::Update(float dt)
                         }
                     }
                 }
-                
 
-                if (minion != nullptr)
-                {   
-                    Minion* realPtrMinion = (Minion *)minion->GetComponent("Minion").get();
-                    // realPtrMinion->Shoot(target);
+                // Se esse minion existir
+                if (minion.get() != nullptr)
+                {
+                    Minion* real_minion = (Minion *)minion->GetComponent("Minion").get();
+                    // Atira
+                    if (PenguinBody::player != nullptr)
+                    {
+                        std::cout << "ALIEN: HAAAA! PEW" << std::endl;
+                        real_minion->Shoot(target);
+                    }
                 }
                 else
                 {
                     std::cout << "ERRO: não existe minion pra atirar" << std::endl;
                 }
 
-                taskQueue.pop();
-                break;
+                // Reseta o timer e muda o estado para RESTING
+                restTimer.Restart();
+                state = RESTING;
             }
+        }
+        case RESTING:
+        {   
+            // Se o timer já tiver "estourado"
+            if (restTimer.Get() >= ALIEN_MOV_COOLDOWN)
+            {   
+                // Atualiza a posição do destino/target e muda o estado para MOVING
+                if (PenguinBody::player != nullptr)
+                {
+                    destination = PenguinBody::player->Pos();
+                }
+                state = MOVING;
+
+            }
+            else
+            {   
+                // Atualiza o timer até ele "estourar"
+                restTimer.Update(dt);
+            }
+            
         }
     }
 }
@@ -177,6 +198,7 @@ void Alien::NotifyCollision(GameObject &other)
         {
             int damage = bullet->GetDamage();
             hp -= damage;
+            std::cout << "ALIEN HP: " << hp << std::endl;
         }
     }
 }
