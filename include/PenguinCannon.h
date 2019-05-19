@@ -7,7 +7,7 @@
 #define PENGUINCANNON_FRAME_COUNT 4
 #define PENGUINCANNON_FRAME_TIME 2
 #define BULLET_WIDTH_FACTOR 0.75
-#define PENGUIN_BULLET_CD 0.5
+#define PENGUIN_BULLET_CD 0.25
 
 #include <iostream>
 #include <memory>
@@ -33,5 +33,5 @@ public:
 private:
     std::weak_ptr<GameObject> pbody;
     float angle;
-    Timer timer;
+    Timer shootCooldown;
 };
