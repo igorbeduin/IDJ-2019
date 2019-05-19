@@ -3,6 +3,7 @@
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
 #define ALIEN_VELOCITY 300
 #define ALIEN_ANG_VEL 8 // degree/frame
+#define ALIEN_HP 150
 
 #include <iostream>
 #include <queue>

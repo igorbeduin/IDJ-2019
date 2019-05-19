@@ -4,6 +4,7 @@
 #define PENGUIN_ACCELERATION 0.025
 #define SPEED_LIM 2.5
 #define ANG_SPEED 1
+#define PENGUIN_HP 100
 
 #include <memory>
 
@@ -12,6 +13,7 @@
 #include "Vec2.h"
 #include "GameObject.h"
 #include "Collider.h"
+#include "Bullet.h"
 
 class PenguinBody : public Component
 {
