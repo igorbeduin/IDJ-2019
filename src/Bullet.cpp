@@ -1,8 +1,9 @@
 #include "../include/Bullet.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite) : Component::Component(associated),
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, bool originPlayer) : Component::Component(associated),
                                                                                                           distanceLeft(maxDistance),
-                                                                                                          damage(damage)
+                                                                                                          damage(damage),
+                                                                                                          originPlayer(originPlayer)
 {
     // Criando o sprite do tiro
     Sprite *bullet_sprite = new Sprite(associated, sprite);
