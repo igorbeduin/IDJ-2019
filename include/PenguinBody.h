@@ -31,6 +31,7 @@ public:
     bool Is(std::string type);
     static PenguinBody* player;
     void NotifyCollision(GameObject &other);
+    Vec2 Pos();
 
 private:
     std::weak_ptr<GameObject> pcannon;

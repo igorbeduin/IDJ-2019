@@ -24,8 +24,8 @@ PenguinBody::PenguinBody(GameObject &associated) : Component::Component(associat
 
 PenguinBody::~PenguinBody()
 {
-    player = nullptr;
     Camera::Unfollow();
+    player = nullptr;
 }
 
 void PenguinBody::Update(float dt)
@@ -47,7 +47,6 @@ void PenguinBody::Update(float dt)
         Game::GetInstance().GetState().AddObject(penguin_death);
         
         explosion_sound->Play();
-
     }
 
     if (InputManager::GetInstance().IsKeyDown(W_KEY))
@@ -103,6 +102,12 @@ void PenguinBody::NotifyCollision(GameObject &other)
         {
             int damage = bullet->GetDamage();
             hp -= damage;
+            std::cout << "PENGUIN HP: " << hp << std::endl;
         }
     }
+}
+
+Vec2 PenguinBody::Pos()
+{   
+    return associated.box.GetCenter();
 }
