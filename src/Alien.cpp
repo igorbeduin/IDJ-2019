@@ -11,7 +11,7 @@ Alien::Action::Action(ActionType type, float x, float y) : type(type),
 
 // speed já está sendo inicializado pelo construtor de Vec2
 Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associated),
-                                                     hp(50),
+                                                     hp(ALIEN_HP),
                                                      nMinions(nMinions)
 {
     // Adicionando o sprite do alien
@@ -49,7 +49,12 @@ Alien::~Alien()
 }
 
 void Alien::Update(float dt)
-{   
+{
+    if (hp <= 0)
+    {
+        associated.RequestDelete();
+    }
+    
     // Faz o alien girar
     associated.angleDeg += dt * ALIEN_ANG_VEL;
     
@@ -122,7 +127,7 @@ void Alien::Update(float dt)
                 if (minion != nullptr)
                 {   
                     Minion* realPtrMinion = (Minion *)minion->GetComponent("Minion").get();
-                    realPtrMinion->Shoot(target);
+                    // realPtrMinion->Shoot(target);
                 }
                 else
                 {
@@ -146,4 +151,14 @@ bool Alien::Is(std::string type)
 }
 
 void Alien::NotifyCollision(GameObject &other)
-{}
+{
+    std::shared_ptr<Component> shared_Bullet = other.GetComponent("Bullet");
+
+    if (shared_Bullet.get() != nullptr)
+    {
+        Bullet *bullet = (Bullet *)shared_Bullet.get();
+        int damage = bullet->GetDamage();
+        std::cout << "ALIEN SOFREU " << damage << std::endl;
+        hp -= damage;
+    }
+}
