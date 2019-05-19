@@ -1,7 +1,5 @@
 #include "../include/Collider.h"
 
-#define DEBUG
-
 #ifdef DEBUG
 #include "../include/Camera.h"
 #include "../include/Game.h"

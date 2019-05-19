@@ -64,14 +64,13 @@ bool Minion::Is(std::string type)
 
 void Minion::Shoot(Vec2 target)
 {
-    Vec2 distance = target - Vec2(associated.box.x + (associated.box.w / 2), associated.box.y + (associated.box.h / 2));
+    Vec2 distance = Vec2::Distance(associated.box.GetCenter(), target);
     float angle = atan2(distance.y, distance.x);
 
     // Criando um bullet
-    GameObject* bullet = new GameObject();
-    Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH, "Enemy");
+    GameObject *bullet = new GameObject(associated.box.GetCenter());
+    Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, MINION_BULLET_DISTANCE, MINION_BULLET_SPRITE_PATH, "Enemy");
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
-    bullet->box.DefineCenter(associated.box.GetCenter());
     
     std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
     Sprite* bulletSprite = (Sprite*)weak_bullet.lock()->GetComponent("Sprite").get();

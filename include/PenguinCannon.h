@@ -8,6 +8,7 @@
 #define PENGUINCANNON_FRAME_TIME 2
 #define BULLET_WIDTH_FACTOR 0.75
 #define PENGUIN_BULLET_CD 0.25
+#define PENGUIN_BULLET_DISTANCE 2000
 
 #include <iostream>
 #include <memory>

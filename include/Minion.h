@@ -7,6 +7,7 @@
 #define MINION_BULLET_SPRITE_PATH "assets/img/minionbullet2.png"
 #define MINION_BULLET_FRAME_COUNT 3
 #define MINION_BULLET_FRAME_TIME 0.1
+#define MINION_BULLET_DISTANCE 2000
 
 #include <iostream>
 #include <memory>

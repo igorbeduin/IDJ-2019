@@ -1,8 +1,6 @@
 #include "../include/Camera.h"
 #include "../include/InputManager.h"
 
-#define SPEED 100
-
 GameObject* Camera::focus;
 
 Vec2 Camera::pos;
