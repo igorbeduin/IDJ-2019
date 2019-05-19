@@ -22,9 +22,6 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     CameraFollower *bg_cmrFollower = new CameraFollower(*background);
     background->AddComponent((std::shared_ptr<CameraFollower>)bg_cmrFollower);
 
-    background->box.x = 0;
-    background->box.y = 0;
-
     // Adicionando o background no objectArray
     AddObject(background);
 
@@ -41,14 +38,12 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // GameObject PENGUIN
     // ====================================================
-    GameObject *penguinBody = new GameObject();
+    GameObject *penguinBody = new GameObject(704, 640);
     // Adicionando o comportamento do PenguinBody
     PenguinBody* penguinBody_behaviour = new PenguinBody(*penguinBody);
     penguinBody->AddComponent((std::shared_ptr<PenguinBody>)penguinBody_behaviour);
-    penguinBody->box.DefineCenter(704, 640);
 
-        std::weak_ptr<GameObject>
-            weak_penguin = AddObject(penguinBody);
+    std::weak_ptr<GameObject> weak_penguin = AddObject(penguinBody);
 
     // GameObject CANNON PENGUIN
     // ====================================================
@@ -61,11 +56,10 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
 
     // GameObject ALIEN
     // ====================================================
-    GameObject *alien = new GameObject();
+    GameObject *alien = new GameObject(512, 300);
     // Adicionando o comportamento de Alien
     Alien *alien_behaviour = new Alien(*alien, 4);
     alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
-    alien->box.DefineCenter(512, 300);
 
     AddObject(alien);
 }
