@@ -42,5 +42,24 @@ int Bullet::GetDamage()
     return damage;
 }
 
+bool Bullet::FromPlayer()
+{
+    return originPlayer;
+}
+
 void Bullet::NotifyCollision(GameObject &other)
-{}
+{
+    std::shared_ptr<Component> shared_pengBody = other.GetComponent("PenguinBody");
+    std::shared_ptr<Component> shared_Alien = other.GetComponent("Alien");
+
+    if ((shared_pengBody.get() != nullptr) && (!originPlayer))
+    {   
+        associated.RequestDelete();
+        std::cout << "BALA COLIDIU COM PINGUIM" << std::endl;
+    }
+    if (shared_Alien.get() != nullptr)
+    {
+        associated.RequestDelete();
+        std::cout << "BALA COLIDIU COM ALIEN" << std::endl;
+    }
+}
