@@ -21,8 +21,8 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
     if (shared_alien.get() != nullptr)
     {
         // Radius inicia com x aproximadamente igual à diagonal do sprite do alien
-        radius.x = (shared_alien->box.w);
-        radius.y = (shared_alien->box.h);
+        radius.x = (shared_alien->box.w * 0.6);
+        radius.y = (shared_alien->box.h * 0.6);
     }
     else
     {   
@@ -43,7 +43,8 @@ void Minion::Update(float dt)
     // Compensação de giro
     associated.angleDeg += arcStep;
     if (alienCenter.lock().get() != nullptr)
-    {
+    {   
+        // Gira em torno de um ponto
         radius.RotateDeg(arcStep);
         Vec2 pos = radius + alienCenter.lock().get()->box.GetCenter();
         associated.box.DefineCenter(pos.x, pos.y);
@@ -51,6 +52,17 @@ void Minion::Update(float dt)
     else
     {
         associated.RequestDelete();
+        // Criando animação de morte
+        GameObject *alien_death = new GameObject();
+        Sprite *explosion_anim = new Sprite(*alien_death, ALIEN_DEATH_ANIM_PATH, ALIEN_DEATH_ANIM_COUNT,
+                                            ALIEN_DEATH_ANIM_TIME / ALIEN_DEATH_ANIM_COUNT,
+                                            ALIEN_DEATH_ANIM_TIME);
+        alien_death->AddComponent((std::shared_ptr<Sprite>)explosion_anim);
+        // Criando som da morte
+        Sound *explosion_sound = new Sound(*alien_death, ALIEN_DEATH_SOUND_PATH);
+        alien_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
+        alien_death->box.DefineCenter(associated.box.GetCenter());
+        Game::GetInstance().GetState().AddObject(alien_death);
     }
 }
 
