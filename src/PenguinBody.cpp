@@ -8,7 +8,7 @@ PenguinBody::PenguinBody(GameObject &associated) : Component::Component(associat
                                                    speed(0, 0),
                                                    linearSpeed(0),
                                                    angle(0),
-                                                   hp(50)
+                                                   hp(PENGUIN_HP)
 {
     player = this;
     // Criando a sprite
@@ -29,6 +29,11 @@ PenguinBody::~PenguinBody()
 
 void PenguinBody::Update(float dt)
 {
+    if (hp <= 0)
+    {
+        associated.RequestDelete();
+    }
+
     if (InputManager::GetInstance().IsKeyDown(W_KEY))
     {
         if (linearSpeed < SPEED_LIM)
@@ -70,4 +75,17 @@ void PenguinBody::Start()
 {}
 
 void PenguinBody::NotifyCollision(GameObject &other)
-{}
+{
+    std::shared_ptr<Component> shared_Bullet = other.GetComponent("Bullet");
+
+    if (shared_Bullet.get() != nullptr)
+    {
+        Bullet* bullet = (Bullet*)shared_Bullet.get();
+        if (!bullet->FromPlayer())
+        {
+            int damage = bullet->GetDamage();
+            std::cout << "PUNGUIM SOFREU " << damage << std::endl;
+            hp -= damage;
+        }
+    }
+}
