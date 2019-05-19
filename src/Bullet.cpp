@@ -1,9 +1,9 @@
 #include "../include/Bullet.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, bool originPlayer) : Component::Component(associated),
-                                                                                                          distanceLeft(maxDistance),
-                                                                                                          damage(damage),
-                                                                                                          originPlayer(originPlayer)
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, std::string shooter) : Component::Component(associated),
+                                                                                                                                                    distanceLeft(maxDistance),
+                                                                                                                                                    damage(damage),
+                                                                                                                                                    shooter(shooter)
 {
     // Criando o sprite do tiro
     Sprite *bullet_sprite = new Sprite(associated, sprite);
@@ -43,9 +43,9 @@ int Bullet::GetDamage()
     return damage;
 }
 
-bool Bullet::FromPlayer()
+bool Bullet::IsShooter(std::string shooter)
 {
-    return originPlayer;
+    return (shooter == this->shooter);
 }
 
 void Bullet::NotifyCollision(GameObject &other)
@@ -53,14 +53,14 @@ void Bullet::NotifyCollision(GameObject &other)
     std::shared_ptr<Component> shared_pengBody = other.GetComponent("PenguinBody");
     std::shared_ptr<Component> shared_Alien = other.GetComponent("Alien");
 
-    if ((shared_pengBody.get() != nullptr) && (!originPlayer))
+    // Se a colisão ocorre com o pinguim
+    if ((shared_pengBody.get() != nullptr) && (shooter != "Player"))
     {   
         associated.RequestDelete();
-        std::cout << "BALA COLIDIU COM PINGUIM" << std::endl;
     }
-    if (shared_Alien.get() != nullptr)
+    // Se a colisão ocorre com o alien
+    if ((shared_Alien.get() != nullptr) && (shooter != "Enemy"))
     {
         associated.RequestDelete();
-        std::cout << "BALA COLIDIU COM ALIEN" << std::endl;
     }
 }

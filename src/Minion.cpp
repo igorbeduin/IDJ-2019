@@ -68,11 +68,11 @@ void Minion::Shoot(Vec2 target)
     float angle = atan2(distance.y, distance.x);
 
     // Criando um bullet
-    // A Bullet inicia com posição inicial igual a posição do Minion
-    GameObject* bullet = new GameObject(associated.box.GetCenter());
-    Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH);
+    GameObject* bullet = new GameObject();
+    Bullet *bullet_behaviour = new Bullet(*bullet, angle, MINION_BULLET_SPEED, MINION_BULLET_DAMAGE, distance.Magnitude(), MINION_BULLET_SPRITE_PATH, "Enemy");
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
-
+    bullet->box.DefineCenter(associated.box.GetCenter());
+    
     std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
     Sprite* bulletSprite = (Sprite*)weak_bullet.lock()->GetComponent("Sprite").get();
     bulletSprite->SetFrameCount(MINION_BULLET_FRAME_COUNT);

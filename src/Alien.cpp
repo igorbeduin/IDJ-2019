@@ -145,7 +145,7 @@ void Alien::Update(float dt)
                 }
                 else
                 {
-                    std::cout << "ERRO: minion é um nullptr!" << std::endl;
+                    std::cout << "ERRO: não existe minion pra atirar" << std::endl;
                 }
 
                 taskQueue.pop();
@@ -168,11 +168,15 @@ void Alien::NotifyCollision(GameObject &other)
 {
     std::shared_ptr<Component> shared_Bullet = other.GetComponent("Bullet");
 
+    // Se a colisão ocorre com uma bala
     if (shared_Bullet.get() != nullptr)
     {
         Bullet *bullet = (Bullet *)shared_Bullet.get();
-        int damage = bullet->GetDamage();
-        std::cout << "ALIEN SOFREU " << damage << std::endl;
-        hp -= damage;
+        // Se quem atirou não foi o inimigo, ou seja, ele mesmo
+        if (!bullet->IsShooter("Enemy"))
+        {
+            int damage = bullet->GetDamage();
+            hp -= damage;
+        }
     }
 }

@@ -1,6 +1,7 @@
 #include "../include/PenguinBody.h"
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
+#include "../include/Game.h"
 
 PenguinBody* PenguinBody::player = nullptr;
 
@@ -93,13 +94,14 @@ void PenguinBody::NotifyCollision(GameObject &other)
 {
     std::shared_ptr<Component> shared_Bullet = other.GetComponent("Bullet");
 
+    // Se a colisão ocorre com uma bala
     if (shared_Bullet.get() != nullptr)
     {
         Bullet* bullet = (Bullet*)shared_Bullet.get();
-        if (!bullet->FromPlayer())
+        // Se quem atirou não foi o jogador, ou seja, ele mesmo
+        if (!bullet->IsShooter("Player"))
         {
             int damage = bullet->GetDamage();
-            std::cout << "PUNGUIM SOFREU " << damage << std::endl;
             hp -= damage;
         }
     }
