@@ -53,8 +53,8 @@ void PenguinBody::Update(float dt)
         associated.angleDeg += ANG_SPEED;
     }
 
-    float angleRad = associated.angleDeg / (180 / 3.14159265359);
-    Vec2 desloc = Vec2(cos(angleRad) * linearSpeed, sin(angleRad) * linearSpeed);
+    angle = associated.angleDeg / (180 / 3.14159265359);
+    Vec2 desloc = Vec2(cos(angle) * linearSpeed, sin(angle) * linearSpeed);
     associated.box.DefineCenter(associated.box.GetCenter() + desloc);
 }
 
