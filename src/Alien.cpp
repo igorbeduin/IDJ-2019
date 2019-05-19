@@ -49,12 +49,26 @@ Alien::~Alien()
 }
 
 void Alien::Update(float dt)
-{
+{   
     if (hp <= 0)
     {
         associated.RequestDelete();
+
+        // Criando animação de morte
+        GameObject *alien_death = new GameObject();
+        Sprite *explosion_anim = new Sprite(*alien_death, ALIEN_DEATH_ANIM_PATH, ALIEN_DEATH_ANIM_COUNT,
+                                                     ALIEN_DEATH_ANIM_TIME / ALIEN_DEATH_ANIM_COUNT,
+                                                     ALIEN_DEATH_ANIM_TIME);
+        alien_death->AddComponent((std::shared_ptr<Sprite>)explosion_anim);
+        // Criando som da morte
+        Sound *explosion_sound = new Sound(*alien_death, ALIEN_DEATH_SOUND_PATH);
+        alien_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
+        alien_death->box.DefineCenter(associated.box.GetCenter());
+        Game::GetInstance().GetState().AddObject(alien_death);
+
+        explosion_sound->Play();
     }
-    
+
     // Faz o alien girar
     associated.angleDeg += dt * ALIEN_ANG_VEL;
     

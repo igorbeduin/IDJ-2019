@@ -28,10 +28,25 @@ PenguinBody::~PenguinBody()
 }
 
 void PenguinBody::Update(float dt)
-{
+{   
     if (hp <= 0)
     {
         associated.RequestDelete();
+
+        // Criando animação de morte
+        GameObject* penguin_death = new GameObject();
+        Sprite *explosion_anim = new Sprite(*penguin_death, PENGUIN_DEATH_ANIM_PATH, PENGUIN_DEATH_ANIM_COUNT, 
+                                                       PENGUIN_DEATH_ANIM_TIME / PENGUIN_DEATH_ANIM_COUNT, 
+                                                       PENGUIN_DEATH_ANIM_TIME);
+        penguin_death->AddComponent((std::shared_ptr<Sprite>)explosion_anim);
+        // Criando som da morte
+        Sound *explosion_sound = new Sound(*penguin_death, PENGUIN_DEATH_SOUND_PATH);
+        penguin_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
+        penguin_death->box.DefineCenter(associated.box.GetCenter());
+        Game::GetInstance().GetState().AddObject(penguin_death);
+        
+        explosion_sound->Play();
+
     }
 
     if (InputManager::GetInstance().IsKeyDown(W_KEY))
