@@ -27,6 +27,8 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
 
 void PenguinCannon::Update(float dt)
 {
+    timer.Update(dt);
+
     std::shared_ptr<GameObject> shared_body = pbody.lock();
     if (shared_body.get() != nullptr)
     {
@@ -43,7 +45,11 @@ void PenguinCannon::Update(float dt)
 
     if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
     {   
-        Shoot();
+        if (timer.Get() >= PENGUIN_BULLET_CD)
+        {
+            Shoot();
+            timer.Restart();
+        }
     }
 }
 

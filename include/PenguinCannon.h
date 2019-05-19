@@ -7,6 +7,7 @@
 #define PENGUINCANNON_FRAME_COUNT 4
 #define PENGUINCANNON_FRAME_TIME 2
 #define BULLET_WIDTH_FACTOR 0.75
+#define PENGUIN_BULLET_CD 0.5
 
 #include <iostream>
 #include <memory>
@@ -17,6 +18,7 @@
 #include "Vec2.h"
 #include "Bullet.h"
 #include "Collider.h"
+#include "Timer.h"
 
 class PenguinCannon : public Component
 {
@@ -31,4 +33,5 @@ public:
 private:
     std::weak_ptr<GameObject> pbody;
     float angle;
+    Timer timer;
 };
