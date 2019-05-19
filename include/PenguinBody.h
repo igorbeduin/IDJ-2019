@@ -5,6 +5,10 @@
 #define SPEED_LIM 2.5
 #define ANG_SPEED 1
 #define PENGUIN_HP 100
+#define PENGUIN_DEATH_ANIM_PATH "assets/img/penguindeath.png"
+#define PENGUIN_DEATH_ANIM_COUNT 5.0
+#define PENGUIN_DEATH_ANIM_TIME 3.0
+#define PENGUIN_DEATH_SOUND_PATH "assets/audio/boom.wav"
 
 #include <memory>
 
@@ -14,6 +18,7 @@
 #include "GameObject.h"
 #include "Collider.h"
 #include "Bullet.h"
+#include "Sound.h"
 
 class PenguinBody : public Component
 {
