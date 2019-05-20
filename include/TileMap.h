@@ -1,7 +1,7 @@
-#ifndef TILEMAP_H
-#define TILEMAP_H
-
 #pragma once
+
+// Compensador de velocidade do parallax
+#define PARALLAX_COMP 0.01
 
 #include <iostream>
 #include <fstream>
@@ -24,6 +24,7 @@ public:
   int GetDepth();
   bool Is(std::string type);
   void Update(float dt);
+  void NotifyCollision(GameObject& other);
 
 private:
   std::vector<int> tileMatrix;
@@ -32,4 +33,3 @@ private:
   int mapHeight;
   int mapDepth;
 };
-#endif

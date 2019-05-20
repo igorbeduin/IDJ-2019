@@ -19,3 +19,4 @@ A disciplina foi cursada durante o semestre 2019/1 e ministrada pela Profª Carl
 
 ## Global TODO List:
 * Resolver erros de inicialização com `try/catch`
+* Constructor de GameObject que recebe a posição inicial com bugs, preferir usar DefineCenter() após a criação do objeto

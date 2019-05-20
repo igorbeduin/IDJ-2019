@@ -17,7 +17,6 @@ void TileSet::RenderTile(unsigned index, float x, float y)
         {   
             int OrgX = tileWidth*(index%columns);
             int OrgY = tileHeight*(index/columns);
-            //std::cout << "OrgX: " << OrgX << "|" << "OrgY: " << OrgY << "|" << "index: " << index << std::endl;
             tileSet.SetClip(OrgX, OrgY, tileWidth, tileHeight);
             tileSet.Render((int)x, (int)y);
         }

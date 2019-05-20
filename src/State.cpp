@@ -22,11 +22,8 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     CameraFollower *bg_cmrFollower = new CameraFollower(*background);
     background->AddComponent((std::shared_ptr<CameraFollower>)bg_cmrFollower);
 
-    background->box.x = 0;
-    background->box.y = 0;
-
     // Adicionando o background no objectArray
-    objectArray.emplace_back(background);
+    AddObject(background);
 
     // GameObject MAP
     // ====================================================
@@ -37,23 +34,34 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     TileMap *tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
     map->AddComponent((std::shared_ptr<TileMap>)tileMap);
 
-    map->box.x = 0;
-    map->box.y = 0;
+    AddObject(map);
 
-    // Adicionando o mapa no objectArray
-    objectArray.emplace_back(map);
+    // GameObject PENGUIN
+    // ====================================================
+    GameObject *penguinBody = new GameObject(704, 640);
+    // Adicionando o comportamento do PenguinBody
+    PenguinBody* penguinBody_behaviour = new PenguinBody(*penguinBody);
+    penguinBody->AddComponent((std::shared_ptr<PenguinBody>)penguinBody_behaviour);
+
+    std::weak_ptr<GameObject> weak_penguin = AddObject(penguinBody);
+
+    // GameObject CANNON PENGUIN
+    // ====================================================
+    GameObject *penguinCannon = new GameObject();
+    // Adicionando o comportamento do PenguinCannon
+    PenguinCannon* penguinCannon_behaviour = new PenguinCannon(*penguinCannon, weak_penguin);
+    penguinCannon->AddComponent((std::shared_ptr<PenguinCannon>)penguinCannon_behaviour);
+
+    AddObject(penguinCannon);
 
     // GameObject ALIEN
     // ====================================================
-    GameObject *alien = new GameObject();
+    GameObject *alien = new GameObject(512, 300);
     // Adicionando o comportamento de Alien
-    Alien *behaviour = new Alien(*alien, 4);
-    alien->AddComponent((std::shared_ptr<Alien>)behaviour);
+    Alien *alien_behaviour = new Alien(*alien, 4);
+    alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
 
-    alien->box.x = 512;
-    alien->box.y = 300;
-
-    objectArray.emplace_back(alien);
+    AddObject(alien);
 }
 
 State::~State()
@@ -77,10 +85,35 @@ void State::Update(float dt)
         quitRequested = true;
     }
 
+    // Update dos GOs
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         objectArray[i]->Update(dt);
     }
+
+    // Verifica se há colisões
+    std::vector<std::shared_ptr<GameObject>> objWithCollider;
+    for (int i = (int)objectArray.size() - 1; i >= 0; i--)
+    {   
+        std::shared_ptr<Component> colliderComponent = objectArray[i]->GetComponent("Collider");
+        if (colliderComponent.get() != nullptr)
+        {
+            objWithCollider.push_back(objectArray[i]);
+            for (int j = 0; j < (int)objWithCollider.size(); j++)
+            {
+                if (objectArray[i] != objWithCollider[j])
+                {
+                    if (Collision::IsColliding(objectArray[i]->box, objWithCollider[j]->box, objectArray[i]->GetAngleRad(), objWithCollider[j]->GetAngleRad()))
+                    {
+                        objectArray[i]->NotifyCollision(*objWithCollider[j].get());
+                        objWithCollider[j]->NotifyCollision(*objectArray[i].get());
+                    }
+                }
+            }
+        }
+    }
+
+    // Verifica se algum objeto deve ser deletado depois de ser atualizado
     for (int i = (int)objectArray.size() - 1; i >= 0; --i)
     {
         if (objectArray[i]->IsDead())
@@ -89,7 +122,7 @@ void State::Update(float dt)
         }
     }
 
-
+    
     SDL_Delay(dt);
 }
 

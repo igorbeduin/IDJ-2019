@@ -23,7 +23,6 @@ bool Rect::Contains(float x, float y)
         {
             return false;
         }
-        
     }
     else 
     {
@@ -31,10 +30,10 @@ bool Rect::Contains(float x, float y)
     }
 }
 
-void Rect::DefineCenter(float x, float y)
+void Rect::DefineCenter(float x_, float y_)
 {
-    this->x = x - (this->w / 2);
-    this->y = y - (this->h / 2);
+    this->x = x_ - (this->w / 2);
+    this->y = y_ - (this->h / 2);
 }
 
 void Rect::DefineCenter(Vec2 box)

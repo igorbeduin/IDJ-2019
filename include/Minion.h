@@ -2,9 +2,12 @@
 
 #define MINION_SPRITE_PATH "assets/img/minion.png"
 #define MINION_ANG_VEL -50
-#define MINION_BULLET_SPEED 50.0
+#define MINION_BULLET_SPEED 100.0
 #define MINION_BULLET_DAMAGE 30.0
-#define MINION_BULLET_SPRITE_PATH "assets/img/minionbullet1.png"
+#define MINION_BULLET_SPRITE_PATH "assets/img/minionbullet2.png"
+#define MINION_BULLET_FRAME_COUNT 3
+#define MINION_BULLET_FRAME_TIME 0.1
+#define MINION_BULLET_DISTANCE 2000
 
 #include <iostream>
 #include <memory>
@@ -15,6 +18,7 @@
 #include "Component.h"
 #include "Vec2.h"
 #include "Bullet.h"
+#include "Collider.h"
 
 class Minion : public Component
 {
@@ -24,6 +28,7 @@ public:
     void Render();
     bool Is(std::string type);
     void Shoot(Vec2 target);
+    void NotifyCollision(GameObject &other);
 
 private:
     Vec2 radius;

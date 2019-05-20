@@ -7,13 +7,18 @@
 #define CLIP_START_Y 0
 
 Sprite::Sprite(GameObject &associated) : Component::Component(associated),
-                                         scale(Vec2(1, 1))
+                                         scale(Vec2(1, 1)),
+                                         currentFrame(0),
+                                         timeElapsed(0)
 {
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject &associated, std::string file) : Sprite(associated)
+Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Sprite(associated)
 {
+    this->frameTime = frameTime;
+    this->frameCount = frameCount;
+    this->secondsToSelfDestruct = secondsToSelfDestruct;
     Open(file);
 }
 
@@ -32,7 +37,7 @@ void Sprite::Open(std::string file)
     {
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     }
-    SetClip(CLIP_START_X, CLIP_START_Y, width, height);
+    SetClip(CLIP_START_X, CLIP_START_Y, width / frameCount, height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h)
@@ -42,15 +47,14 @@ void Sprite::SetClip(int x, int y, int w, int h)
     clipRect.w = w;
     clipRect.h = h;
 
-    associated.box.w = w;
-    associated.box.h = h;
+    associated.box.w = w * scale.x;
+    associated.box.h = h * scale.y;
 }
 
 void Sprite::Render()
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {int(associated.box.x) + (int)Camera::pos.x, int(associated.box.y) + (int)Camera::pos.y, (int)associated.box.w, (int)associated.box.h};
-    // std::cout << "Sprite:  x: " << (int)associated.box.x << std::endl << "y: " << (int)associated.box.y << std::endl << "w: " << clipRect.w << std::endl << "h: " << clipRect.h << std::endl;
+    SDL_Rect dstLoc = {int(associated.box.x) + (int)Camera::pos.x, int(associated.box.y) + (int)Camera::pos.y, (int)(clipRect.w * GetScale().x), (int)(clipRect.h * GetScale().y)};
 
     RENDER_ERROR = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (RENDER_ERROR != 0)
@@ -62,7 +66,7 @@ void Sprite::Render()
 void Sprite::Render(int x, int y)
 {
     int RENDER_ERROR;
-    SDL_Rect dstLoc = {x + (int)Camera::pos.x, y + (int)Camera::pos.y, clipRect.w, clipRect.h};
+    SDL_Rect dstLoc = {(int)(x * GetScale().x) + (int)Camera::pos.x, (int)(y * GetScale().y) + (int)Camera::pos.y, (int)(clipRect.w * GetScale().x), (int)(clipRect.h * GetScale().y)};
 
     RENDER_ERROR = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstLoc, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (RENDER_ERROR != 0)
@@ -72,13 +76,25 @@ void Sprite::Render(int x, int y)
 }
 
 int Sprite::GetWidth()
-{
-    return width * scale.x;
+{   
+    int realWidth = (width * scale.x) / frameCount;
+    return realWidth;
 }
 
 int Sprite::GetHeight()
 {
     return height * scale.y;
+}
+
+int Sprite::GetWidthNoScale()
+{
+    int realWidth = width / frameCount;
+    return realWidth;
+}
+
+int Sprite::GetHeightNoScale()
+{
+    return height;
 }
 
 bool Sprite::IsOpen()
@@ -95,7 +111,26 @@ bool Sprite::IsOpen()
 }
 
 void Sprite::Update(float dt)
-{
+{   
+    if (secondsToSelfDestruct > 0)
+    {
+        selfDestructCount.Update(dt);
+        if (selfDestructCount.Get() >= secondsToSelfDestruct)
+        {
+            associated.RequestDelete();
+        }
+    }
+
+    timeElapsed += dt;
+    if (timeElapsed >= frameTime)
+    {
+        SetFrame(currentFrame + 1);
+    }
+    if (currentFrame >= frameCount)
+    {
+        SetFrame(0);
+    }
+    
 }
 
 bool Sprite::Is(std::string type)
@@ -108,12 +143,12 @@ void Sprite::SetScale(float scaleX, float scaleY)
     if (scaleX != 0)
     {
         scale.x = scaleX;
-        associated.box.w = associated.box.w * scale.x;
+        associated.box.w = clipRect.w * scale.x;
     }
     if (scaleX != 0)
     {
         scale.y = scaleY;
-        associated.box.h = associated.box.h * scale.y;
+        associated.box.h = clipRect.h * scale.y;
 
     }
 }
@@ -122,3 +157,26 @@ Vec2 Sprite::GetScale()
 {
     return scale;
 }
+
+void Sprite::SetFrame(int frame)
+{   
+    timeElapsed = 0;
+    currentFrame = frame;
+    SetClip(GetWidthNoScale() * frame, CLIP_START_Y, GetWidthNoScale() , GetHeightNoScale());
+}
+
+void Sprite::SetFrameCount(int frameCount)
+{
+    this->frameCount = frameCount;
+    SetFrame(0);
+    associated.box.w = GetWidth();
+    associated.box.DefineCenter(associated.box.x, associated.box.y);
+}
+
+void Sprite::SetFrameTime(float frameTime)
+{
+    this->frameTime = frameTime;
+}
+
+void Sprite::NotifyCollision(GameObject &other)
+{}
