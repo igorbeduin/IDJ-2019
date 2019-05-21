@@ -1,5 +1,3 @@
-#ifndef GAME_H
-#define GAME_H
 #pragma once
 
 #define INCLUDE_SDL
@@ -13,23 +11,25 @@
 
 class State;
 
-class Game {
-    private:
-        static Game* instance;
-        Game(std::string title, int width, int height);
-        SDL_Window* window;
-        SDL_Renderer* renderer;
-        State* state;
-        int frameStart;
-        float dt;
-        void CalculateDeltaTime();
+class Game
+{
+public:
+    Game(std::string title, int width, int height);
+    ~Game();
+    static Game& GetInstance();
+    SDL_Renderer *GetRenderer();
+    State& GetCurrentState();
+    void Push(State* state);
+    void Run();
+    float GetDeltaTime();
 
-    public:
-        ~Game();
-        void Run();
-        SDL_Renderer* GetRenderer();
-        State& GetState();
-        static Game& GetInstance();
-        float GetDeltaTime();
+private:
+    static Game* instance;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    State* storedState;
+    int frameStart;
+    float dt;
+    void CalculateDeltaTime();
+    std::stack<std::unique_ptr<State>> stateStack;
 };
-#endif

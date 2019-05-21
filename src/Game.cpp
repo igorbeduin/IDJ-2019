@@ -19,7 +19,8 @@
 Game* Game::instance = nullptr;
 
 Game::Game(std::string title, int width, int height) : frameStart(0),
-                                                       dt(0.0)
+                                                       dt(0.0),
+                                                       storedState(nullptr)
 {
     int SDL_ERROR;
     int IMG_ERROR;
@@ -83,12 +84,19 @@ Game::Game(std::string title, int width, int height) : frameStart(0),
             }
         }
     } 
-    // End of initialization routine
-    state = new State();
 }
 
 Game::~Game()
 {
+    if (storedState != nullptr)
+    {
+        storedState = nullptr;
+    }
+    while (!stateStack.empty())
+    {
+        stateStack.pop();
+    }
+
     Mix_Quit();
     IMG_Quit();
     Mix_CloseAudio();
@@ -110,30 +118,53 @@ Game &Game::GetInstance()
     }
 }
 
-State &Game::GetState()
-{
-    return *state;
-}
-
 SDL_Renderer *Game::GetRenderer()
 {
     return renderer;
 }
 
+State &Game::GetCurrentState()
+{
+    return *stateStack.top();
+}
+
+void Game::Push(State* state)
+{
+    storedState = state;
+}
+
 void Game::Run()
 {   
-    state->Start();
-    while (state->QuitRequested() != true)
-    {   
-        CalculateDeltaTime();
-        InputManager::GetInstance().Update();
-        state->Update(dt);
-        state->Render();
-        SDL_RenderPresent(Game::GetInstance().GetRenderer());
+    if (storedState != nullptr)
+    {
+        storedState->Start();
+        stateStack.push((std::unique_ptr<State>)storedState);
+        storedState = nullptr;
+        while (!state->QuitRequested() && !stateStack.empty())
+        {   
+            if (stateStack.top()->QuitRequested())
+            {
+                stateStack.pop();
+                if (!stateStack.empty())
+                {
+                    stateStack.top()->Resume();
+                }
+            }
+            if (storedState != nullptr)
+            {
+                stateStack.top()->Pause();
+                stateStack.push(storedState);
+                stateStack.top()->Start();
+            }
+
+            CalculateDeltaTime();
+            InputManager::GetInstance().Update();
+            stateStack.top()->Update(dt);
+            stateStack.top()->Render();
+            SDL_RenderPresent(Game::GetInstance().GetRenderer());
+            Resources::ClearAll();
+        }
     }
-    Resources::ClearImages();
-    Resources::ClearMusics();
-    Resources::ClearSounds();
 }
 
 void Game::CalculateDeltaTime()
