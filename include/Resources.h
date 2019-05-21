@@ -21,6 +21,7 @@ class Resources
     static void ClearMusics();
     static Mix_Chunk *GetSound(std::string file);
     static void ClearSounds();
+    static void ClearAll();
 
   private:
     static std::unordered_map<std::string, SDL_Texture*> imageTable;

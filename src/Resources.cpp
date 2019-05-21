@@ -101,3 +101,10 @@ void Resources::ClearSounds()
     }
     std::cout << "Todos os sons foram apagados!" << std::endl;
 }
+
+void Resources::ClearAll()
+{
+    ClearImages();
+    ClearMusics();
+    ClearSounds();
+}
