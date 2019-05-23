@@ -6,7 +6,6 @@
 
 #define ENEMY_SPRITE_PATH "assets/img/penguinface.png"
 #define ENEMY_SOUND_PATH "assets/audio/boom.wav"
-#define PI 3.141592
 
 #define TILE_WIDTH 64
 #define TILE_HEIGHT 64
@@ -35,7 +34,6 @@ class StageState : public State
 {
 public:
   StageState();
-  ~StageState();
   void LoadAssets();
   void Update(float dt);
   void Render();
