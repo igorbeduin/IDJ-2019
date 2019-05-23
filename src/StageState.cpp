@@ -2,8 +2,10 @@
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 
-StageState::StageState() : State::State()
+StageState::StageState() : State::State(),
+                           backgroundMusic(BACKGROUND_MUSIC_PATH)
 {   
+    backgroundMusic.Play(BACKGROUND_MUSIC_LOOP_TIMES);
     LoadAssets();
 
     // GameObject BACKGROUND
