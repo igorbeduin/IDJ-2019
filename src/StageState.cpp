@@ -1,6 +1,7 @@
 #include "../include/StageState.h"
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
+#include "../include/Game.h"
 
 StageState::StageState() : State::State(),
                            backgroundMusic(BACKGROUND_MUSIC_PATH)
@@ -71,7 +72,14 @@ void StageState::Update(float dt)
     Camera::Update(dt);
 
     // Lida com eventos de quit a partir da interface de InputManager
-    if ((InputManager::GetInstance().KeyPress(ESCAPE_KEY)) || (InputManager::GetInstance().QuitRequested()))
+    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY))
+    {
+        TitleState* title = new TitleState();
+        Game::GetInstance().Push(title);
+        popRequested = true;
+    }
+
+    if (InputManager::GetInstance().QuitRequested())
     {
         quitRequested = true;
     }
