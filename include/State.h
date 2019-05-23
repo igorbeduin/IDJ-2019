@@ -10,13 +10,13 @@ public:
     State();
     ~State();
     virtual void LoadAssets() = 0;
-    void Update(float dt) = 0;
-    void Render() = 0;
-    void Start() = 0;
-    void Pause() = 0;
-    void Resume() = 0;
-    std::weak_ptr<GameObject> AddObject(GameObject* object) = 0;
-    std::weak_ptr<GameObject> GetObjectPtr(GameObject* object) = 0;
+    virtual void Update(float dt) = 0;
+    virtual void Render() = 0;
+    virtual void Start() = 0;
+    virtual void Pause() = 0;
+    virtual void Resume() = 0;
+    virtual std::weak_ptr<GameObject> AddObject(GameObject* go);
+    virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
     bool PopRequested();
     bool QuitRequested();
 

@@ -16,6 +16,7 @@
 #include <vector>
 #include <memory>
 
+#include "State.h"
 #include "Sprite.h"
 #include "Music.h"
 #include "Sound.h"
@@ -28,24 +29,21 @@
 #include "PenguinCannon.h"
 #include "Collider.h"
 #include "Collision.h"
+#include "Vec2.h"
 
-class State
+class StageState : public State
 {
 public:
-  void Start();
-  State();
-  ~State();
-  bool QuitRequested();
+  StageState();
+  ~StageState();
   void LoadAssets();
   void Update(float dt);
   void Render();
-  std::weak_ptr<GameObject> AddObject(GameObject* go);
-  std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+  void Start();
+  void Pause();
+  void Resume();
 
 private:
-  Music music;
-  bool quitRequested;
-  void Input();
-  std::vector<std::shared_ptr<GameObject>> objectArray;
-  bool started;
+  TileSet* tileSet;
+  Music backgroundMusic;
 };

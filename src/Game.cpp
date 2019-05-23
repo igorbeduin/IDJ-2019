@@ -140,7 +140,7 @@ void Game::Run()
         storedState->Start();
         stateStack.push((std::unique_ptr<State>)storedState);
         storedState = nullptr;
-        while (!state->QuitRequested() && !stateStack.empty())
+        while (!stateStack.top()->QuitRequested() && !stateStack.empty())
         {   
             if (stateStack.top()->QuitRequested())
             {
@@ -153,7 +153,7 @@ void Game::Run()
             if (storedState != nullptr)
             {
                 stateStack.top()->Pause();
-                stateStack.push(storedState);
+                stateStack.push((std::unique_ptr<State>)storedState);
                 stateStack.top()->Start();
             }
 

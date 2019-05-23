@@ -55,7 +55,7 @@ Vec2 Vec2::Rotate(float theta)
 void Vec2::RotateDeg(float theta)
 {
     // Recebe theta em graus
-    RotateItself(theta / (180 / 3.14159265359));
+    RotateItself(theta / (180 / PI));
 }
 
 Vec2 Vec2::GetRotated(float theta)
@@ -87,6 +87,6 @@ float Vec2::Arg()
 float Vec2::ArgDeg()
 {   
     // Return value in degrees
-    float argDeg = Arg() * (180 / 3.14159265359);
+    float argDeg = Arg() * (180 / PI);
     return argDeg;
 }

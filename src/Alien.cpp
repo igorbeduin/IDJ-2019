@@ -25,7 +25,7 @@ Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associ
 
 void Alien::Start()
 {
-    std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetState().GetObjectPtr(&associated);
+    std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetCurrentState().GetObjectPtr(&associated);
 
     // Criando minions
     for (int i = 0; i < nMinions; i++)
@@ -34,7 +34,7 @@ void Alien::Start()
         Minion *minion_behaviour = new Minion(*minion, weak_alien, i * 360/nMinions);
         minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
 
-        std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetState().AddObject(minion);
+        std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetCurrentState().AddObject(minion);
         minionArray.push_back(weak_minion);
     }
 }
@@ -65,7 +65,7 @@ void Alien::Update(float dt)
         Sound *explosion_sound = new Sound(*alien_death, ALIEN_DEATH_SOUND_PATH);
         alien_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
         alien_death->box.DefineCenter(associated.box.GetCenter());
-        Game::GetInstance().GetState().AddObject(alien_death);
+        Game::GetInstance().GetCurrentState().AddObject(alien_death);
 
         explosion_sound->Play();
     }

@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <stack>
 
 #include "SDL_include.h"
 #include "State.h"

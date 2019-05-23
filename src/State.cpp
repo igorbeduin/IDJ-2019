@@ -22,7 +22,7 @@ std::weak_ptr<GameObject> State::AddObject(GameObject *go)
     return weak_go;
 }
 
-std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *object)
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
 {
     for (int i = 0; i < (int)objectArray.size(); i++)
     {

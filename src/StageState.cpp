@@ -1,15 +1,9 @@
-#include "../include/State.h"
-#include "../include/GameObject.h"
-#include "../include/Face.h"
-#include "../include/Vec2.h"
+#include "../include/StageState.h"
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 
-State::State() : music(BACKGROUND_MUSIC_PATH),
-                 quitRequested(false),
-                 started(false)
+StageState::StageState() : State::State()
 {   
-    music.Play(BACKGROUND_MUSIC_LOOP_TIMES);
     LoadAssets();
 
     // GameObject BACKGROUND
@@ -64,16 +58,16 @@ State::State() : music(BACKGROUND_MUSIC_PATH),
     AddObject(alien);
 }
 
-State::~State()
+StageState::~StageState()
 {
     objectArray.clear();
 }
 
-void State::LoadAssets()
+void StageState::LoadAssets()
 {
 }
 
-void State::Update(float dt)
+void StageState::Update(float dt)
 {   
     // É importante que o Update da camera ocorra ANTES da atualização dos objetos
     // para que o background tenha sua movimentação compensada adequadamente.
@@ -126,7 +120,7 @@ void State::Update(float dt)
     SDL_Delay(dt);
 }
 
-void State::Render()
+void StageState::Render()
 {
     for (int i = 0; i != (int)objectArray.size(); i++)
     {
@@ -134,24 +128,7 @@ void State::Render()
     }
 }
 
-bool State::QuitRequested()
-{
-    return quitRequested;
-}
-
-std::weak_ptr<GameObject> State::AddObject(GameObject* go)
-{
-    std::shared_ptr<GameObject> shared_go(go);
-    objectArray.push_back(shared_go);
-    if (started)
-    {
-        shared_go->Start();
-    }
-    std::weak_ptr<GameObject> weak_go(shared_go);
-    return weak_go;
-}
-
-void State::Start()
+void StageState::Start()
 {
     LoadAssets();
     for (int i = 0; i < (int)objectArray.size(); i++)
@@ -161,16 +138,8 @@ void State::Start()
     started = true;
 }
 
-std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
-{
-    for (int i = 0; i < (int)objectArray.size(); i++)
-    {
-        if (go == objectArray[i].get())
-        {
-            std::weak_ptr<GameObject> weak_go(objectArray[i]);
-            return weak_go;
-        }
-    }
-    std::weak_ptr<GameObject> empty_weak;
-    return empty_weak;
-}
+void StageState::Pause()
+{}
+
+void StageState::Resume()
+{}

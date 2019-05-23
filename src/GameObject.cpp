@@ -96,7 +96,7 @@ void GameObject::Start()
 
 double GameObject::GetAngleRad()
 {
-    return angleDeg / (180 / 3.141592);
+    return angleDeg / (180 / PI);
 }
 
 void GameObject::NotifyCollision(GameObject &other)
