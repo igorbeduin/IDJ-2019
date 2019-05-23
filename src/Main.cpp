@@ -4,9 +4,9 @@
 int main(int argc, char** argv) {
     Game& game = Game::GetInstance();
 
-    StageState* initialState;
+    StageState* initialState = new StageState();
     
-    game.Push(initialState);
+    game.Push((State*)initialState);
     game.Run();
 
     return 0;
