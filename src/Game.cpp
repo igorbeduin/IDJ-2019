@@ -140,33 +140,42 @@ void Game::Run()
         stateStack.push((std::unique_ptr<State>)storedState);
         stateStack.top()->Start();
         storedState = nullptr;
-        while (!stateStack.empty())
+    }
+
+    while (!stateStack.empty())
+    {
+        if (stateStack.top()->QuitRequested())
         {
-            if (stateStack.top()->QuitRequested())
+            break;
+        }
+        if (stateStack.top()->PopRequested())
+        {
+            stateStack.pop();
+            if (!stateStack.empty())
             {
-                stateStack.pop();
-                if (!stateStack.empty())
-                {
-                    stateStack.top()->Resume();
-                }
-                break;
+                stateStack.top()->Resume();
             }
-            if (storedState != nullptr)
+        }
+        if (storedState != nullptr)
+        {
+            if (!stateStack.empty())
             {
                 stateStack.top()->Pause();
-                stateStack.push((std::unique_ptr<State>)storedState);
-                stateStack.top()->Start();
             }
-
-            CalculateDeltaTime();
-            InputManager::GetInstance().Update();
-            stateStack.top()->Update(dt);
-            stateStack.top()->Render();
-            SDL_RenderPresent(Game::GetInstance().GetRenderer());
+            stateStack.push((std::unique_ptr<State>)storedState);
+            stateStack.top()->Start();
+            storedState = nullptr;
         }
 
-        Resources::ClearAll();
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        stateStack.top()->Update(dt);
+        stateStack.top()->Render();
+        SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
+
+    Resources::ClearAll();
+    
 }
 
 void Game::CalculateDeltaTime()
