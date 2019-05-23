@@ -16,10 +16,10 @@
 #define WINDOW_TITLE "Igor R. O. Beduin - 14/0143882"
 
 // Static class member initialization
-Game* Game::instance = nullptr;
+Game *Game::instance = nullptr;
 
-Game::Game(std::string title, int width, int height) : frameStart(0),
-                                                       storedState(nullptr),
+Game::Game(std::string title, int width, int height) : storedState(nullptr),
+                                                       frameStart(0),
                                                        dt(0.0)
 {
     int SDL_ERROR;
@@ -83,7 +83,7 @@ Game::Game(std::string title, int width, int height) : frameStart(0),
                 }
             }
         }
-    } 
+    }
 }
 
 Game::~Game()
@@ -128,20 +128,20 @@ State &Game::GetCurrentState()
     return *stateStack.top();
 }
 
-void Game::Push(State* state)
+void Game::Push(State *state)
 {
     storedState = state;
 }
 
 void Game::Run()
-{   
+{
     if (storedState != nullptr)
     {
-        storedState->Start();
         stateStack.push((std::unique_ptr<State>)storedState);
+        stateStack.top()->Start();
         storedState = nullptr;
-        while (!stateStack.top()->QuitRequested() && !stateStack.empty())
-        {   
+        while (!stateStack.empty())
+        {
             if (stateStack.top()->QuitRequested())
             {
                 stateStack.pop();
@@ -149,6 +149,7 @@ void Game::Run()
                 {
                     stateStack.top()->Resume();
                 }
+                break;
             }
             if (storedState != nullptr)
             {
@@ -162,8 +163,9 @@ void Game::Run()
             stateStack.top()->Update(dt);
             stateStack.top()->Render();
             SDL_RenderPresent(Game::GetInstance().GetRenderer());
-            Resources::ClearAll();
         }
+
+        Resources::ClearAll();
     }
 }
 
