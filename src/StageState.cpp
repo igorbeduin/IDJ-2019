@@ -25,9 +25,9 @@ StageState::StageState() : State::State(),
     // ====================================================
     GameObject *map = new GameObject();
     // Criando o tileSet para o tileMap
-    TileSet *tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILESET_PATH);
+    tileSet = new TileSet(*map, TILE_HEIGHT, TILE_WIDTH, MAP_TILESET_PATH);
     // Criando o tileMap
-    TileMap *tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
+    TileMap* tileMap = new TileMap(*map, MAP_TILEMAP_PATH, tileSet);
     map->AddComponent((std::shared_ptr<TileMap>)tileMap);
 
     AddObject(map);
