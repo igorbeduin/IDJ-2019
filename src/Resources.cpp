@@ -102,9 +102,30 @@ void Resources::ClearSounds()
     std::cout << "Todos os sons foram apagados!" << std::endl;
 }
 
+TTF_Font *Resources::GetFont(std::string file)
+{
+    TTF_Font *font;
+    std::unordered_map<std::string, TTF_Font *>::iterator it = Resources::fontTable.find(file);
+    if (it == Resources::fontTable.end())
+    {
+        std::cout << "Resources: No Font found on Table! "
+                  << "(" << file << ")" << std::endl;
+        std::cout << "Resources: Loading a new file... "
+                  << "(" << file << ")" << std::endl;
+        // font = TTF_OpenFont(file.c_str(), );
+        // TODO: Concatenar o fontFile com o tamanho para crar uma chave única para o unordered_map
+        Resources::fontTable.insert({file, font});
+        std::cout << "Loading done! "
+                  << "(" << file << ")" << std::endl;
+        return font;
+    }
+    return it->second;
+}
+
 void Resources::ClearAll()
 {
     ClearImages();
     ClearMusics();
     ClearSounds();
+    ClearFonts();
 }

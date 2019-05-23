@@ -25,6 +25,7 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr),
     int SDL_ERROR;
     int IMG_ERROR;
     int MSC_ERROR;
+    int TTF_ERROR;
 
     if (Game::instance != nullptr)
     {
@@ -63,23 +64,32 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr),
                 std::cout << "Game: Mix_Init iniciou corretamente" << std::endl;
                 Mix_OpenAudio(AUDIO_FREQUENCY, AUDIO_FORMAT, AUDIO_CHANNELS, AUDIO_CHUNKSIZE);
                 Mix_AllocateChannels(SOUND_RESOLUTION);
-                window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAGS);
-                if (window == nullptr)
+                TTF_ERROR = TTF_Init();
+                if (TTF_ERROR != 0)
                 {
-                    std::cout << "Game: Falha na criação da janela" << std::endl;
+                    std::cout << "Game: Falha na inicialização do TTF" << std::endl;
                 }
                 else
                 {
-                    std::cout << "Game: Window criada com sucesso!" << std::endl;
-                }
-                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-                if (renderer == nullptr)
-                {
-                    std::cout << "Game: Falha na criação do renderer" << std::endl;
-                }
-                else
-                {
-                    std::cout << "Game: Renderer criado com sucesso!" << std::endl;
+                    std::cout << "Game: TTF iniciado com sucesso!" << std::endl;
+                    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAGS);
+                    if (window == nullptr)
+                    {
+                        std::cout << "Game: Falha na criação da janela" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Game: Window criada com sucesso!" << std::endl;
+                    }
+                    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+                    if (renderer == nullptr)
+                    {
+                        std::cout << "Game: Falha na criação do renderer" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Game: Renderer criado com sucesso!" << std::endl;
+                    }
                 }
             }
         }
@@ -100,6 +110,7 @@ Game::~Game()
     Mix_Quit();
     IMG_Quit();
     Mix_CloseAudio();
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

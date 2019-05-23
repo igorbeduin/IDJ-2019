@@ -1,6 +1,7 @@
 #pragma once
 
 #define INCLUDE_SDL
+#define INCLUDE_SDL_TTF
 
 #include <string>
 #include <iostream>
