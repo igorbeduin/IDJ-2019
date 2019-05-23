@@ -17,12 +17,14 @@
 #include <memory>
 #include <math.h>
 
+#include "Alien.h"
 #include "Sprite.h"
 #include "GameObject.h"
 #include "Component.h"
 #include "Vec2.h"
 #include "Bullet.h"
 #include "Collider.h"
+#include "Sound.h"
 
 class Minion : public Component
 {
