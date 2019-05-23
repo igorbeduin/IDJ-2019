@@ -58,11 +58,6 @@ StageState::StageState() : State::State()
     AddObject(alien);
 }
 
-StageState::~StageState()
-{
-    objectArray.clear();
-}
-
 void StageState::LoadAssets()
 {
 }

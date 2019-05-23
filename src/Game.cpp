@@ -19,8 +19,8 @@
 Game* Game::instance = nullptr;
 
 Game::Game(std::string title, int width, int height) : frameStart(0),
-                                                       dt(0.0),
-                                                       storedState(nullptr)
+                                                       storedState(nullptr),
+                                                       dt(0.0)
 {
     int SDL_ERROR;
     int IMG_ERROR;

@@ -9,6 +9,10 @@
 #define MINION_BULLET_FRAME_TIME 0.1
 #define MINION_BULLET_DISTANCE 2000
 
+#ifndef PI
+#define PI 3.1415
+#endif
+
 #include <iostream>
 #include <memory>
 #include <math.h>

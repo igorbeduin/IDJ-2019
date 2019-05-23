@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef PI
+#define PI 3.1415
+#endif
+
 #include <iostream>
 #include <vector>
 #include <string>

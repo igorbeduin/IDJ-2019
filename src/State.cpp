@@ -71,7 +71,7 @@ void State::StartArray()
 {
     for (int i = 0; i < (int)objectArray.size(); i++)
     {
-        objectArray[i].Start();
+        objectArray[i]->Start();
     }
 }
 
@@ -79,14 +79,14 @@ void State::UpdateArray(float dt)
 {
     for (int i = 0; i < (int)objectArray.size(); i++)
     {
-        objectArray[i].Update(dt);
+        objectArray[i]->Update(dt);
     }
 }
 
-void RenderArary()
+void State::RenderArray()
 {
     for (int i = 0; i < (int)objectArray.size(); i++)
     {
-        objectArray[i].Render();
+        objectArray[i]->Render();
     }
 }
