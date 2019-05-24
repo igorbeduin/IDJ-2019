@@ -36,9 +36,9 @@ void Rect::DefineCenter(float x_, float y_)
     this->y = y_ - (this->h / 2);
 }
 
-void Rect::DefineCenter(Vec2 box)
+void Rect::DefineCenter(Vec2 center)
 {   
-    DefineCenter(box.x, box.y);
+    DefineCenter(center.x, center.y);
 }
 
 Vec2 Rect::GetCenter()

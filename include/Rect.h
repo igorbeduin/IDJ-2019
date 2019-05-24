@@ -12,7 +12,7 @@ class Rect {
       bool Contains(float x, float y);
       float x, y, w, h;
       void DefineCenter(float x, float y);
-      void DefineCenter(Vec2 box);
+      void DefineCenter(Vec2 center);
       Vec2 GetCenter();
 
 };
