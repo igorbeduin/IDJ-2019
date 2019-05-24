@@ -7,14 +7,11 @@
 
 TitleState::TitleState() : State::State()
 {
-    Camera::pos.x = 0;
-    Camera::pos.y = 0;
-
     GameObject *menu = new GameObject();
     Sprite* menuSprite= new Sprite(*menu, TITLE_IMAGE_PATH);
     menu->AddComponent((std::shared_ptr<Component>)menuSprite);
-    CameraFollower* cameraMenu = new CameraFollower(*menu);
-    menu->AddComponent((std::shared_ptr<Component>)cameraMenu);
+    // CameraFollower* cameraMenu = new CameraFollower(*menu);
+    // menu->AddComponent((std::shared_ptr<Component>)cameraMenu);
     AddObject(menu);
 
     GameObject *title = new GameObject();
@@ -27,7 +24,7 @@ TitleState::TitleState() : State::State()
 
 void TitleState::Update(float dt)
 {   
-    Camera::Update(dt);
+    // Camera::Update(dt);
     if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested())
     {
         quitRequested = true;

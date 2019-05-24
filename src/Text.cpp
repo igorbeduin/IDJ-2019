@@ -50,12 +50,6 @@ void Text::Render()
                         clipRect.w, 
                         clipRect.h};
 
-        std::cout << "associated.box.x: " << associated.box.x << std::endl;
-        std::cout << "associated.box.y: " << associated.box.y << std::endl;
-
-        std::cout << "dst.x: " << dst.x << std::endl;
-        std::cout << "dst.y: " << dst.y << std::endl;
-
         RENDER_ERROR = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dst, associated.angleDeg, nullptr, SDL_FLIP_NONE);
         if (RENDER_ERROR != 0)
         {

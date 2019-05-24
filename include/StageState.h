@@ -30,12 +30,14 @@
 #include "Collision.h"
 #include "Vec2.h"
 #include "TitleState.h"
+#include "EndState.h"
+
 
 class StageState : public State
 {
 public:
   StageState();
-  // ~StageState();
+  ~StageState();
   void LoadAssets();
   void Update(float dt);
   void Render();

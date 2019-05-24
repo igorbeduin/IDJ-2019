@@ -2,6 +2,7 @@
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 #include "../include/Game.h"
+#include "../include/GameData.h"
 
 StageState::StageState() : State::State(),
                            backgroundMusic(BACKGROUND_MUSIC_PATH)
@@ -61,12 +62,56 @@ StageState::StageState() : State::State(),
     AddObject(alien);
 }
 
+StageState::~StageState()
+{
+    Camera::pos.x = 0;
+    Camera::pos.y = 0;
+}
+
 void StageState::LoadAssets()
 {
 }
 
 void StageState::Update(float dt)
 {   
+    // Verifica as condições de fim de jogo
+    // Verifica se há alguem objeto Alien em jogo
+    Component* lastAlien = nullptr;
+    for (int i = 0; i < (int)objectArray.size(); i++)
+    {   
+        Component* temp = objectArray[i]->GetComponent("Alien").get();
+        if (temp != nullptr)
+        {
+            lastAlien = temp;
+        }
+    }
+    if (lastAlien == nullptr)
+    {
+        GameData::playerVictory = true;
+        EndState* end = new EndState();
+        Game::GetInstance().Push(end);
+        popRequested = true;
+    }
+    
+    // Verifica se há algum objeto Penguin em jogo
+    Component* penguin = nullptr;
+    for (int i = 0; i < (int)objectArray.size(); i++)
+    {
+        Component* temp = objectArray[i]->GetComponent("PenguinBody").get();
+        if (temp != nullptr)
+        {
+            penguin = temp;
+        }
+    }
+    if (penguin == nullptr)
+    {
+        GameData::playerVictory = false;
+        EndState* end = new EndState();
+        Game::GetInstance().Push(end);
+        popRequested = true;
+
+    }
+
     // É importante que o Update da camera ocorra ANTES da atualização dos objetos
     // para que o background tenha sua movimentação compensada adequadamente.
     Camera::Update(dt);
