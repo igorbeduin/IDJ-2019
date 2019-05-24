@@ -3,6 +3,9 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_TTF
 
+#define MAP_WIDTH 1408
+#define MAP_HEIGHT 1280
+
 #include <string>
 #include <iostream>
 #include <memory>
