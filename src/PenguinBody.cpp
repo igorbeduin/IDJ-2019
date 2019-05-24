@@ -75,7 +75,27 @@ void PenguinBody::Update(float dt)
 
     angle = associated.angleDeg / (180 / PI);
     Vec2 desloc = Vec2(cos(angle) * linearSpeed, sin(angle) * linearSpeed);
-    associated.box.DefineCenter(associated.box.GetCenter() + desloc);
+    Vec2 newPos = associated.box.GetCenter() + desloc;
+
+    if (newPos.x > MAP_WIDTH)
+    {
+        newPos.x = MAP_WIDTH;
+    }
+    if (newPos.x < 0)
+    {
+        newPos.x = 0;
+    }
+
+    if (newPos.y > MAP_HEIGHT)
+    {
+        newPos.y = MAP_HEIGHT;
+    }
+    if (newPos.y < 0)
+    {
+        newPos.y = 0;
+    }
+
+    associated.box.DefineCenter(newPos);
 }
 
 void PenguinBody::Render()

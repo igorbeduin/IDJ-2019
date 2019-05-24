@@ -84,7 +84,7 @@ void Alien::Update(float dt)
 
         // Se ele estiver se movendo
         case MOVING:
-        {   
+        {
             // Se a distancia for maior que uma tolerancia, SE MOVE até o destino
             if (Vec2::Distance(associated.box.GetCenter(), destination).Magnitude() > ALIEN_TARGET_TOLERANCE)
             {
