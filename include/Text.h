@@ -2,6 +2,7 @@
 
 #define INCLUDE_SDL
 #define INCLUDE_SDL_TTF
+#define BACKGROUND_COLOR {0, 255, 0, 0}
 
 #include <iostream>
 
@@ -9,6 +10,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "Timer.h"
 
 class Text : public Component
 {
@@ -20,7 +22,7 @@ public:
             BLENDED
         };
     Text(GameObject& associated, std::string fontFile, int fontSize, 
-         TextStyle style, std::string text, SDL_Color color);
+         TextStyle style, std::string text, SDL_Color color, int blinkPeriod = 0);
     ~Text();
     void Update(float dt);
     void Render();
@@ -40,4 +42,6 @@ private:
     std::string fontFile;
     int fontSize;
     SDL_Color color;
+    int blinkPeriod;
+    Timer blinkTimer;
 };
