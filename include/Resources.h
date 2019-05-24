@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <string>
 
 #include "SDL_include.h"
 #include "Game.h"
@@ -21,7 +22,7 @@ class Resources
     static void ClearMusics();
     static Mix_Chunk *GetSound(std::string file);
     static void ClearSounds();
-    static TTF_Font *GetFont(std::string file);
+    static TTF_Font *GetFont(std::string file, int fontSize);
     static void ClearFonts();
 
     static void ClearAll();

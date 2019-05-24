@@ -3,6 +3,7 @@
 std::unordered_map<std::string, SDL_Texture *> Resources::imageTable;
 std::unordered_map<std::string, Mix_Music *> Resources::musicTable;
 std::unordered_map<std::string, Mix_Chunk *> Resources::soundTable;
+std::unordered_map<std::string, TTF_Font *> Resources::fontTable;
 
 SDL_Texture *Resources::GetImage(std::string file)
 {   
@@ -102,24 +103,39 @@ void Resources::ClearSounds()
     std::cout << "Todos os sons foram apagados!" << std::endl;
 }
 
-TTF_Font *Resources::GetFont(std::string file)
+TTF_Font *Resources::GetFont(std::string file, int fontSize)
 {
+    std::string key = file + std::to_string(fontSize);
+
     TTF_Font *font;
-    std::unordered_map<std::string, TTF_Font *>::iterator it = Resources::fontTable.find(file);
+    std::unordered_map<std::string, TTF_Font *>::iterator it = Resources::fontTable.find(key);
     if (it == Resources::fontTable.end())
     {
         std::cout << "Resources: No Font found on Table! "
-                  << "(" << file << ")" << std::endl;
+                  << "(" << key << ")" << std::endl;
         std::cout << "Resources: Loading a new file... "
-                  << "(" << file << ")" << std::endl;
-        // font = TTF_OpenFont(file.c_str(), );
-        // TODO: Concatenar o fontFile com o tamanho para crar uma chave única para o unordered_map
-        Resources::fontTable.insert({file, font});
+                  << "(" << key << ")" << std::endl;
+        font = TTF_OpenFont(file.c_str(), fontSize);
+        
+        Resources::fontTable.insert({key, font});
         std::cout << "Loading done! "
                   << "(" << file << ")" << std::endl;
         return font;
     }
     return it->second;
+}
+
+void Resources::ClearFonts()
+{
+    int i = 0;
+    while (soundTable.begin() != soundTable.end())
+    {
+        std::cout << "Limpando memória de fontes..."
+                  << " (" << i + 1 << ") " << std::endl;
+        soundTable.erase(soundTable.begin()++);
+        i++;
+    }
+    std::cout << "Todas as fontes foram apagadas!" << std::endl;
 }
 
 void Resources::ClearAll()
