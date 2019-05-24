@@ -6,13 +6,23 @@
 
 
 TitleState::TitleState() : State::State()
-{   
-    GameObject* title = new GameObject();
-    Sprite* titleSprite = new Sprite(*title, TITLE_IMAGE_PATH);
-    title->AddComponent((std::shared_ptr<Component>)titleSprite);
-    CameraFollower* camera = new CameraFollower(*title);
-    title->AddComponent((std::shared_ptr<Component>)camera);
+{
+    Camera::pos.x = 0;
+    Camera::pos.y = 0;
+
+    GameObject *menu = new GameObject();
+    Sprite* menuSprite= new Sprite(*menu, TITLE_IMAGE_PATH);
+    menu->AddComponent((std::shared_ptr<Component>)menuSprite);
+    CameraFollower* cameraMenu = new CameraFollower(*menu);
+    menu->AddComponent((std::shared_ptr<Component>)cameraMenu);
+    AddObject(menu);
+
+    GameObject *title = new GameObject();
+    Text *titleText = new Text(*title, TITLE_FONT_PATH, 50, Text::BLENDED, TITLE_PLAY_TEXT, TITLE_FONT_COLOR, 2);
+    title->AddComponent((std::shared_ptr<Component>)titleText);
+    title->box.DefineCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     AddObject(title);
+
 }
 
 void TitleState::Update(float dt)
