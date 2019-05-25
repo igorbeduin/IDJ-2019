@@ -7,34 +7,40 @@
 EndState::EndState() : State::State()
 {   
     GameObject* endScreen = new GameObject();
-    GameObject* endMessage = new GameObject();
+    GameObject* firstMsg = new GameObject();
 
     Sprite* endScreenSprite;
-    Text* endMessageText;
+    Text* firstMsgText;
 
     SDL_Color endTextColor;
     std::string conditinalText;
     if (GameData::playerVictory)
     {
         endScreenSprite = new Sprite(*endScreen, WIN_SCREEN_PATH);
-        conditinalText = "YES! You have won!";
-        endTextColor = {0, 200, 0, 0};
+        conditinalText = "CONGRATULATIONS!! You have won!";
+        endTextColor = {0, 200, 0, 0}; // Green
     }
     else
     {
         endScreenSprite = new Sprite(*endScreen, LOSE_SCREEN_PATH);
         conditinalText = "Oh no! You have lost!";
-        endTextColor = {200, 0, 0, 0};
+        endTextColor = {200, 0, 0, 0}; // Red
     }
-    std::string text = conditinalText + "\n" + "Press ESC to go to Menu or SPACEBAR to play again";
-    endMessageText = new Text(*endMessage, TITLE_FONT_PATH, 50, Text::BLENDED, text, endTextColor, 2);
+    std::string text = conditinalText;
+    firstMsgText = new Text(*firstMsg, TITLE_FONT_PATH, 50, Text::BLENDED, text, endTextColor, 2);
 
     endScreen->AddComponent((std::shared_ptr<Component>)endScreenSprite);
-    endMessage->AddComponent((std::shared_ptr<Component>)endMessageText);
+    firstMsg->AddComponent((std::shared_ptr<Component>)firstMsgText);
+    firstMsg->box.DefineCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
     AddObject(endScreen);
-    AddObject(endMessage);
+    std::weak_ptr<GameObject> weak_firstMsg = AddObject(firstMsg);
 
+    GameObject* secondMsg = new GameObject();
+    Text *secondMsgText = new Text(*secondMsg, TITLE_FONT_PATH, 40, Text::BLENDED, "Press ESC to go to Menu or SPACEBAR to play again", endTextColor, 2);
+    secondMsg->AddComponent((std::shared_ptr<Component>)secondMsgText);
+    secondMsg->box.DefineCenter(weak_firstMsg.lock()->box.GetCenter() + Vec2(0, 50));
+    AddObject(secondMsg);
 }
 
 void EndState::LoadAssets()
