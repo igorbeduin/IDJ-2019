@@ -167,9 +167,12 @@ void Alien::Update(float dt)
 
             }
             else
-            {   
-                // Atualiza o timer até ele "estourar"
-                restTimer.Update(dt);
+            {
+                // Tempoa aleatório adicionado no update 
+                // para avançar o tempo e evitar que os aliens ajam sincronizadamente.
+                float randomTime = (rand() % 500 / 1000); 
+                // Atualiza o timer até ele "estourar".
+                restTimer.Update(dt + randomTime);
             }
             
         }

@@ -52,14 +52,21 @@ StageState::StageState() : State::State(),
 
     AddObject(penguinCannon);
 
+    int nAliens = 3 + (rand() % MAX_NUMBER_ADIT_ALIENS);
+    std::cout << "nAliens: " << nAliens << std::endl;
     // GameObject ALIEN
     // ====================================================
-    GameObject *alien = new GameObject(512, 300);
-    // Adicionando o comportamento de Alien
-    Alien *alien_behaviour = new Alien(*alien, 4);
-    alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
+    for (int i = 0; i < nAliens; i++)
+    {
+        GameObject *alien = new GameObject(i * 512, i * 300);
+        // Adicionando o comportamento de Alien
+        int nMinions = 3 + (rand() % MAX_NUMBER_ADIT_MINIONS);
+        std::cout << "nMinions: " << nMinions << std::endl;
+        Alien *alien_behaviour = new Alien(*alien, nMinions);
+        alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
 
-    AddObject(alien);
+        AddObject(alien);
+    }
 }
 
 StageState::~StageState()

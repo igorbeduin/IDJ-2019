@@ -12,6 +12,9 @@
 #define MAP_TILEMAP_PATH "assets/map/tileMap.txt"
 #define MAP_TILESET_PATH "assets/img/tileset.png"
 
+#define MAX_NUMBER_ADIT_ALIENS 3
+#define MAX_NUMBER_ADIT_MINIONS 5
+
 #include <vector>
 #include <memory>
 
