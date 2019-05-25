@@ -17,7 +17,7 @@ EndState::EndState() : State::State()
     if (GameData::playerVictory)
     {
         endScreenSprite = new Sprite(*endScreen, WIN_SCREEN_PATH);
-        conditinalText = "CONGRATULATIONS!! You have won!";
+        conditinalText = "CONGRATULATIONS!!! You have won!";
         endTextColor = {0, 200, 0, 0}; // Green
     }
     else
