@@ -2,7 +2,7 @@
 
 #define MINION_SPRITE_PATH "assets/img/minion.png"
 #define MINION_ANG_VEL -50
-#define MINION_BULLET_SPEED 500.0
+#define MINION_BULLET_SPEED 300.0
 #define MINION_BULLET_DAMAGE 30.0
 #define MINION_BULLET_SPRITE_PATH "assets/img/minionbullet2.png"
 #define MINION_BULLET_FRAME_COUNT 3

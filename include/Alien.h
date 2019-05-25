@@ -8,7 +8,7 @@
 #define ALIEN_DEATH_ANIM_COUNT 4.0
 #define ALIEN_DEATH_ANIM_TIME 3.0
 #define ALIEN_DEATH_SOUND_PATH "assets/audio/boom.wav"
-#define ALIEN_MOV_COOLDOWN 0.25
+#define ALIEN_MOV_COOLDOWN 2
 #define ALIEN_TARGET_TOLERANCE 300
 
 #include <iostream>

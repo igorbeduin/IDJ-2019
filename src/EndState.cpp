@@ -45,6 +45,7 @@ EndState::EndState() : State::State()
 
 void EndState::LoadAssets()
 {}
+
 void EndState::Update(float dt)
 {
     if (InputManager::GetInstance().QuitRequested())
