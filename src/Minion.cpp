@@ -53,10 +53,10 @@ void Minion::Update(float dt)
         // Criando animação de morte
         GameObject *alien_death = new GameObject();
         Sprite *explosion_anim = new Sprite(*alien_death,
-                                            ALIEN_DEATH_ANIM_PATH,
-                                            ALIEN_DEATH_ANIM_COUNT,
-                                            ALIEN_DEATH_ANIM_TIME / ALIEN_DEATH_ANIM_COUNT,
-                                            ALIEN_DEATH_ANIM_TIME);
+                                            MINION_DEATH_ANIM_PATH,
+                                            MINION_DEATH_ANIM_COUNT,
+                                            MINION_DEATH_ANIM_TIME / MINION_DEATH_ANIM_COUNT,
+                                            MINION_DEATH_ANIM_TIME);
         alien_death->AddComponent((std::shared_ptr<Sprite>)explosion_anim);
         // Criando som da morte
         Sound *explosion_sound = new Sound(*alien_death, ALIEN_DEATH_SOUND_PATH);

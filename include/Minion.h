@@ -9,6 +9,10 @@
 #define MINION_BULLET_FRAME_TIME 0.1
 #define MINION_BULLET_DISTANCE 2000
 
+#define MINION_DEATH_ANIM_PATH "assets/img/miniondeath.png"
+#define MINION_DEATH_ANIM_COUNT 4.0
+#define MINION_DEATH_ANIM_TIME 3.0
+
 #ifndef PI
 #define PI 3.1415
 #endif
