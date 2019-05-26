@@ -128,11 +128,11 @@ TTF_Font *Resources::GetFont(std::string file, int fontSize)
 void Resources::ClearFonts()
 {
     int i = 0;
-    while (soundTable.begin() != soundTable.end())
+    while (fontTable.begin() != fontTable.end())
     {
         std::cout << "Limpando memória de fontes..."
                   << " (" << i + 1 << ") " << std::endl;
-        soundTable.erase(soundTable.begin()++);
+        fontTable.erase(fontTable.begin()++);
         i++;
     }
     std::cout << "Todas as fontes foram apagadas!" << std::endl;
