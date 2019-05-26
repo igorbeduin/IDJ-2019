@@ -3,13 +3,12 @@
 #include "../include/Camera.h"
 #include "../include/Game.h"
 #include "../include/GameData.h"
+#include "../include/Alien.h"
+#include "../include/PenguinBody.h"
 
 StageState::StageState() : State::State(),
                            backgroundMusic(BACKGROUND_MUSIC_PATH)
 {   
-    backgroundMusic.Play(BACKGROUND_MUSIC_LOOP_TIMES);
-    LoadAssets();
-
     // GameObject BACKGROUND
     // ====================================================
     GameObject *background = new GameObject();
@@ -53,7 +52,6 @@ StageState::StageState() : State::State(),
     AddObject(penguinCannon);
 
     int nAliens = 3 + (rand() % MAX_NUMBER_ADIT_ALIENS);
-    std::cout << "nAliens: " << nAliens << std::endl;
     // GameObject ALIEN
     // ====================================================
     for (int i = 0; i < nAliens; i++)
@@ -61,7 +59,6 @@ StageState::StageState() : State::State(),
         GameObject *alien = new GameObject(i * 512, i * 300);
         // Adicionando o comportamento de Alien
         int nMinions = 3 + (rand() % MAX_NUMBER_ADIT_MINIONS);
-        std::cout << "nMinions: " << nMinions << std::endl;
         Alien *alien_behaviour = new Alien(*alien, nMinions);
         alien->AddComponent((std::shared_ptr<Alien>)alien_behaviour);
 
@@ -81,42 +78,21 @@ void StageState::LoadAssets()
 
 void StageState::Update(float dt)
 {   
+    
     // Verifica as condições de fim de jogo
-    // Verifica se há alguem objeto Alien em jogo
-    Component* lastAlien = nullptr;
-    for (int i = 0; i < (int)objectArray.size(); i++)
-    {   
-        Component* temp = objectArray[i]->GetComponent("Alien").get();
-        if (temp != nullptr)
-        {
-            lastAlien = temp;
-        }
-    }
-    if (lastAlien == nullptr)
+    if (Alien::alienCount == 0)
     {
         GameData::playerVictory = true;
-        EndState* end = new EndState();
+        EndState *end = new EndState();
         Game::GetInstance().Push(end);
         popRequested = true;
     }
-    
-    // Verifica se há algum objeto Penguin em jogo
-    Component* penguin = nullptr;
-    for (int i = 0; i < (int)objectArray.size(); i++)
-    {
-        Component* temp = objectArray[i]->GetComponent("PenguinBody").get();
-        if (temp != nullptr)
-        {
-            penguin = temp;
-        }
-    }
-    if (penguin == nullptr)
+    if (PenguinBody::player == nullptr)
     {
         GameData::playerVictory = false;
         EndState* end = new EndState();
         Game::GetInstance().Push(end);
         popRequested = true;
-
     }
 
     // É importante que o Update da camera ocorra ANTES da atualização dos objetos
@@ -129,11 +105,13 @@ void StageState::Update(float dt)
         TitleState* title = new TitleState();
         Game::GetInstance().Push(title);
         popRequested = true;
+        backgroundMusic.Stop(0);
     }
 
     if (InputManager::GetInstance().QuitRequested())
     {
         quitRequested = true;
+        backgroundMusic.Stop(0);
     }
 
     // Update dos GOs
@@ -193,10 +171,15 @@ void StageState::Start()
         objectArray[i]->Start();
     }
     started = true;
+    backgroundMusic.Play(BACKGROUND_MUSIC_LOOP_TIMES);
 }
 
 void StageState::Pause()
-{}
+{
+    backgroundMusic.Stop(0);
+}
 
 void StageState::Resume()
-{}
+{
+    backgroundMusic.Play();
+}

@@ -161,6 +161,7 @@ void Game::Run()
         }
         if (stateStack.top()->PopRequested())
         {
+            stateStack.top()->Pause();
             stateStack.pop();
             if (!stateStack.empty())
             {

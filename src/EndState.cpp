@@ -19,12 +19,14 @@ EndState::EndState() : State::State()
         endScreenSprite = new Sprite(*endScreen, WIN_SCREEN_PATH);
         conditinalText = "CONGRATULATIONS!!! You have won!";
         endTextColor = {0, 200, 0, 0}; // Green
+        backgroundMusic.Open(WIN_MUSIC_PATH);
     }
     else
     {
         endScreenSprite = new Sprite(*endScreen, LOSE_SCREEN_PATH);
         conditinalText = "Oh no! You have lost!";
         endTextColor = {200, 0, 0, 0}; // Red
+        backgroundMusic.Open(LOSE_MUSIC_PATH);
     }
     std::string text = conditinalText;
     firstMsgText = new Text(*firstMsg, TITLE_FONT_PATH, 50, Text::BLENDED, text, endTextColor, 2);
@@ -43,8 +45,15 @@ EndState::EndState() : State::State()
     AddObject(secondMsg);
 }
 
+EndState::~EndState()
+{
+    backgroundMusic.Stop();
+}
+
 void EndState::LoadAssets()
-{}
+{
+    
+}
 
 void EndState::Update(float dt)
 {
@@ -86,8 +95,14 @@ void EndState::Start()
         objectArray[i]->Start();
     }
     started = true;
+    backgroundMusic.Play();
 }
 void EndState::Pause()
-{}
+{
+    backgroundMusic.Stop();
+}
+
 void EndState::Resume()
-{}
+{
+    backgroundMusic.Play();
+}
