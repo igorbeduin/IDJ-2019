@@ -1,11 +1,14 @@
 #pragma once
 
+#define SDL
+
 #include <string>
 #include <iostream>
 #include <memory>
 #include <stack>
 
-#include "SDL_include.h"
+#include "Engine_include.h"
+
 #include "State.h"
 
 class State;
