@@ -2,19 +2,6 @@
 #include "../include/Resources.h"
 #include "../include/InputManager.h"
 
-#define AUDIO_CHUNKSIZE 1024
-#define AUDIO_FREQUENCY MIX_DEFAULT_FREQUENCY
-#define AUDIO_FORMAT MIX_DEFAULT_FORMAT
-#define AUDIO_CHANNELS MIX_DEFAULT_CHANNELS
-#define SOUND_RESOLUTION 32
-
-#define WINDOW_FLAGS 0 // Ex.: SDL_WINDOW_FULLSCREEN
-
-// Configurações da janela do jogo
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Igor R. O. Beduin - 14/0143882"
-
 // Static class member initialization
 Game *Game::instance = nullptr;
 
@@ -72,7 +59,7 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr),
                 else
                 {
                     std::cout << "Game: TTF iniciado com sucesso!" << std::endl;
-                    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAGS);
+                    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAG);
                     if (window == nullptr)
                     {
                         std::cout << "Game: Falha na criação da janela" << std::endl;
@@ -153,6 +140,7 @@ void Game::Run()
         storedState = nullptr;
     }
 
+    // GameLoop
     while (!stateStack.empty())
     {
         if (stateStack.top()->QuitRequested())

@@ -1,5 +1,3 @@
-#ifndef TILESET_H
-#define TILESET_H
 #pragma once
 
 #include <iostream>
@@ -23,4 +21,3 @@ class TileSet
     int tileHeight;
     int tilesNumber;
 };
-#endif
