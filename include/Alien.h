@@ -2,13 +2,15 @@
 
 #define ALIEN_SPRITE_PATH "assets/img/alien.png"
 #define ALIEN_VELOCITY 300
-#define ALIEN_ANG_VEL 8 // degree/frame
+#define ALIEN_ANG_VEL 8 
 #define ALIEN_HP 150
+
 #define ALIEN_DEATH_ANIM_PATH "assets/img/aliendeath.png"
 #define ALIEN_DEATH_ANIM_COUNT 4.0
 #define ALIEN_DEATH_ANIM_TIME 3.0
+
 #define ALIEN_DEATH_SOUND_PATH "assets/audio/boom.wav"
-#define ALIEN_MOV_COOLDOWN 0.5
+#define ALIEN_MOV_COOLDOWN 2
 #define ALIEN_TARGET_TOLERANCE 300
 
 #include <iostream>

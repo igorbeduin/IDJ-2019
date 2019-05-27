@@ -41,7 +41,7 @@ void PenguinCannon::Update(float dt)
     Vec2 mousePos = Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
 
     angle = Vec2::Distance(associated.box.GetCenter(), mousePos).Arg();
-    associated.angleDeg = angle * (180/3.1415);
+    associated.angleDeg = angle * (180/PI);
 
     if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
     {   
@@ -65,7 +65,7 @@ void PenguinCannon::Shoot()
     Bullet *bullet_behaviour = new Bullet(*bullet, angle, PENGUIN_BULLET_SPEED, PENGUIN_BULLET_DAMAGE, PENGUIN_BULLET_DISTANCE, PENGUIN_BULLET_SPRITE_PATH, "Player");
     bullet->AddComponent((std::shared_ptr<Bullet>)bullet_behaviour);
 
-    std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetState().AddObject(bullet);
+    std::weak_ptr<GameObject> weak_bullet = Game::GetInstance().GetCurrentState().AddObject(bullet);
     Sprite *bulletSprite = (Sprite *)weak_bullet.lock()->GetComponent("Sprite").get();
     bulletSprite->SetFrameCount(PENGUINCANNON_FRAME_COUNT);
     bulletSprite->SetFrameTime(PENGUINCANNON_FRAME_TIME);

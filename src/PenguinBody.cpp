@@ -44,8 +44,8 @@ void PenguinBody::Update(float dt)
         Sound *explosion_sound = new Sound(*penguin_death, PENGUIN_DEATH_SOUND_PATH);
         penguin_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
         penguin_death->box.DefineCenter(associated.box.GetCenter());
-        Game::GetInstance().GetState().AddObject(penguin_death);
-        
+        Game::GetInstance().GetCurrentState().AddObject(penguin_death);
+
         explosion_sound->Play();
     }
 
@@ -73,9 +73,29 @@ void PenguinBody::Update(float dt)
         associated.angleDeg += ANG_SPEED;
     }
 
-    angle = associated.angleDeg / (180 / 3.14159265359);
+    angle = associated.angleDeg / (180 / PI);
     Vec2 desloc = Vec2(cos(angle) * linearSpeed, sin(angle) * linearSpeed);
-    associated.box.DefineCenter(associated.box.GetCenter() + desloc);
+    Vec2 newPos = associated.box.GetCenter() + desloc;
+
+    if (newPos.x > MAP_WIDTH)
+    {
+        newPos.x = MAP_WIDTH;
+    }
+    if (newPos.x < 0)
+    {
+        newPos.x = 0;
+    }
+
+    if (newPos.y > MAP_HEIGHT)
+    {
+        newPos.y = MAP_HEIGHT;
+    }
+    if (newPos.y < 0)
+    {
+        newPos.y = 0;
+    }
+
+    associated.box.DefineCenter(newPos);
 }
 
 void PenguinBody::Render()

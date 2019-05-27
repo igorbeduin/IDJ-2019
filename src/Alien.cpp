@@ -25,7 +25,7 @@ Alien::Alien(GameObject &associated, int nMinions) : Component::Component(associ
 
 void Alien::Start()
 {
-    std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetState().GetObjectPtr(&associated);
+    std::weak_ptr<GameObject> weak_alien = Game::GetInstance().GetCurrentState().GetObjectPtr(&associated);
 
     // Criando minions
     for (int i = 0; i < nMinions; i++)
@@ -34,7 +34,7 @@ void Alien::Start()
         Minion *minion_behaviour = new Minion(*minion, weak_alien, i * 360/nMinions);
         minion->AddComponent((std::shared_ptr<Minion>)minion_behaviour);
 
-        std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetState().AddObject(minion);
+        std::weak_ptr<GameObject> weak_minion = Game::GetInstance().GetCurrentState().AddObject(minion);
         minionArray.push_back(weak_minion);
     }
 }
@@ -65,7 +65,7 @@ void Alien::Update(float dt)
         Sound *explosion_sound = new Sound(*alien_death, ALIEN_DEATH_SOUND_PATH);
         alien_death->AddComponent((std::shared_ptr<Sound>)explosion_sound);
         alien_death->box.DefineCenter(associated.box.GetCenter());
-        Game::GetInstance().GetState().AddObject(alien_death);
+        Game::GetInstance().GetCurrentState().AddObject(alien_death);
 
         explosion_sound->Play();
     }
@@ -84,7 +84,7 @@ void Alien::Update(float dt)
 
         // Se ele estiver se movendo
         case MOVING:
-        {   
+        {
             // Se a distancia for maior que uma tolerancia, SE MOVE até o destino
             if (Vec2::Distance(associated.box.GetCenter(), destination).Magnitude() > ALIEN_TARGET_TOLERANCE)
             {
@@ -167,9 +167,12 @@ void Alien::Update(float dt)
 
             }
             else
-            {   
-                // Atualiza o timer até ele "estourar"
-                restTimer.Update(dt);
+            {
+                // Tempoa aleatório adicionado no update 
+                // para avançar o tempo e evitar que os aliens ajam sincronizadamente.
+                float randomTime = (rand() % 500 / 1000); 
+                // Atualiza o timer até ele "estourar".
+                restTimer.Update(dt + randomTime);
             }
             
         }

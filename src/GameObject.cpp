@@ -29,7 +29,7 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {   
-    for (int i = components.size() - 1; i >= 0; --i)
+    for (int i = 0; i < (int)components.size(); i++)
     {
         components[i]->Update(dt);
     }
@@ -37,7 +37,7 @@ void GameObject::Update(float dt)
 
 void GameObject::Render()
 {   
-    for (int i = components.size() -1; i >= 0; --i)
+    for (int i = 0; i < (int)components.size(); i++)
     {   
         components[i]->Render();
     }
@@ -64,7 +64,7 @@ void GameObject::AddComponent(std::shared_ptr<Component> cpt)
 
 void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
 {
-    for (int i = components.size() - 1; i >= 0; i--)
+    for(int i = 0; i < (int)components.size(); i++)
     {   
         if (components[i] == cpt)
         {
@@ -75,7 +75,7 @@ void GameObject::RemoveComponent(std::shared_ptr<Component> cpt)
 
 std::shared_ptr<Component> GameObject::GetComponent(std::string type)
 {
-    for (int i = components.size() - 1; i >= 0; i--)
+    for(int i = 0; i < (int)components.size(); i++)
     {
         if (components[i]->Is(type))
         {
@@ -87,7 +87,7 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string type)
 
 void GameObject::Start()
 {
-    for (int i = 0; i < (int)components.size(); i++)
+    for(int i = 0; i < (int)components.size(); i++)
     {
         components[i]->Start();
     }
@@ -96,12 +96,12 @@ void GameObject::Start()
 
 double GameObject::GetAngleRad()
 {
-    return angleDeg / (180 / 3.141592);
+    return angleDeg / (180 / PI);
 }
 
 void GameObject::NotifyCollision(GameObject &other)
 {
-    for (int i = 0; i < (int)components.size(); i++)
+    for(int i = 0; i < (int)components.size(); i++)
     {
         components[i]->NotifyCollision(other);
     }

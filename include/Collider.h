@@ -1,6 +1,10 @@
 #pragma once
 
-#define DEBUG
+#ifndef PI
+#define PI 3.1415
+#endif
+
+//#define DEBUG
 
 #include <iostream>
 

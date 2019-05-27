@@ -16,14 +16,16 @@
 #define WINDOW_TITLE "Igor R. O. Beduin - 14/0143882"
 
 // Static class member initialization
-Game* Game::instance = nullptr;
+Game *Game::instance = nullptr;
 
-Game::Game(std::string title, int width, int height) : frameStart(0),
+Game::Game(std::string title, int width, int height) : storedState(nullptr),
+                                                       frameStart(0),
                                                        dt(0.0)
 {
     int SDL_ERROR;
     int IMG_ERROR;
     int MSC_ERROR;
+    int TTF_ERROR;
 
     if (Game::instance != nullptr)
     {
@@ -62,36 +64,53 @@ Game::Game(std::string title, int width, int height) : frameStart(0),
                 std::cout << "Game: Mix_Init iniciou corretamente" << std::endl;
                 Mix_OpenAudio(AUDIO_FREQUENCY, AUDIO_FORMAT, AUDIO_CHANNELS, AUDIO_CHUNKSIZE);
                 Mix_AllocateChannels(SOUND_RESOLUTION);
-                window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAGS);
-                if (window == nullptr)
+                TTF_ERROR = TTF_Init();
+                if (TTF_ERROR != 0)
                 {
-                    std::cout << "Game: Falha na criação da janela" << std::endl;
+                    std::cout << "Game: Falha na inicialização do TTF" << std::endl;
                 }
                 else
                 {
-                    std::cout << "Game: Window criada com sucesso!" << std::endl;
-                }
-                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-                if (renderer == nullptr)
-                {
-                    std::cout << "Game: Falha na criação do renderer" << std::endl;
-                }
-                else
-                {
-                    std::cout << "Game: Renderer criado com sucesso!" << std::endl;
+                    std::cout << "Game: TTF iniciado com sucesso!" << std::endl;
+                    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, WINDOW_FLAGS);
+                    if (window == nullptr)
+                    {
+                        std::cout << "Game: Falha na criação da janela" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Game: Window criada com sucesso!" << std::endl;
+                    }
+                    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+                    if (renderer == nullptr)
+                    {
+                        std::cout << "Game: Falha na criação do renderer" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Game: Renderer criado com sucesso!" << std::endl;
+                    }
                 }
             }
         }
-    } 
-    // End of initialization routine
-    state = new State();
+    }
 }
 
 Game::~Game()
 {
+    if (storedState != nullptr)
+    {
+        storedState = nullptr;
+    }
+    while (!stateStack.empty())
+    {
+        stateStack.pop();
+    }
+
     Mix_Quit();
     IMG_Quit();
     Mix_CloseAudio();
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -110,30 +129,65 @@ Game &Game::GetInstance()
     }
 }
 
-State &Game::GetState()
-{
-    return *state;
-}
-
 SDL_Renderer *Game::GetRenderer()
 {
     return renderer;
 }
 
+State &Game::GetCurrentState()
+{
+    return *stateStack.top();
+}
+
+void Game::Push(State *state)
+{
+    storedState = state;
+}
+
 void Game::Run()
-{   
-    state->Start();
-    while (state->QuitRequested() != true)
-    {   
+{
+    if (storedState != nullptr)
+    {
+        stateStack.push((std::unique_ptr<State>)storedState);
+        stateStack.top()->Start();
+        storedState = nullptr;
+    }
+
+    while (!stateStack.empty())
+    {
+        if (stateStack.top()->QuitRequested())
+        {
+            break;
+        }
+        if (stateStack.top()->PopRequested())
+        {
+            stateStack.top()->Pause();
+            stateStack.pop();
+            if (!stateStack.empty())
+            {
+                stateStack.top()->Resume();
+            }
+        }
+        if (storedState != nullptr)
+        {
+            if (!stateStack.empty())
+            {
+                stateStack.top()->Pause();
+            }
+            stateStack.push((std::unique_ptr<State>)storedState);
+            stateStack.top()->Start();
+            storedState = nullptr;
+        }
+
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        state->Update(dt);
-        state->Render();
+        stateStack.top()->Update(dt);
+        stateStack.top()->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
     }
-    Resources::ClearImages();
-    Resources::ClearMusics();
-    Resources::ClearSounds();
+
+    Resources::ClearAll();
+    
 }
 
 void Game::CalculateDeltaTime()

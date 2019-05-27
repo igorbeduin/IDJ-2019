@@ -30,7 +30,6 @@ void Music::Stop(int msToStop) {
 void Music::Open(std::string file) {
     
     music = Resources::GetMusic(file.c_str());
-    // music = Mix_LoadMUS(file.c_str());
     if (music == nullptr) {
         std::cout << "Music: Falha ao carregar a música!" << std::endl;
     } else {
@@ -38,10 +37,7 @@ void Music::Open(std::string file) {
     }
 }
 
-bool Music::IsOpen() {
-    if (music != nullptr) {
-        return true;
-    } else {
-        return false;
-    }
+bool Music::IsOpen() 
+{
+    return (music != nullptr);
 }
