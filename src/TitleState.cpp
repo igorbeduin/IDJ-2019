@@ -1,4 +1,5 @@
 #include "../include/TitleState.h"
+#include "../include/InputManager.h"
 
 
 
@@ -8,8 +9,11 @@ TitleState::TitleState() : State::State()
 }
 
 void TitleState::Update(float dt)
-{   
-
+{
+    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY))
+    {
+        quitRequested = true;
+    }
 }
 
 void TitleState::LoadAssets()
